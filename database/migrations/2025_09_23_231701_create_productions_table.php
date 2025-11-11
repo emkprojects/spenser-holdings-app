@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('productions', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('production_reference'); 
+            $table->uuid('production_reference'); 
             $table->string('production_reference_no')->nullable();
             $table->string('production');
             $table->text('description')->nullable();

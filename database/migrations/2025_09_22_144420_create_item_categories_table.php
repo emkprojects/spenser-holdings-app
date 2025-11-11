@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('item_categories', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('item_category_reference'); 
+            $table->uuid('item_category_reference'); 
             $table->string('item_category');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true); 

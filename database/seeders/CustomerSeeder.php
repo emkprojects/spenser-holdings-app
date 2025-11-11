@@ -8,9 +8,11 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Administration\Customer;
 use App\Models\Administration\CustomerType;
+use App\Models\Administration\ReferrerType;
 use App\Models\Settings\Group;
 use App\Models\Settings\Category;
 use App\Models\Settings\Position;
+
 
 use Str;
 use DB;
@@ -40,6 +42,8 @@ class CustomerSeeder extends Seeder
         $loyal = CustomerType::where('customer_type', 'Loyal Customer')->first();
         $new   = CustomerType::where('customer_type', 'New Customer')->first();
         $position = Position::where('slug', 'head-chef')->first();
+
+        $referrer_type   = ReferrerType::where('referrer_type', 'Employee')->first();
         
         $seeded_customers = [
 
@@ -49,13 +53,14 @@ class CustomerSeeder extends Seeder
              'customer' => 'Default Customer', 
              'customer_type_id' => $loyal->id,
              'phone_number' => '256205465930',
-             'email_address' => 'customer@andiagroup.io',
-             'physical_address' => 'Plot 69 Bukoto Street - Kololo',
+             'email_address' => 'customer@spenserholdings.org',
+             'physical_address' => 'Plot 123 Mutungo Avenue - Mutungo',
              'contact_first_name' => 'John',
              'contact_last_name' => 'Doe',
              'contact_phone_number' => '256703003647',
-             'contact_email_address' => 'customer@andiagroup.io',
-             'position_id' => $position->id,  
+             'contact_email_address' => 'customer@spenserholdings.org',
+             'position_id' => $position->id, 
+             'referrer_type_id' => $referrer_type->id,
              'contact_gender' => 'Male',
              'contact_date_of_birth' => '1985/11/03',    
              'created_at' => now(),         
@@ -68,13 +73,14 @@ class CustomerSeeder extends Seeder
              'customer' => 'Sheraton Hotel', 
              'customer_type_id' => $new->id,
              'phone_number' => '256393248791',
-             'email_address' => 'customer@andiagroup.io',
+             'email_address' => 'customer@spenserholdings.org',
              'physical_address' => 'Plot 123 Hotel Street - Nakasero',
              'contact_first_name' => 'Jane',
              'contact_last_name' => 'Doe',
              'contact_phone_number' => '256703003647',
-             'contact_email_address' => 'customer@andiagroup.io',
+             'contact_email_address' => 'customer@spenserholdings.org',
              'position_id' => $position->id, 
+             'referrer_type_id' => $referrer_type->id,
              'contact_gender' => 'Male',
              'contact_date_of_birth' => '1999/01/30',         
              'created_at' => now(),         

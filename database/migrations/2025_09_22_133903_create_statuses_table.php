@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('status_reference'); 
+            $table->uuid('status_reference'); 
             $table->string('status');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
-            // $table->foreignId('category_type_id')->constrained('category_types');              
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');    
             $table->softDeletes();

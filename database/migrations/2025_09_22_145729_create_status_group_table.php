@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('status_category_type');
+        Schema::dropIfExists('status_group');
     }
 };

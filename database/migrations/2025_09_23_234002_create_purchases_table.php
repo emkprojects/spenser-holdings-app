@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); 
             $table->foreignId('item_id')->nullable()->constrained();         
             $table->foreignId('supplier_id')->nullable()->constrained(); 
-            $table->Uuid('purchase_reference'); 
+            $table->uuid('purchase_reference'); 
             $table->string('purchase_reference_no')->nullable(); 
             $table->string('purchase')->nullable();
             $table->string('description')->nullable();          

@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+use App\Models\ProductionManagement\Production;
 
 class RawMaterial extends Model implements Auditable
 {
@@ -32,5 +34,10 @@ class RawMaterial extends Model implements Auditable
         'created_by',        
     ];
 
+
+    public function productions()
+    {
+        return $this->belongsToMany(Production::class)->using(RawMaterialProduction::class);
+    }
 }
 

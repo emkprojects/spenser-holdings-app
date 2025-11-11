@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('inventory_categories', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('inventory_category_reference'); 
+            $table->uuid('inventory_category_reference'); 
             $table->string('inventory_category');
             $table->text('description')->nullable();
+            $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true); 
             $table->foreignId('category_id')->nullable()->constrained('categories');    
             $table->foreignId('group_id')->nullable()->constrained('groups');             

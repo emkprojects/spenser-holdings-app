@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();            
-            $table->Uuid('supplier_reference'); 
+            $table->uuid('supplier_reference'); 
             $table->string('supplier');
             $table->string('national_identification_number')->nullable();
             $table->string('tax_identification_number')->nullable();
@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('email_address')->nullable();
             $table->string('alternative_email')->nullable();
             $table->string('physical_address')->nullable();
-            // $table->string('contact_full_name')->nullable();
             $table->string('contact_first_name')->nullable();
             $table->string('contact_last_name')->nullable();
             $table->string('contact_other_name')->nullable();             

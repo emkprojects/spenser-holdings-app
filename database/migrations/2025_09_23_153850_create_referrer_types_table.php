@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('programs', function (Blueprint $table) {
-            $table->id();             
-            $table->Uuid('program_reference'); 
-            $table->text('program');
+        Schema::create('referrer_types', function (Blueprint $table) {
+            $table->id();
+            $table->Uuid('referrer_type_reference'); 
+            $table->string('referrer_type');
             $table->text('description')->nullable();
-            #$table->foreignId('created_by')->constrained('users')->index();  
+            $table->boolean('is_active')->default(true);               
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');    
             $table->softDeletes();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('programs');
+        Schema::dropIfExists('referrer_types');
     }
 };

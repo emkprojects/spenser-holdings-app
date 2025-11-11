@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('sub_counties', function (Blueprint $table) {
             $table->id();
+            $table->uuid('sub_county_reference'); 
+            $table->string('sub_county');
+            $table->string('slug'); 
+            $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true); 
+            $table->foreignId('district_id')->nullable()->constrained('districts');       
+            $table->softDeletes();
             $table->timestamps();
         });
     }

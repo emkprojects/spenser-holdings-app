@@ -1487,9 +1487,9 @@ class SettingsController extends Controller
         if ($request->ajax()) {
 
             $groups = Group::leftJoin('users', 'groups.created_by', '=', 'users.id')
-            ->where('is_active', 1)
+            ->where('groups.is_active', 1)
             ->select('groups.group_reference', 'groups.group', 
-            'groups.description', 'groups.created_at', 'users.name')
+            'groups.description', 'groups.is_active', 'groups.created_at', 'users.name')
             ->orderBy('groups.group', 'asc');
 
             return Datatables::of($groups)

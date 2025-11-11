@@ -43,20 +43,6 @@ class DefaultUserSeeder extends Seeder
 
 
 
-        $director =  User::create(
-
-            [
-            'user_reference' => Str::uuid(),
-            'name' => 'director',
-            'email' => 'director@spenserholdings.org',
-            'phone' => '256772123456',
-            'password' =>  bcrypt('Admin@1234!'),
-            'user_status_id' => $user_status->id,
-            'position_id' => $md_position->id,
-            ],
-
-        );
-
 
         $admin =  User::create(
 
@@ -68,6 +54,22 @@ class DefaultUserSeeder extends Seeder
             'password' =>  bcrypt('Admin@1234!'),
             'user_status_id' => $user_status->id,
             'position_id' => $coo_position->id,
+            ],
+
+        );
+
+        
+
+        $director =  User::create(
+
+            [
+            'user_reference' => Str::uuid(),
+            'name' => 'director',
+            'email' => 'director@spenserholdings.org',
+            'phone' => '256772123456',
+            'password' =>  bcrypt('Admin@1234!'),
+            'user_status_id' => $user_status->id,
+            'position_id' => $md_position->id,
             ],
 
         );
@@ -88,20 +90,7 @@ class DefaultUserSeeder extends Seeder
         );
 
 
-        $director_details =  UserDetail::create(
-            [
-                'user_id' => $director->id,
-                'first_name' => 'Spenser',
-                'last_name' =>  'Precious',
-                'other_name' =>  '',
-                'gender' => 'Female',
-                'date_of_birth' => '1999-12-31',
-                'physical_address' => 'Plot 123 Spenser Close - Mutungo',             
-                
-            ]
-        );
-
-
+      
         $admin_details =  UserDetail::create(
             [
                 'user_id' => $admin->id,
@@ -115,9 +104,23 @@ class DefaultUserSeeder extends Seeder
         );
 
 
+          $director_details =  UserDetail::create(
+            [
+                'user_id' => $director->id,
+                'first_name' => 'Spenser',
+                'last_name' =>  'Precious',
+                'other_name' =>  '',
+                'gender' => 'Female',
+                'date_of_birth' => '1999-12-31',
+                'physical_address' => 'Plot 123 Spenser Close - Mutungo',             
+                
+            ]
+        );
+
+
         $super_admin->assignRole('super admin');
-        $director->assignRole('director');
         $admin->assignRole('administrator');
+        $director->assignRole('director');
         
     }
 }

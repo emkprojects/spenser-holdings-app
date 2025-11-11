@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('positions', function (Blueprint $table) {
+        Schema::create('raw_material_production', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('position_reference'); 
-            $table->string('position'); 
-            $table->string('slug'); 
-            $table->text('description')->nullable();
+            $table->foreignId('raw_material_id')->constrained();
+            $table->foreignId('production_id')->constrained();
+            $table->decimal('quantity', total: 10, places: 2)->nullable();
+            $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
-            // $table->unsignedBigInteger('created_by');
-            // $table->foreign('created_by')->references('id')->on('users');    
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('raw_material_production');
     }
 };

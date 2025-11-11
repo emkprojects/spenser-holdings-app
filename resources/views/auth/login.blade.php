@@ -99,8 +99,8 @@
             <div class="d-flex col-12 col-xl-4 align-items-center authentication-bg p-sm-12 p-6">
                 <div class="w-px-400 mx-auto mt-12 pt-5">
                 
-                <h4 class="mb-1">Welcome! 👋</h4>
-                <p class="mb-6">Sign-in to your account and start the adventure</p>
+                <h4 class="mb-1">Welcome! to SIMS 👋</h4>
+                <p class="mb-6 fs-5">Sign-in to your account and start the adventure</p>
 
                 <form method="POST" action="{{ route('login') }}" id="formAuthentication" class="mb-4">
                 @csrf
@@ -138,7 +138,8 @@
                                 <label class="form-check-label" for="remember-me"> Remember Me </label>
                             </div>
 
-                            <a href="{{ route('password.request') }}">
+                            <!-- <a href="{{ route('password.request') }}"> -->
+                            <a href="/login">
                             <p class="mb-0">Forgot Password?</p>
                             </a>
 
@@ -152,12 +153,12 @@
                     <button type="submit" class="btn btn-primary d-grid w-100">Login</button>
                 </form>
 
-                <p class="text-center">
+                <!-- <p class="text-center">
                     <span>New employee?</span>
                     <a href="#">
                     <span>Create an account</span>
                     </a>
-                </p>
+                </p> -->
 
                 <div class="divider my-6">
                     <div class="divider-text">-</div>

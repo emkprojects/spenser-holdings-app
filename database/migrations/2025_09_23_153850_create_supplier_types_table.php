@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('supplier_types', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('supplier_type_reference'); 
+            $table->uuid('supplier_type_reference'); 
             $table->string('supplier_type');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);               

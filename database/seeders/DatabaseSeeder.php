@@ -24,13 +24,13 @@ class DatabaseSeeder extends Seeder
             
             GroupSeeder::class,
             CategorySeeder::class,
-            #SubCategorySeeder::class,
             
             CurrencySeeder::class,
             PaymentMethodSeeder::class,
             MetricSeeder::class,
             StatusSeeder::class,                      
 
+            ReferrerTypeSeeder::class,
             SupplierTypeSeeder::class,
             CustomerTypeSeeder::class,
             ItemCategorySeeder::class,

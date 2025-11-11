@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\LearningMaterials;
+namespace App\Models\Administration;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,20 +13,26 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Question extends Model implements Auditable
+class Referrer extends Model implements Auditable
 {
     use HasFactory, AuditableTrait, SoftDeletes;
 
     protected $fillable = [
 
-        'question_reference',
-        'question',
-        'description', 
-        'question_status',
-        'multimedia_type_id',
-        'topic_id',
-        'lesson_id',   
-        'user_id',        
+        'referrer_reference',
+        'national_identification_number',
+        'tax_identification_number',
+        'phone_number',
+        'alternative_phone',
+        'email_address', 
+        'alternative_email',
+        'physical_address', 
+        'first_name',
+        'lastst_name',
+        'other_name',
+        'referrer_type_id', 
+        'is_active',        
+        'created_by',        
     ];
     
 }

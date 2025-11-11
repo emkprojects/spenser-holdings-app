@@ -6,7 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\Administration\customerType;
+use App\Models\Administration\CustomerType;
 use App\Models\Settings\Group;
 use App\Models\Settings\Category;
 use App\Models\User;

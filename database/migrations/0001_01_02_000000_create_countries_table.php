@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->uuid('country_reference'); 
+            $table->string('country');
+            $table->string('slug'); 
+            $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true);   
+            $table->softDeletes();
             $table->timestamps();
         });
     }

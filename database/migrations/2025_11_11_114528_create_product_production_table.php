@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_sales', function (Blueprint $table) {
-            $table->id(); 
+        Schema::create('product_production', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('sale_id')->constrained();            
+            $table->foreignId('production_id')->constrained();
             $table->decimal('quantity', total: 10, places: 2)->nullable();
             $table->decimal('unit_cost', total: 10, places: 2)->nullable();   
-            // $table->integer('quantity')->default(0);
-            // $table->integer('unit_cost')->default(0);      
-            
-            $table->string('status')->default('pending');
+            $table->foreignId('status_id')->nullable()->constrained();
+            $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_sales');
+        Schema::dropIfExists('product_production');
     }
 };

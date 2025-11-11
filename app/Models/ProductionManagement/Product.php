@@ -11,13 +11,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+use App\Models\ProductionManagement\Production;
+use App\Models\SalesManagement\Sale;
 
 class Product extends Model implements Auditable
 {
     use HasFactory, AuditableTrait, SoftDeletes;
 
-     protected $fillable =  [
+    protected $fillable =  [
          
         'product_reference',
         'product', 
@@ -34,6 +37,17 @@ class Product extends Model implements Auditable
 
     ];
 
+
+    public function productions()
+    {
+        return $this->belongsToMany(Production::class)->using(Productproduction::class);
+    }
+
+
+    public function sales()
+    {
+        return $this->belongsToMany(Sale::class)->using(ProductSale::class);
+    }
     
 }
 

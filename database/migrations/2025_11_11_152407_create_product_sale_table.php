@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('metrics', function (Blueprint $table) {
+        Schema::create('product_sale', function (Blueprint $table) {
             $table->id();
-            $table->uuid('metric_reference'); 
-            $table->string('metric');
-            $table->string('metric_code');
-            $table->text('description')->nullable();
+            $table->foreignId('product_id')->constrained();
+            $table->foreignId('sale_id')->constrained();            
+            $table->decimal('quantity', total: 10, places: 2)->nullable();
+            $table->decimal('unit_cost', total: 10, places: 2)->nullable();   
+            $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');    
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('metrics');
+        Schema::dropIfExists('product_sale');
     }
 };

@@ -20,9 +20,13 @@ class Supplier extends Model implements Auditable
     protected $fillable = [
 
         'supplier_reference',
+        'national_identification_number',
+        'tax_identification_number',
         'supplier',
         'phone_number',
+        'alternative_phone',
         'email_address', 
+        'alternative_email', 
         'physical_address', 
         'contact_first_name',
         'contact_lastst_name',
@@ -30,6 +34,7 @@ class Supplier extends Model implements Auditable
         'contact_phone_number',
         'contact_email_address', 
         'contact_physical_address', 
+        'supplier_type_id', 
         'is_active',        
         'created_by',         
     ];

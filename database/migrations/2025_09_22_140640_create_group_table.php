@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('group_reference'); 
+            $table->uuid('group_reference'); 
             $table->string('group'); 
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);

@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Models;
-
 namespace App\Models\ProductionManagement;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class ProductProduction extends Pivot implements Auditable
+class RawMaterialProduction extends Pivot implements Auditable
 {
     use HasFactory, AuditableTrait, SoftDeletes;
 
     protected $fillable =  [
          
         'quantity',
-        'unit_cost',
         'status_id',
         'is_active',
         
     ];
+    
 }

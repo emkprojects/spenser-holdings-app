@@ -11,21 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_details', function (Blueprint $table) {
+        Schema::create('referrers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->uuid('referrer_reference');
             $table->string('national_identification_number')->nullable();
             $table->string('tax_identification_number')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('other_name')->nullable();
-            $table->string('gender')->nullable();
-            $table->date('date_of_birth')->nullable();
+            $table->string('phone_number');
             $table->string('alternative_phone')->nullable();
+            $table->string('email_address')->nullable();
             $table->string('alternative_email')->nullable();
-            $table->string('physical_address')->nullable();
-            // $table->string('current_position')->nullable();
+            $table->string('physical_address')->nullable();            
             $table->boolean('is_active')->default(true);
+            $table->foreignId('referrer_type_id')->constrained();            
+            $table->foreignId('user_id')->nullable()->constrained();   
             $table->softDeletes();
             $table->timestamps();
         });
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_details');
+        Schema::dropIfExists('referrers');
     }
 };

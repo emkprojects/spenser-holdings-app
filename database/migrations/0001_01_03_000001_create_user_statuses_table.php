@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_statuses', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('user_status_reference'); 
+            $table->uuid('user_status_reference'); 
             $table->string('user_status');
             $table->boolean('is_active')->default(true);
             $table->text('description')->nullable();  

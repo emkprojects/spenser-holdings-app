@@ -20,16 +20,22 @@ class Customer extends Model implements Auditable
     protected $fillable = [
 
         'customer_reference',
+        'national_identification_number',
+        'tax_identification_number',
         'customer',
         'phone_number',
+        'alternative_phone',
         'email_address', 
+        'alternative_email', 
         'physical_address', 
         'contact_first_name',
         'contact_lastst_name',
         'contact_other_name',
         'contact_phone_number',
         'contact_email_address', 
-        'contact_physical_address', 
+        'contact_physical_address',
+        'customer_type_id',
+        'referrer_type_id', 
         'is_active',        
         'created_by',        
     ];

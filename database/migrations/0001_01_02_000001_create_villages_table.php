@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('villages', function (Blueprint $table) {
             $table->id();
+            $table->uuid('village_reference'); 
+            $table->string('village');
+            $table->string('slug'); 
+            $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true); 
+            $table->foreignId('parish_id')->nullable()->constrained('parishes');  
+            $table->softDeletes();
             $table->timestamps();
         });
     }

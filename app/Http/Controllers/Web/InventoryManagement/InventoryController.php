@@ -465,6 +465,35 @@ class InventoryController extends Controller
 
 
 
+    public function addRawMaterial(Request $request){
+
+        return abort(404);
+    }
+
+    public function getViewRawMaterial(Request $request, $record_ref){
+
+        return abort(404, 'PAGE IS UNDER CONSTRUCTION');
+    }
+
+    public function getUpdateRawMaterial(Request $request, $record_ref){
+
+        return null;
+    }
+
+
+    public function updateRawMaterial(Request $request){
+
+        return null;
+    }
+
+
+    public function deleteRawMaterial(Request $request){
+
+        return null;
+    }
+
+    
+
 
 
 
