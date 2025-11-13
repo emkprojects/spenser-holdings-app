@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();            
-            $table->uuid('product_reference'); 
             $table->string('product_reference_no')->nullable();
             $table->string('product_code')->nullable();
             $table->string('product');
@@ -26,7 +25,8 @@ return new class extends Migration
             $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
             $table->foreignId('product_category_id')->constrained();            
-            $table->foreignId('user_id')->nullable()->constrained(); 
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->uuid('product_reference')->unique();              
             $table->softDeletes();
             $table->timestamps();
         });

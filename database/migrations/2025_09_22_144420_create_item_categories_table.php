@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('item_categories', function (Blueprint $table) {
             $table->id();
-            $table->uuid('item_category_reference'); 
             $table->string('item_category');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true); 
             $table->foreignId('category_id')->nullable()->constrained('categories'); 
             $table->foreignId('group_id')->nullable()->constrained('groups');             
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');    
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->uuid('item_category_reference')->unique();               
             $table->softDeletes();
             $table->timestamps();
         });

@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('metrics', function (Blueprint $table) {
             $table->id();
-            $table->uuid('metric_reference'); 
             $table->string('metric');
             $table->string('metric_code');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');    
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->uuid('metric_reference')->unique();                
             $table->softDeletes();
             $table->timestamps();
         });

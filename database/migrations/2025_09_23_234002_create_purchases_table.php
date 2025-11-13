@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id(); 
-            $table->foreignId('item_id')->nullable()->constrained();         
-            $table->foreignId('supplier_id')->nullable()->constrained(); 
-            $table->uuid('purchase_reference'); 
             $table->string('purchase_reference_no')->nullable(); 
             $table->string('purchase')->nullable();
             $table->string('description')->nullable();          
@@ -31,7 +28,10 @@ return new class extends Migration
             //$table->string('status')->default('paid');
             $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
-            $table->foreignId('user_id')->nullable()->constrained();            
+            $table->foreignId('user_id')->nullable()->constrained();
+             $table->foreignId('item_id')->nullable()->constrained();         
+            $table->foreignId('supplier_id')->nullable()->constrained(); 
+            $table->uuid('purchase_reference')->unique();                        
             $table->softDeletes();
             $table->timestamps();
         });

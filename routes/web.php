@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Administration\EmployeeController;
 use App\Http\Controllers\Web\Administration\AdministrationController;
 use App\Http\Controllers\Web\Administration\CustomerController;
 use App\Http\Controllers\Web\Administration\SupplierController;
+use App\Http\Controllers\Web\Administration\ReferrerController;
 
 use App\Http\Controllers\Web\InventoryManagement\InventoryController;
 use App\Http\Controllers\Web\InventoryManagement\ExpenseController;
@@ -60,6 +61,24 @@ Route::group(['middleware' => 'auth'], function () {
     ////////////// ADMINISTRATION ROUTES ///////////////////////////////////////////////////////////////////////////////
     
     Route::get('/dashboard', [AdministrationController::class, 'getDashboard'])->name('dashboard');
+
+    ////////////// Referrer Type Routes ///////////////////////////////////////////////////////////////////////////////
+    Route::get('/referrer-types', [SettingsController::class, 'getReferrerTypes'])->name('view.referrer.types');
+    Route::get('/add-referrer-type', [SettingsController::class, 'getAddReferrerType'])->name('new.referrer.type');
+    Route::post('/add-referrer-type', [SettingsController::class, 'addReferrerType'])->name('add.referrer.type');
+    Route::get('/specific-referrer-type/{record_reference}', [SettingsController::class, 'getViewReferrerType'])->name('specific.referrer.type');
+    Route::get('/edit-referrer-type/{record_reference}', [SettingsController::class, 'getUpdateReferrerType'])->name('edit.referrer.type');
+    Route::post('/edit-referrer-type', [SettingsController::class, 'updateReferrerType'])->name('update.referrer.type');
+    Route::post('/delete-referrer-type/{record_reference}', [SettingsController::class, 'deleteReferrerType'])->name('remove.referrer.type');
+
+    ////////////// Referrer Routes ///////////////////////////////////////////////////////////////////////////////////
+    Route::get('/referrers', [ReferrerController::class, 'getReferrers'])->name('view.referrers');
+    Route::get('/new-referrer', [ReferrerController::class, 'getAddReferrer'])->name('new.referrer');
+    Route::post('/add-referrer', [ReferrerController::class, 'addReferrer'])->name('add.referrer');
+    Route::get('/specific-referrer/{record_reference}', [ReferrerController::class, 'viewReferrer'])->name('specific.referrer');
+    Route::get('/edit-referrer/{record_reference}', [ReferrerController::class, 'getUpdateReferrer'])->name('edit.referrer');
+    Route::post('/edit-referrer', [ReferrerController::class, 'updateReferrer'])->name('update.referrer');
+    Route::post('/delete-referrer/{record_reference}', [ReferrerController::class, 'deleteReferrer'])->name('remove.referrer');
 
     ////////////// Customer Type Routes ///////////////////////////////////////////////////////////////////////////////
     Route::get('/customer-types', [SettingsController::class, 'getCustomerTypes'])->name('view.customer.types');

@@ -47,6 +47,23 @@
                         <!-- @csrf -->
 
                         <div class="col-md-4 form-control-validation">
+                            <label class="form-label fs-5" for="position_id">Customer Type</label>
+                            <div class="input-group input-group-merge">                    
+                                <!-- <span class="input-group-text" id="basic-addon-dob">
+                                    <i class="icon-base ti tabler-list"></i>
+                                </span>  -->
+                                <select id="customer_type_id" name="customer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Customer Type</option>
+                                    @foreach($customer_types as $customer_type)
+                                        <option value="{{$customer_type->id}}">{{$customer_type->customer_type}}</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+
+                        <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="national_identification_number">NIN</label>
                            <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-nin">
@@ -123,28 +140,10 @@
                                 <span class="input-group-text" id="basic-addon-paddress">
                                     <i class="icon-base ti tabler-map-pin"></i>
                                 </span>
-                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address..." rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
+                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address..." rows="" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
                             </div>
                         </div>
-
-                        <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="position_id">Customer Type</label>
-                            <div class="input-group input-group-merge">                    
-                                <!-- <span class="input-group-text" id="basic-addon-dob">
-                                    <i class="icon-base ti tabler-list"></i>
-                                </span>  -->
-                                <select id="customer_type_id" name="customer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <option value="">Select Customer Type</option>
-                                    @foreach($customer_types as $customer_type)
-                                        <option value="{{$customer_type->id}}">{{$customer_type->customer_type}}</option>
-                                    @endforeach
-                                                            
-                                </select>
-
-                            </div> 
-                        </div>
-
-
+                    
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="first_name">Contact First Name</label>
                            <div class="input-group input-group-merge">
@@ -245,17 +244,16 @@
                                 <span class="input-group-text" id="basic-addon-paddress">
                                     <i class="icon-base ti tabler-map-pin"></i>
                                 </span>
-                                <textarea id="contact_physical_address" name="contact_physical_address" class="form-control autosize fs-5" placeholder="Enter Contact Physical Address... (Optional)" rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
+                                <textarea id="contact_physical_address" name="contact_physical_address" class="form-control autosize fs-5" placeholder="Enter Contact Physical Address... (Optional)" rows="" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
                             </div>
                         </div>
-
                         
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="gender">Contact Gender</label> 
                             
                             <div class="switches-stacked">
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Male" class="switch-input" id="gender" name="gender" />
+                                    <input type="radio" value="Male" class="switch-input" id="contact_gender" name="contact_gender" />
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -264,7 +262,7 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Female" class="switch-input" id="gender" name="gender" />
+                                    <input type="radio" value="Female" class="switch-input" id="contact_gender" name="contact_gender" />
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -273,7 +271,7 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Other" class="switch-input" id="gender" name="gender" />
+                                    <input type="radio" value="Other" class="switch-input" id="contact_gender" name="contact_gender" />
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -284,6 +282,89 @@
                                
                             </div>
                             
+                        </div>
+
+
+                        
+                        <div class="col-md-4 form-control-validation">
+                           <label class="form-label fs-5" for="date_of_birth">Contact Date of Birth</label>
+                           <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-dob">
+                                    <i class="icon-base ti tabler-calendar"></i>
+                                </span>                                    
+                                <input type="date" id="contact_date_of_birth" name="contact_date_of_birth" class="form-control" placeholder="Contact Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
+                            </div> 
+                        </div>
+
+
+                        <div class="col-md-4 form-control-validation">
+                            <label class="form-label fs-5" for="position_id">Referrer Type</label>
+                            <div class="input-group input-group-merge"> 
+                                <select id="referrer_type_id" name="referrer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Referrer Type</option>
+                                    @foreach($referrer_types as $referrer_type)
+                                        <option value="{{$referrer_type->id}}">{{$referrer_type->referrer_type}}</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+
+                        <div class="col-md-4 form-control-validation" id="ref-employee-div">
+                            <label class="form-label fs-5" for="position_id">Employee</label>
+                            <div class="input-group input-group-merge"> 
+                                <select id="user_id" name="user_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Employee</option>
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+
+                        <div class="col-md-4 form-control-validation" id="ref-supplier-div">
+                            <label class="form-label fs-5" for="position_id">Supplier</label>
+                            <div class="input-group input-group-merge"> 
+                                <select id="supplier_id" name="supplier_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Supplier</option>
+                                    @foreach($suppliers as $supplier)
+                                        <option value="{{$supplier->id}}">{{$supplier->supplier}} (+{{$supplier->phone_number}})</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+
+                        <div class="col-md-4 form-control-validation" id="ref-customer-div">
+                            <label class="form-label fs-5" for="position_id">Customer</label>
+                            <div class="input-group input-group-merge"> 
+                                <select id="customer_id" name="customer_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Customer</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{$customer->id}}">{{$customer->customer}} (+{{$customer->phone_number}})</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+
+                        <div class="col-md-4 form-control-validation" id="ref-referrer-div">
+                            <label class="form-label fs-5" for="position_id">Referrer</label>
+                            <div class="input-group input-group-merge"> 
+                                <select id="referrer_id" name="referrer_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Referrer</option>
+                                    @foreach($referrers as $referrer)
+                                        <option value="{{$referrer->id}}">{{$referrer->first_name}} {{$referrer->last_name}}</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
                         </div>
                         
 
@@ -388,6 +469,124 @@
             });
 
 
+            $('#referrer_type_id').select2({
+
+                "placeholder": "Select Referrer Type",
+
+            });
+
+
+            $('#referrer_id').select2({
+
+                "placeholder": "Select Referrer",
+
+            });
+
+
+            $('#user_id').select2({
+
+                "placeholder": "Select Employee",
+
+            });
+
+
+            $('#customer_id').select2({
+
+                "placeholder": "Select Customer",
+
+            });
+
+
+            $('#supplier_id').select2({
+
+                "placeholder": "Select Supplier",
+
+            });
+
+
+            //////////////////////////// /////////////////////////////////////////////////////////
+
+            $('#ref-customer-div').hide();
+            $('#ref-supplier-div').hide();
+            $('#ref-employee-div').hide();
+            $('#ref-referrer-div').hide();
+
+
+            let referrer_type = "";
+
+            $(document).on('change', '#referrer_type_id', function() {
+                
+                //let ref_selected_item = $(this).find('option:selected').val();
+                let ref_selected_item = $(this).find('option:selected').text();
+                referrer_type = $(this).find('option:selected').text();
+
+                if(ref_selected_item == "Employee"){
+                    
+                    $('#employee_id').val($('#employee_id option:first-child').val()).trigger('change');
+                    $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                   
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').show();
+                    $('#ref-referrer-div').hide();
+                    
+
+                }
+                else if(ref_selected_item == "Customer"){
+
+                    $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    $('#employee_id').val($('#employee_id option:first-child').val()).trigger('change');                    
+                    $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                                                          
+                    $('#ref-customer-div').show();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').hide();
+                }
+                else if(ref_selected_item == "Supplier"){
+
+                    
+                    $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    $('#employee_id').val($('#employee_id option:first-child').val()).trigger('change');
+                    $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                                       
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').show();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').hide();
+                   
+                }else if(ref_selected_item == "Others"){
+
+                    $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');                      
+                    $('#employee_id').val($('#employee_id option:first-child').val()).trigger('change');
+                    $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                                     
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').show();
+                   
+                }else{
+
+                    $('#employee_id').val($('#employee_id option:first-child').val()).trigger('change');
+                    $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                   
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').hide();
+
+                }
+            
+            });
+
 
             ///////////////////NUMBER INPUT INITIALISATION ///////////////////////////////////////
 
@@ -455,7 +654,10 @@
                         
                     // Format the form data
                     var formData = new FormData(form);
-                
+                    formData.append("referrer_type", referrer_type);
+
+                    console.log(referrer_type);
+                                  
                     // Initiate Ajax request
                     $.ajax({
 

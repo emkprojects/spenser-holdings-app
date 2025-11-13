@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('districts', function (Blueprint $table) {
             $table->id();
-            $table->uuid('district_reference'); 
             $table->string('district');
             $table->string('slug'); 
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true); 
-            $table->foreignId('country_id')->nullable()->constrained('countries');     
+            $table->foreignId('country_id')->nullable()->constrained('countries');
+            $table->uuid('district_reference')->unique();                 
             $table->softDeletes();
             $table->timestamps();
         });

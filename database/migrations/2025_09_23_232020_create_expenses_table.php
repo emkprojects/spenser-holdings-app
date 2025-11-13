@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();            
-            $table->uuid('expense_reference'); 
             $table->string('expense_reference_no')->nullable();
             $table->string('expense')->nullable();
             $table->string('description')->nullable();
@@ -26,7 +25,8 @@ return new class extends Migration
             $table->foreignId('production_id')->nullable()->constrained();            
             $table->foreignId('user_id')->nullable()->constrained();
             $table->unsignedBigInteger('approved_by');
-            $table->foreign('approved_by')->references('id')->on('users');    
+            $table->foreign('approved_by')->references('id')->on('users');
+            $table->uuid('expense_reference')->unique();                 
             $table->softDeletes();
             $table->timestamps();
         });

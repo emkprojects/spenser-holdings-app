@@ -132,7 +132,9 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">200 Days</div>
+                                        <div class="accordion-body" id="">
+                                            {{ $next_customer_dob }}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -145,7 +147,7 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">25 Years old</div>
+                                        <div class="accordion-body" id="">{{ $customer_age}}</div>
                                     </div>
                                 </div>
 
@@ -219,10 +221,10 @@
                             </ul> -->
 
                             <div class="d-flex justify-content-center">
-                                <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editcustomer" data-bs-toggle="modal">
+                                <a href="https://api.whatsapp.com/send?phone=+{{$customer->phone_number}}&text=Hello!" class="btn btn-primary me-4" target="new" title="Chat now">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </a>
-                                <a href="javascript:;" class="btn btn-success me-4" data-bs-target="#editcustomer" data-bs-toggle="modal">
+                                <a href="mailto:{{$customer->email_address}}" class="btn btn-success me-4" title="Send mail">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </a>
                                 <!-- <a href="javascript:;" class="btn btn-label-danger suspend-customer">Suspend</a> -->
@@ -323,6 +325,9 @@
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
                                         <div class="accordion-body" id="">+{{ $customer->phone_number }}</div>
+                                        @if($customer->alternative_phone)
+                                            <div class="accordion-body" id="">+{{ $customer->alternative_phone }}</div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -337,6 +342,9 @@
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
                                         <div class="accordion-body" id="">{{ $customer->email_address }}</div>
+                                        @if($customer->alternative_email)
+                                            <div class="accordion-body" id="">+{{ $customer->alternative_email }}</div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -441,7 +449,11 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($customer->contact_date_of_birth)) }}</div>
+                                        @if(date('Y-m-d', strtotime($customer->contact_date_of_birth)) != "1970-01-01")
+                                            <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($customer->contact_date_of_birth)) }}</div>
+                                        @else
+                                            <div class="accordion-body" id="">---</div>
+                                        @endif
                                     </div>
                                 </div>
 

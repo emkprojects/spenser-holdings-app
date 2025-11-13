@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('productions', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('production_reference'); 
+            $table->id();             
             $table->string('production_reference_no')->nullable();
             $table->string('production');
             $table->text('description')->nullable();
@@ -22,7 +21,8 @@ return new class extends Migration
             $table->date('date_of_production')->default(now()); 
             $table->foreignId('user_id')->nullable()->constrained(); 
             $table->unsignedBigInteger('supervisor')->nullable();
-            $table->foreign('supervisor')->nullable()->references('id')->on('users');  
+            $table->foreign('supervisor')->nullable()->references('id')->on('users'); 
+            $table->uuid('production_reference')->unique(); 
             $table->softDeletes();
             $table->timestamps();
         });

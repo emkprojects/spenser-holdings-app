@@ -132,7 +132,7 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">200 Days</div>
+                                        <div class="accordion-body" id="">{{ $next_supplier_dob }}</div>
                                     </div>
                                 </div>
 
@@ -145,7 +145,7 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">25 Years old</div>
+                                        <div class="accordion-body" id="">{{ $supplier_age}}</div>
                                     </div>
                                 </div>
 
@@ -219,12 +219,20 @@
                             </ul> -->
 
                             <div class="d-flex justify-content-center">
-                                <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editsupplier" data-bs-toggle="modal">
+
+                                <a href="https://api.whatsapp.com/send?phone=+{{$supplier->phone_number}}&text=Hello!" class="btn btn-primary me-4" target="new" title="Chat now">
+                                    <i class="icon-base ti tabler-phone"></i>
+                                </a>
+                                <a href="mailto:{{$supplier->email_address}}" class="btn btn-success me-4" title="Send mail">
+                                    <i class="icon-base ti tabler-mail"></i>
+                                </a>
+
+                                <!-- <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editsupplier" data-bs-toggle="modal">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </a>
                                 <a href="javascript:;" class="btn btn-success me-4" data-bs-target="#editsupplier" data-bs-toggle="modal">
                                     <i class="icon-base ti tabler-mail"></i>
-                                </a>
+                                </a> -->
                                 <!-- <a href="javascript:;" class="btn btn-label-danger suspend-supplier">Suspend</a> -->
                             </div>
 
@@ -322,7 +330,10 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">+{{ $supplier->phone_number }}</div>
+                                        <div class="accordion-body" id="">+{{ $supplier->phone_number }}</div>  
+                                        @if($supplier->alternative_phone)
+                                            <div class="accordion-body" id="">{{ $supplier->alternative_phone }}</div>
+                                        @endif                                      
                                     </div>
                                 </div>
 
@@ -337,6 +348,9 @@
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
                                         <div class="accordion-body" id="">{{ $supplier->email_address }}</div>
+                                        @if($supplier->alternative_email)
+                                            <div class="accordion-body" id="">{{ $supplier->alternative_email }}</div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -441,7 +455,11 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($supplier->contact_date_of_birth)) }}</div>
+                                        @if(date('Y-m-d', strtotime($supplier->contact_date_of_birth)) != "1970-01-01")
+                                            <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($supplier->contact_date_of_birth)) }}</div>
+                                        @else
+                                            <div class="accordion-body" id="">---</div>
+                                        @endif
                                     </div>
                                 </div>
 

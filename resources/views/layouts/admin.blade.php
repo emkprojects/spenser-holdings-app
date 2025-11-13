@@ -9,14 +9,14 @@
         <title>SIMS - {{$title}}</title>    
         
         <!-- Canonical SEO -->
-        <meta name="description" content="" />
+        <meta name="description" content="SPENSER HOLDINGS LTD SIMS" />
         <meta name="keywords" content="" />
-        <meta property="og:title" content="" />
+        <meta property="og:title" content="SIMS" />
         <meta property="og:type" content="" />
-        <meta property="og:url" content="" />
+        <meta property="og:url" content="https://staging.spenserholdings.org" />
         <meta property="og:image" content="" />
-        <meta property="og:description" content="" />
-        <meta property="og:site_name" content="" />
+        <meta property="og:description" content="SPENSER HOLDINGS LTD SIMS" />
+        <meta property="og:site_name" content="SIMS" />
         <link rel="canonical" href="" />           
         
         <!-- Favicon -->
@@ -56,6 +56,8 @@
         
         <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->    
         <script src="{{ asset('/assets/js/config.js') }}"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
         <style>
             .swal2-container {
@@ -384,6 +386,35 @@
                         <!-- Customer Management menu end -->
 
 
+                        <!-- Referrer Management menu start -->
+                        @can('manage-referrers')
+                        <li class="menu-item {{ request()->is('referrers') ? 'active open' : '' }} {{ request()->is('new-referrer') ? 'active open' : '' }} {{ request()->is('specific-referrer/*') ? 'active open' : '' }} {{ request()->is('edit-referrer/*') ? 'active open' : '' }}">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon icon-base ti tabler-users"></i>
+                                <div data-i18n="Referrer Management">Referrer Management</div>
+                            </a>
+                            <ul class="menu-sub">
+
+                                <li class="menu-item {{ request()->is('new-referrer') ? 'active' : '' }}">
+                                    <a href="/new-referrer" class="menu-link">
+                                    <i class="menu-icon icon-base ti tabler-user-plus"></i>
+                                    <div data-i18n="New Referrer">New Referrer</div>
+                                    </a>
+                                </li>
+
+                               <li class="menu-item {{ request()->is('referrers') ? 'active' : '' }} {{ request()->is('specific-referrer/*') ? 'active open' : '' }} {{ request()->is('edit-referrer/*') ? 'active open' : '' }}">
+                                    <a href="/referrers" class="menu-link">
+                                    <i class="menu-icon icon-base ti tabler-user-plus"></i>
+                                    <div data-i18n="View Referrers">View Referrers</div>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        @endcan
+                        <!-- Referrer Management menu end -->
+
+
                         <!-- Supplier Management menu start -->
                         @can('manage-suppliers')
                         <li class="menu-item {{ request()->is('suppliers') ? 'active open' : '' }} {{ request()->is('new-supplier') ? 'active open' : '' }} {{ request()->is('specific-supplier/*') ? 'active open' : '' }} {{ request()->is('edit-supplier/*') ? 'active open' : '' }}">
@@ -551,7 +582,7 @@
 
                         <!-- Settings Management menu start -->
                         @can('manage-settings')
-                        <li class="menu-item {{ request()->is('product-categories') ? 'active open' : '' }}  {{ request()->is('inventory-categories') ? 'active open' : '' }}  {{ request()->is('customer-types') ? 'active open' : '' }}  {{ request()->is('supplier-types') ? 'active open' : '' }}  {{ request()->is('statuses') ? 'active open' : '' }} {{ request()->is('item-categories') ? 'active open' : '' }} {{ request()->is('categories') ? 'active open' : '' }} {{ request()->is('payment-methods') ? 'active open' : '' }} {{ request()->is('groups') ? 'active open' : '' }} {{ request()->is('currencies') ? 'active open' : '' }} {{ request()->is('metrics') ? 'active open' : '' }}">
+                        <li class="menu-item {{ request()->is('product-categories') ? 'active open' : '' }} {{ request()->is('inventory-categories') ? 'active open' : '' }} {{ request()->is('referrer-types') ? 'active' : '' }} {{ request()->is('customer-types') ? 'active open' : '' }}  {{ request()->is('supplier-types') ? 'active open' : '' }}  {{ request()->is('statuses') ? 'active open' : '' }} {{ request()->is('item-categories') ? 'active open' : '' }} {{ request()->is('categories') ? 'active open' : '' }} {{ request()->is('payment-methods') ? 'active open' : '' }} {{ request()->is('groups') ? 'active open' : '' }} {{ request()->is('currencies') ? 'active open' : '' }} {{ request()->is('metrics') ? 'active open' : '' }}">
 
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon icon-base ti tabler-settings"></i>
@@ -584,6 +615,16 @@
                                     <a href="/inventory-categories" class="menu-link">
                                     <i class="menu-icon icon-base ti tabler-layout-navbar"></i>
                                     <div data-i18n="Inventory Categories">Inventory Categories</div>
+                                    </a>
+                                </li>
+                                @endcan
+
+
+                                @can('manage-referrer-types')
+                                <li class="menu-item {{ request()->is('referrer-types') ? 'active' : '' }}">
+                                    <a href="/referrer-types" class="menu-link">
+                                    <i class="menu-icon icon-base ti tabler-list"></i>
+                                    <div data-i18n="Referrer Types">Referrer Types</div>
                                     </a>
                                 </li>
                                 @endcan

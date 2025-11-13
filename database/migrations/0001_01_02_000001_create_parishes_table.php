@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('parishes', function (Blueprint $table) {
             $table->id();
-            $table->uuid('parish_reference'); 
             $table->string('parish');
             $table->string('slug'); 
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);  
-            $table->foreignId('sub_county_id')->nullable()->constrained('sub_counties');   
+            $table->foreignId('sub_county_id')->nullable()->constrained('sub_counties'); 
+            $table->uuid('parish_reference')->unique();               
             $table->softDeletes();
             $table->timestamps();
         });

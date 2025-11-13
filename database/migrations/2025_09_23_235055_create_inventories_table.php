@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();            
-            $table->uuid('inventory_reference'); 
             $table->string('inventory_reference_no')->nullable();
             $table->string('inventory')->nullable();
             $table->string('description')->nullable();
@@ -24,7 +23,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('raw_material_id')->nullable()->constrained();
             $table->foreignId('purchase_id')->nullable()->constrained();           
-            $table->foreignId('user_id')->nullable()->constrained();  
+            $table->foreignId('user_id')->nullable()->constrained(); 
+            $table->uuid('inventory_reference')->unique();              
             $table->softDeletes();
             $table->timestamps();
         });

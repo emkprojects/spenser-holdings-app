@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('multimedia_types', function (Blueprint $table) {
             $table->id();
-            $table->uuid('multimedia_type_reference'); 
             $table->string('multimedia_type');
             $table->string('slug'); 
             $table->text('description')->nullable();
-            $table->boolean('is_active')->default(true);   
+            $table->boolean('is_active')->default(true);  
+            $table->uuid('multimedia_type_reference')->unique();              
             $table->softDeletes();
             $table->timestamps();
         });

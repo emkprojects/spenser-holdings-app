@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('raw_materials', function (Blueprint $table) {
             $table->id();            
-            $table->uuid('raw_material_reference'); 
-            $table->string('raw_material_reference_no')->nullable();
+             $table->string('raw_material_reference_no')->nullable();
             $table->string('raw_material')->nullable();
             $table->string('description')->nullable();
             $table->decimal('physical_stock', total: 10, places: 2)->nullable();
@@ -23,7 +22,8 @@ return new class extends Migration
             $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
             $table->foreignId('inventory_category_id')->constrained();          
-            $table->foreignId('user_id')->nullable()->constrained();  
+            $table->foreignId('user_id')->nullable()->constrained(); 
+            $table->uuid('raw_material_reference')->unique();             
             $table->softDeletes();
             $table->timestamps();
         });
