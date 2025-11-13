@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();            
-            $table->uuid('item_reference'); 
             $table->string('item_reference_no')->nullable();
             $table->string('item_code')->nullable();
             $table->string('item');
@@ -27,7 +26,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('item_category_id')->constrained();
             $table->foreignId('supplier_id')->constrained();            
-            $table->foreignId('user_id')->nullable()->constrained();  
+            $table->foreignId('user_id')->nullable()->constrained(); 
+            $table->uuid('item_reference')->unique();              
             $table->softDeletes();
             $table->timestamps();
         });

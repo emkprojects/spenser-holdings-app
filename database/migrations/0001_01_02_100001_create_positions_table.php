@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
-            $table->Uuid('position_reference'); 
             $table->string('position'); 
             $table->string('slug'); 
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->Uuid('position_reference')->unique();              
             $table->softDeletes();
             $table->timestamps();
         });

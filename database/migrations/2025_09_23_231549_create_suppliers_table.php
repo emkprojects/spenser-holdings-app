@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();            
-            $table->uuid('supplier_reference'); 
             $table->string('supplier');
             $table->string('national_identification_number')->nullable();
             $table->string('tax_identification_number')->nullable();
@@ -35,7 +34,9 @@ return new class extends Migration
             $table->foreignId('position_id')->nullable()->constrained(); 
             $table->boolean('is_active')->default(true);
             $table->foreignId('supplier_type_id')->constrained();            
-            $table->foreignId('user_id')->nullable()->constrained();    
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->uuid('supplier_reference')->unique();                
             $table->softDeletes();
             $table->timestamps();
         });

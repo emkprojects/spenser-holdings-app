@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('supplier_types', function (Blueprint $table) {
             $table->id();
-            $table->uuid('supplier_type_reference'); 
             $table->string('supplier_type');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);               
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');    
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->uuid('supplier_type_reference')->unique();                 
             $table->softDeletes();
             $table->timestamps();
         });

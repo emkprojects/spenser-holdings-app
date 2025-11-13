@@ -46,6 +46,24 @@
                     <form method="POST" id="add-form" nam="add-form" class="row g-6">
                         <!-- @csrf -->
 
+
+                         <div class="col-md-4 form-control-validation">
+                            <label class="form-label fs-5" for="position_id">Supplier Type</label>
+                            <div class="input-group input-group-merge">                    
+                                <!-- <span class="input-group-text" id="basic-addon-dob">
+                                    <i class="icon-base ti tabler-list"></i>
+                                </span>  -->
+                                <select id="supplier_type_id" name="supplier_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    <option value="">Select Supplier Type</option>
+                                    @foreach($supplier_types as $supplier_type)
+                                        <option value="{{$supplier_type->id}}">{{$supplier_type->supplier_type}}</option>
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+                        
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="national_identification_number">NIN</label>
                            <div class="input-group input-group-merge">
@@ -123,28 +141,11 @@
                                 <span class="input-group-text" id="basic-addon-paddress">
                                     <i class="icon-base ti tabler-map-pin"></i>
                                 </span>
-                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address..." rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
+                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address..." rows="" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
                             </div>
                         </div>
 
-                        <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="position_id">Supplier Type</label>
-                            <div class="input-group input-group-merge">                    
-                                <!-- <span class="input-group-text" id="basic-addon-dob">
-                                    <i class="icon-base ti tabler-list"></i>
-                                </span>  -->
-                                <select id="supplier_type_id" name="supplier_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <option value="">Select Supplier Type</option>
-                                    @foreach($supplier_types as $supplier_type)
-                                        <option value="{{$supplier_type->id}}">{{$supplier_type->supplier_type}}</option>
-                                    @endforeach
-                                                            
-                                </select>
-
-                            </div> 
-                        </div>
-
-
+                       
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="first_name">Contact First Name</label>
                            <div class="input-group input-group-merge">
@@ -245,7 +246,7 @@
                                 <span class="input-group-text" id="basic-addon-paddress">
                                     <i class="icon-base ti tabler-map-pin"></i>
                                 </span>
-                                <textarea id="contact_physical_address" name="contact_physical_address" class="form-control autosize fs-5" placeholder="Enter Contact Physical Address... (Optional)" rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
+                                <textarea id="contact_physical_address" name="contact_physical_address" class="form-control autosize fs-5" placeholder="Enter Contact Physical Address... (Optional)" rows="" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
                             </div>
                         </div>
 
@@ -255,7 +256,7 @@
                             
                             <div class="switches-stacked">
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Male" class="switch-input" id="gender" name="gender" />
+                                    <input type="radio" value="Male" class="switch-input" id="contact_gender" name="contact_gender" />
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -264,7 +265,7 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Female" class="switch-input" id="gender" name="gender" />
+                                    <input type="radio" value="Female" class="switch-input" id="contact_gender" name="contact_gender" />
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -273,7 +274,7 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Other" class="switch-input" id="gender" name="gender" />
+                                    <input type="radio" value="Other" class="switch-input" id="contact_gender" name="contact_gender" />
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -284,6 +285,17 @@
                                
                             </div>
                             
+                        </div>
+
+
+                        <div class="col-md-4 form-control-validation">
+                           <label class="form-label fs-5" for="date_of_birth">Contact Date of Birth</label>
+                           <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-dob">
+                                    <i class="icon-base ti tabler-calendar"></i>
+                                </span>                                    
+                                <input type="date" id="contact_date_of_birth" name="contact_date_of_birth" class="form-control" placeholder="Contact Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
+                            </div> 
                         </div>
                         
 

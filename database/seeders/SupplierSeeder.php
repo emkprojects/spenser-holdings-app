@@ -44,7 +44,7 @@ class SupplierSeeder extends Seeder
         $seeded_suppliers = [
 
             [
-             'user_id' => $user->id,
+             'created_by' => $user->id,
              'supplier_reference' => Str::uuid(), 
              'supplier' => 'Erias Meat', 
              'supplier_type_id' => $raw_material->id,
@@ -63,7 +63,7 @@ class SupplierSeeder extends Seeder
             ],
 
             [
-             'user_id' => $user->id,
+             'created_by' => $user->id,
              'supplier_reference' => Str::uuid(),
              'supplier' => 'Default Supplier', 
              'supplier_type_id' => $manufacturer->id,

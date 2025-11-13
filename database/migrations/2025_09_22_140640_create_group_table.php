@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->uuid('group_reference'); 
             $table->string('group'); 
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');    
+            $table->foreign('created_by')->references('id')->on('users');  
+            $table->uuid('group_reference')->unique();               
             $table->softDeletes();
             $table->timestamps();
         });

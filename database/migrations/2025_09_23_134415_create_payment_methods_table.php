@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment_methods', function (Blueprint $table) {
-            $table->uuid('payment_method_reference'); 
             $table->string('payment_method');
             $table->string('payment_method_code')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');    
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->uuid('payment_method_reference')->unique();                 
             $table->softDeletes();
             $table->timestamps();
         });

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();            
-            $table->Uuid('customer_reference'); 
             $table->string('customer');
             $table->string('national_identification_number')->nullable();
             $table->string('tax_identification_number')->nullable();
@@ -36,7 +35,13 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('customer_type_id')->constrained();            
             $table->foreignId('referrer_type_id')->constrained();            
-            $table->foreignId('user_id')->nullable()->constrained();   
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('customer_id')->nullable()->constrained();
+            $table->foreignId('supplier_id')->nullable()->constrained();
+            $table->foreignId('referrer_id')->nullable()->constrained();
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->uuid('customer_reference')->unique();                
             $table->softDeletes();
             $table->timestamps();
         });

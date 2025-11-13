@@ -135,6 +135,18 @@ class PermissionSeeder extends Seeder
             ['permission_reference'=> Str::uuid(), 'name' => 'edit-customers', 'guard_name' => 'web', 'created_at' => now()],
             ['permission_reference'=> Str::uuid(), 'name' => 'delete-customers', 'guard_name' => 'web', 'created_at' => now()],
 
+            ['permission_reference'=> Str::uuid(), 'name' => 'manage-referrer-types', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'view-referrer-types', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'add-referrer-types', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'edit-referrer-types', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'delete-referrer-types', 'guard_name' => 'web', 'created_at' => now()],
+
+            ['permission_reference'=> Str::uuid(), 'name' => 'manage-referrers', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'view-referrers', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'add-referrers', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'edit-referrers', 'guard_name' => 'web', 'created_at' => now()],
+            ['permission_reference'=> Str::uuid(), 'name' => 'delete-referrers', 'guard_name' => 'web', 'created_at' => now()],
+
             ['permission_reference'=> Str::uuid(), 'name' => 'manage-items', 'guard_name' => 'web', 'created_at' => now()],
             ['permission_reference'=> Str::uuid(), 'name' => 'view-items', 'guard_name' => 'web', 'created_at' => now()],
             ['permission_reference'=> Str::uuid(), 'name' => 'add-items', 'guard_name' => 'web', 'created_at' => now()],

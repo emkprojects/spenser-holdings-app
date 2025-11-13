@@ -20,7 +20,10 @@ use App\Models\UserDetail;
 use App\Models\UserStatus;
 
 use App\Models\Administration\CustomerType;
+use App\Models\Administration\ReferrerType;
+use App\Models\Administration\Referrer;
 use App\Models\Administration\Customer;
+use App\Models\Administration\Supplier;
 
 use App\Models\Settings\Position;
 
@@ -28,23 +31,22 @@ use App\Http\Requests\Web\Administration\AddCustomerRequest;
 use App\Http\Requests\Web\Administration\EditCustomerRequest;
 
 class CustomerController extends Controller
-{
-    
+{    
 
 
     /////////////////// ALL CUSTOMERS ///////////////////////////////////////////////////////////////////
 
     public function getCustomers(Request $request){
 
-        if( !Auth::user()->can('view-users')){
+        if( !Auth::user()->can('view-customers')){
 
             return abort('403', 'Unauthorized Access');
         }
 
         if ($request->ajax()) {
 
-            $customers = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.user_id')
-            ->leftJoin('users', 'users.id', '=', 'customers.user_id')
+            $customers = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.created_by')
+            ->leftJoin('users', 'users.id', '=', 'customers.created_by')
             ->leftJoin('customer_types', 'customers.customer_type_id', '=', 'customer_types.id')
             ->leftJoin('positions', 'customers.position_id', '=', 'positions.id')
             ->select('customers.id', 'customers.customer_type_id', 'customers.customer_reference', 
@@ -174,7 +176,18 @@ class CustomerController extends Controller
 
         $positions = Position::select('id','position_reference', 'position')->orderBy('position', 'asc')->get();
 
-        return view('web.administration.add-customer', compact('customer_types', 'positions'));
+        $referrer_types = ReferrerType::select('id','referrer_type_reference', 'referrer_type')->orderBy('referrer_type', 'asc')->get();
+
+        $referrers = Referrer::select('id', 'referrer_reference', 'first_name', 'last_name', 'phone_number')->orderBy('first_name', 'asc')->get();
+
+        $customers = Customer::select('id', 'customer_reference', 'customer', 'phone_number')->orderBy('customer', 'asc')->get();
+
+        $suppliers = Supplier::select('id', 'supplier_reference', 'supplier', 'phone_number')->orderBy('supplier', 'asc')->get();
+
+        $users = User::leftJoin('user_details', 'user_details.user_id', '=', 'users.id')
+        ->select('users.id', 'users.user_reference', 'users.phone', 'user_details.first_name', 'user_details.last_name')->orderBy('user_details.first_name', 'asc')->get();
+
+        return view('web.administration.add-customer', compact('customer_types', 'positions', 'referrer_types', 'referrers', 'customers', 'suppliers', 'users'));
 
     }
 
@@ -242,21 +255,48 @@ class CustomerController extends Controller
             return abort(403, "Unauthorised Access"); 
         } 
        
-        $customer = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.user_id')
-        ->leftJoin('users', 'users.id', '=', 'customers.user_id')
+        $customer = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.created_by')
+        ->leftJoin('users', 'users.id', '=', 'customers.created_by')
         ->leftJoin('customer_types', 'customers.customer_type_id', '=', 'customer_types.id')
         ->leftJoin('positions', 'customers.position_id', '=', 'positions.id')
         ->select('customers.id', 'customers.customer_type_id', 'customers.customer_reference', 
         'customers.national_identification_number', 'customers.tax_identification_number', 
-        'customers.customer', 'customers.phone_number', 'customers.email_address', 'customers.physical_address',
+        'customers.customer', 'customers.phone_number', 'customers.email_address',
+        'customers.alternative_phone', 'customers.alternative_email',
+        'customers.physical_address',
         'customers.contact_first_name', 'customers.contact_last_name', 'customers.contact_phone_number',
         'customers.contact_email_address', 'customers.contact_gender', 'customers.contact_date_of_birth', 
+        'customers.contact_alternative_phone', 'customers.contact_alternative_email',
         'customers.contact_physical_address', 'positions.position', 'customers.is_active', 'customers.created_at',
         'customer_types.customer_type',
         'users.name',
-        ) ->where('customers.customer_reference', $id)->first();   
+        ) ->where('customers.customer_reference', $id)->first();  
         
-        return view('web.administration.specific-customer', compact('customer'));
+        if( date('Y-m-d', strtotime($customer->contact_date_of_birth)) != "1970-01-01"){
+
+            $target_days = mktime(0, 0, 0, date('m',strtotime($customer->contact_date_of_birth)), 
+            date('d',strtotime($customer->contact_date_of_birth)), date('Y', strtotime('+1 year')) );
+            $today = time();
+            $diff_days = ($target_days - $today);
+            $next_customer_dob = (int)($diff_days/86400). " Days";
+            
+            $birth_date = date("Y-m-d", strtotime($customer->contact_date_of_birth));    
+            $current_date = date('Y-m-d');
+            $birth_timestamp = strtotime($birth_date);
+            $current_timestamp = strtotime($current_date);
+            $diff_seconds = $current_timestamp - $birth_timestamp;
+            $age_years = $diff_seconds / (60 * 60 * 24 * 365.25);
+            $age_years = round($age_years);
+            $customer_age = $age_years . " Years old";
+
+        }
+        else{
+
+            $next_customer_dob = "---";
+            $customer_age = "---";
+        }
+                
+        return view('web.administration.specific-customer', compact('customer', 'next_customer_dob', 'customer_age'));
     
 
     }
@@ -275,8 +315,8 @@ class CustomerController extends Controller
             return abort(403, "Unauthorised Access"); 
         }  
        
-         $customer = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.user_id')
-        ->leftJoin('users', 'users.id', '=', 'customers.user_id')
+         $customer = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.created_by')
+        ->leftJoin('users', 'users.id', '=', 'customers.created_by')
         ->leftJoin('customer_types', 'customers.customer_type_id', '=', 'customer_types.id')
         ->select('customers.id', 'customers.customer_type_id', 'customers.customer_reference', 
         'customers.customer', 'customers.phone_number', 'customers.email_address', 'customers.physical_address',

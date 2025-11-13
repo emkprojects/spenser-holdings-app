@@ -48,7 +48,7 @@ class CustomerSeeder extends Seeder
         $seeded_customers = [
 
             [
-             'user_id' => $user->id,
+             'created_by' => $user->id,
              'customer_reference' => Str::uuid(), 
              'customer' => 'Default Customer', 
              'customer_type_id' => $loyal->id,
@@ -61,6 +61,7 @@ class CustomerSeeder extends Seeder
              'contact_email_address' => 'customer@spenserholdings.org',
              'position_id' => $position->id, 
              'referrer_type_id' => $referrer_type->id,
+             'user_id' => $user->id,
              'contact_gender' => 'Male',
              'contact_date_of_birth' => '1985/11/03',    
              'created_at' => now(),         
@@ -68,7 +69,7 @@ class CustomerSeeder extends Seeder
             ],
 
             [
-             'user_id' => $user->id,
+             'created_by' => $user->id,
              'customer_reference' => Str::uuid(),
              'customer' => 'Sheraton Hotel', 
              'customer_type_id' => $new->id,
@@ -81,6 +82,7 @@ class CustomerSeeder extends Seeder
              'contact_email_address' => 'customer@spenserholdings.org',
              'position_id' => $position->id, 
              'referrer_type_id' => $referrer_type->id,
+             'user_id' => $user->id,
              'contact_gender' => 'Male',
              'contact_date_of_birth' => '1999/01/30',         
              'created_at' => now(),         

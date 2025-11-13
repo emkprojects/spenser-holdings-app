@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             InventoryCategorySeeder::class,            
             ProductCategorySeeder::class,
 
+            ReferrerSeeder::class,
             SupplierSeeder::class,
             CustomerSeeder::class,
             

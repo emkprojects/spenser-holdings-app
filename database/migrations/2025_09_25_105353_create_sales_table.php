@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('customer_id')->nullable()->constrained();  
-            $table->uuid('sale_reference');           
             $table->string('sale_reference_no')->nullable();
             $table->datetime('date_of_sale');            
-             $table->decimal('amount', total: 10, places: 2)->nullable();
+            $table->decimal('amount', total: 10, places: 2)->nullable();
             $table->decimal('balance', total: 10, places: 2)->nullable();
             $table->foreignId('referrer_id')->nullable()->constrained();
             $table->foreignId('status_id')->nullable()->constrained();
@@ -33,7 +30,10 @@ return new class extends Migration
             $table->foreign('declined_by')->nullable()->references('id')->on('users');
             $table->datetime('decline_date')->nullable();
             $table->text('decline_remarks')->nullable();  
-            $table->boolean('vat_inclusive')->default(true);           
+            $table->boolean('vat_inclusive')->default(true);
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('customer_id')->nullable()->constrained();  
+            $table->uuid('sale_reference')->unique();      
             $table->softDeletes();
             $table->timestamps();
         });
