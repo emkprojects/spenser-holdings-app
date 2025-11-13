@@ -31,6 +31,7 @@ class Referrer extends Model implements Auditable
         'last_name',
         'other_name',
         'gender',
+        'date_of_birth',
         'referrer_type_id', 
         'is_active',        
         'created_by',        
