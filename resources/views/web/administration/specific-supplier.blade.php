@@ -43,7 +43,13 @@
 
                         <div class="supplier-avatar-section">
                             <div class=" d-flex align-items-center flex-column">
-                            <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/3.png" height="120" width="120" alt="supplier avatar" />
+                            @if($supplier->contact_gender == "Male")
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/supplier-male.png" height="120" width="120" alt="referrer avatar" />
+                            @elseif($supplier->contact_gender == "Female")
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/supplier-female.png" height="120" width="120" alt="referrer avatar" />
+                            @else
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/placeholder.png" height="120" width="120" alt="referrer avatar" />
+                            @endif
                             <div class="supplier-info text-center">
                                 <h5 class="fs-4">{{ $supplier->supplier }}</h5>
                                 <span class="badge bg-label-secondary fs-5">{{ $supplier->position }}</span>
@@ -220,7 +226,7 @@
 
                             <div class="d-flex justify-content-center">
 
-                                <a href="https://api.whatsapp.com/send?phone=+{{$supplier->phone_number}}&text=Hello!" class="btn btn-primary me-4" target="new" title="Chat now">
+                                <a href="https://api.whatsapp.com/send?phone=+{{$supplier->phone_number}}&text=Hello! Supplier" class="btn btn-primary me-4" target="new" title="Chat now">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </a>
                                 <a href="mailto:{{$supplier->email_address}}" class="btn btn-success me-4" title="Send mail">
@@ -294,6 +300,9 @@
                             </li> -->
                             <li class="nav-item">
                                 <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-cash icon-sm me-1_5"></i>Supplies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-users icon-sm me-1_5"></i>Clients</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-settings icon-sm me-1_5"></i>Settings</a>

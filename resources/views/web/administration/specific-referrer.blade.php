@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'View Customer'])
+@extends('layouts.admin', ['title' => 'View referrer'])
 
 @push('stylesheets')
 
@@ -33,29 +33,29 @@
                 <div class="row">
 
 
-                    <!-- customer Sidebar -->
+                    <!-- referrer Sidebar -->
                     <div class="col-xl-4 col-lg-5 order-1 order-md-0">
 
 
-                    <!-- customer Card -->
+                    <!-- referrer Card -->
                     <div class="card mb-6">
                         <div class="card-body pt-12">
 
-                        <div class="customer-avatar-section">
+                        <div class="referrer-avatar-section">
                             <div class=" d-flex align-items-center flex-column">
-                            
-                            @if($customer->contact_gender == "Male")
-                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/customer-male.png" height="120" width="120" alt="referrer avatar" />
-                            @elseif($customer->contact_gender == "Female")
-                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/customer-female.png" height="120" width="120" alt="referrer avatar" />
+                            @if($referrer->gender == "Male")
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/referrer-male.png" height="120" width="120" alt="referrer avatar" />
+                            @elseif($referrer->gender == "Female")
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/referrer-female.png" height="120" width="120" alt="referrer avatar" />
                             @else
                                 <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/placeholder.png" height="120" width="120" alt="referrer avatar" />
                             @endif
 
-                            <div class="customer-info text-center">
-                                <h5 class="fs-4">{{ $customer->customer }}</h5>
-                                <span class="badge bg-label-secondary fs-5">{{ $customer->position }}</span>
+                            <div class="referrer-info text-center">
+                                <h5 class="fs-4">{{ $referrer->first_name }} {{ $referrer->other_name }} {{ $referrer->last_name }}</h5>
+                                <span class="badge bg-label-secondary fs-5"></span>
                             </div>
+
                             </div>
                         </div>
 
@@ -70,7 +70,7 @@
                                 </div>
                                 <div>
                                     <h5 class="mb-0">+100</h5>
-                                    <span>Products</span>
+                                    <span>Commissions</span>
                                 </div>
 
                             </div>
@@ -84,7 +84,7 @@
                                 </div>
                                 <div>
                                     <h5 class="mb-0">+200M</h5>
-                                    <span>Purchases</span>
+                                    <span>Revenue</span>
                                 </div>
 
                             </div>
@@ -106,8 +106,8 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        @if($customer->tax_identification_number)
-                                            <div class="accordion-body" id="">{{ $customer->tax_identification_number }}</div>
+                                        @if($referrer->tax_identification_number)
+                                            <div class="accordion-body" id="">{{ $referrer->tax_identification_number }}</div>
                                         @else
                                             <div class="accordion-body" id="">...</div>
                                         @endif
@@ -123,8 +123,8 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        @if($customer->national_identification_number)
-                                            <div class="accordion-body" id="">{{ $customer->national_identification_number }}</div>
+                                        @if($referrer->national_identification_number)
+                                            <div class="accordion-body" id="">{{ $referrer->national_identification_number }}</div>
                                         @else
                                             <div class="accordion-body" id="">...</div>
                                         @endif
@@ -140,9 +140,7 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">
-                                            {{ $next_customer_dob }}
-                                        </div>
+                                        <div class="accordion-body" id="">{{ $next_referrer_dob }}</div>
                                     </div>
                                 </div>
 
@@ -150,12 +148,12 @@
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Customer Contact is around
+                                        Referrer is around
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ $customer_age}}</div>
+                                        <div class="accordion-body" id="">{{ $referrer_age}}</div>
                                     </div>
                                 </div>
 
@@ -163,12 +161,12 @@
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Started buying on...
+                                        Started referring on...
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($customer->created_at)) }}</div>
+                                        <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($referrer->created_at)) }}</div>
                                     </div>
                                 </div>
 
@@ -177,12 +175,12 @@
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Has been buying for ...
+                                        Has been referring for ...
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">3 Years now</div>
+                                        <div class="accordion-body" id="">1 Years now</div>
                                     </div>
                                 </div>
 
@@ -195,7 +193,7 @@
 
                             <!-- <ul class="list-unstyled mb-6">
                                 <li class="mb-2">
-                                    <span class="h6">customername:</span>
+                                    <span class="h6">referrername:</span>
                                     <span>@violet.dev</span>
                                 </li>
                                 <li class="mb-2">
@@ -229,19 +227,27 @@
                             </ul> -->
 
                             <div class="d-flex justify-content-center">
-                                <a href="https://api.whatsapp.com/send?phone=+{{$customer->phone_number}}&text=Hello! Client" class="btn btn-primary me-4" target="new" title="Chat now">
+
+                                <a href="https://api.whatsapp.com/send?phone=+{{$referrer->phone_number}}&text=Hello! Client" class="btn btn-primary me-4" target="new" title="Chat now">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </a>
-                                <a href="mailto:{{$customer->email_address}}" class="btn btn-success me-4" title="Send mail">
+                                <a href="mailto:{{$referrer->email_address}}" class="btn btn-success me-4" title="Send mail">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </a>
-                                <!-- <a href="javascript:;" class="btn btn-label-danger suspend-customer">Suspend</a> -->
+
+                                <!-- <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editreferrer" data-bs-toggle="modal">
+                                    <i class="icon-base ti tabler-phone"></i>
+                                </a>
+                                <a href="javascript:;" class="btn btn-success me-4" data-bs-target="#editreferrer" data-bs-toggle="modal">
+                                    <i class="icon-base ti tabler-mail"></i>
+                                </a> -->
+                                <!-- <a href="javascript:;" class="btn btn-label-danger suspend-referrer">Suspend</a> -->
                             </div>
 
                         </div>
                         </div>
                     </div>
-                    <!-- /customer Card -->
+                    <!-- /referrer Card -->
 
 
                     <!-- Plan Card -->
@@ -256,7 +262,7 @@
                             </div>
                         </div>
                         <ul class="list-unstyled g-2 my-6">
-                            <li class="mb-2 d-flex align-items-center"><i class="icon-base ti tabler-circle-filled icon-10px text-secondary me-2"></i><span>10 customers</span></li>
+                            <li class="mb-2 d-flex align-items-center"><i class="icon-base ti tabler-circle-filled icon-10px text-secondary me-2"></i><span>10 referrers</span></li>
                             <li class="mb-2 d-flex align-items-center"><i class="icon-base ti tabler-circle-filled icon-10px text-secondary me-2"></i><span>Up to 10 GB storage</span></li>
                             <li class="mb-2 d-flex align-items-center"><i class="icon-base ti tabler-circle-filled icon-10px text-secondary me-2"></i><span>Basic Support</span></li>
                         </ul>
@@ -277,12 +283,12 @@
 
 
                     </div>
-                    <!--/ customer Sidebar -->
+                    <!--/ referrer Sidebar -->
 
-                    <!-- customer Content -->
+                    <!-- referrer Content -->
                     <div class="col-xl-8 col-lg-7 order-0 order-md-1">
 
-                    <!-- customer Pills -->
+                    <!-- referrer Pills -->
                     <div class="nav-align-top">
                         <ul class="nav nav-pills flex-column flex-md-row flex-wrap mb-6 row-gap-2">
                             <li class="nav-item">
@@ -295,9 +301,6 @@
                                 <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-shopping-cart icon-sm me-1_5"></i>Orders</a>
                             </li> -->
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-cash icon-sm me-1_5"></i>Purchases</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-users icon-sm me-1_5"></i>Clients</a>
                             </li>
                             <li class="nav-item">
@@ -305,7 +308,7 @@
                             </li>
                         </ul>
                     </div>
-                    <!--/ customer Pills -->
+                    <!--/ referrer Pills -->
 
 
 
@@ -325,19 +328,51 @@
                         <div class="card-body pt-1">
 
                             <div class="accordion mt-4" id="accordionWithIcon">
+                               
+                               
+                                <div class="accordion-item active">
+                                    <h2 class="accordion-header d-flex align-items-center">
+                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
+                                        <i class="icon-base ti tabler-file-text me-2"></i>
+                                        Referrer Full Name
+                                    </button>
+                                    </h2>
+
+                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
+                                        <div class="accordion-body" id="">{{ $referrer->first_name }} {{ $referrer->other_name }} {{ $referrer->last_name }}</div>
+                                    </div>
+                                </div>
+
 
                                 <div class="accordion-item active">
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Customer Phone
+                                        Referrer Phone
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">+{{ $customer->phone_number }}</div>
-                                        @if($customer->alternative_phone)
-                                            <div class="accordion-body" id="">+{{ $customer->alternative_phone }}</div>
+                                        <div class="accordion-body" id="">+{{ $referrer->phone_number }}</div>  
+                                        @if($referrer->alternative_phone)
+                                            <div class="accordion-body" id="">{{ $referrer->alternative_phone }}</div>
+                                        @endif                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="accordion-item active">
+                                    <h2 class="accordion-header d-flex align-items-center">
+                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
+                                        <i class="icon-base ti tabler-file-text me-2"></i>
+                                        Referrer Email
+                                    </button>
+                                    </h2>
+
+                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
+                                        <div class="accordion-body" id="">{{ $referrer->email_address }}</div>
+                                        @if($referrer->alternative_email)
+                                            <div class="accordion-body" id="">{{ $referrer->alternative_email }}</div>
                                         @endif
                                     </div>
                                 </div>
@@ -347,29 +382,12 @@
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Customer Email
+                                        Referrer Address
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ $customer->email_address }}</div>
-                                        @if($customer->alternative_email)
-                                            <div class="accordion-body" id="">+{{ $customer->alternative_email }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-                                <div class="accordion-item active">
-                                    <h2 class="accordion-header d-flex align-items-center">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
-                                        <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Customer Address
-                                    </button>
-                                    </h2>
-
-                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ $customer->physical_address }}</div>
+                                        <div class="accordion-body" id="">{{ $referrer->physical_address }}</div>
                                     </div>
                                 </div> 
                                                                
@@ -378,90 +396,30 @@
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Customer Status
+                                        Referrer Status
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        @if($customer->is_active == 1)
+                                        @if($referrer->is_active == 1)
                                             <div class="accordion-body" id="">Active</div>
                                         @else
                                             <div class="accordion-body" id="">Inactive</div>
                                         @endif
                                     </div>
                                 </div>
-
                                
                                 <div class="accordion-item active">
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Contact Full Name
+                                       Referrer Date of Birth
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ $customer->contact_first_name }} {{ $customer->contact_last_name }} {{ $customer->contact_other_name }}</div>
-                                    </div>
-                                </div>
-
-                                <div class="accordion-item active">
-                                    <h2 class="accordion-header d-flex align-items-center">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
-                                        <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Contact Email Address
-                                    </button>
-                                    </h2>
-
-                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ $customer->contact_email_address }}</div>
-                                        @if($customer->contact_alternative_email)
-                                            <div class="accordion-body" id="">{{ $customer->contact_alternative_email }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="accordion-item active">
-                                    <h2 class="accordion-header d-flex align-items-center">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
-                                        <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Contact Mobile Number
-                                    </button>
-                                    </h2>
-
-                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">+{{ $customer->contact_phone_number }}</div>
-                                        @if($customer->contact_alternative_phone)
-                                            <div class="accordion-body" id="">+{{ $customer->contact_alternative_phone }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-                                <div class="accordion-item active">
-                                    <h2 class="accordion-header d-flex align-items-center">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
-                                        <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Contact Current Position
-                                    </button>
-                                    </h2>
-
-                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ $customer->position }}</div>
-                                    </div>
-                                </div>
-
-                                <div class="accordion-item active">
-                                    <h2 class="accordion-header d-flex align-items-center">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
-                                        <i class="icon-base ti tabler-file-text me-2"></i>
-                                       Contact Date of Birth
-                                    </button>
-                                    </h2>
-
-                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        @if(date('Y-m-d', strtotime($customer->contact_date_of_birth)) != "1970-01-01")
-                                            <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($customer->contact_date_of_birth)) }}</div>
+                                        @if(date('Y-m-d', strtotime($referrer->date_of_birth)) != "1970-01-01")
+                                            <div class="accordion-body" id="">{{ date("l F d, Y", strtotime($referrer->date_of_birth)) }}</div>
                                         @else
                                             <div class="accordion-body" id="">---</div>
                                         @endif
@@ -472,28 +430,17 @@
                                     <h2 class="accordion-header d-flex align-items-center">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                         <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Contact Gender
+                                        Referrer Gender
                                     </button>
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ ucwords($customer->contact_gender) }}</div>
+                                        <div class="accordion-body" id="">{{ ucwords($referrer->gender) }}</div>
                                     </div>
                                 </div>
 
 
-                                <div class="accordion-item active">
-                                    <h2 class="accordion-header d-flex align-items-center">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
-                                        <i class="icon-base ti tabler-file-text me-2"></i>
-                                        Contact Physical Address
-                                    </button>
-                                    </h2>
-
-                                    <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">{{ ucwords($customer->contact_physical_address) }}</div>
-                                    </div>
-                                </div>
+                              
 
                             </div>
 
@@ -521,40 +468,40 @@
                     <!-- /Invoice table -->
 
                     </div>
-                    <!--/ customer Content -->
+                    <!--/ referrer Content -->
                 </div>
 
                 <!-- Modal -->
-                <!-- Edit customer Modal -->
-                <div class="modal fade" id="editcustomer" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-simple modal-edit-customer">
+                <!-- Edit referrer Modal -->
+                <div class="modal fade" id="editreferrer" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-simple modal-edit-referrer">
                     <div class="modal-content">
                     <div class="modal-body">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="text-center mb-6">
-                        <h4 class="mb-2">Edit customer Information</h4>
-                        <p>Updating customer details will receive a privacy audit.</p>
+                        <h4 class="mb-2">Edit referrer Information</h4>
+                        <p>Updating referrer details will receive a privacy audit.</p>
                         </div>
-                        <form id="editcustomerForm" class="row g-6" onsubmit="return false">
+                        <form id="editreferrerForm" class="row g-6" onsubmit="return false">
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerFirstName">First Name</label>
-                            <input type="text" id="modalEditcustomerFirstName" name="modalEditcustomerFirstName" class="form-control" placeholder="John" value="John" />
+                            <label class="form-label" for="modalEditreferrerFirstName">First Name</label>
+                            <input type="text" id="modalEditreferrerFirstName" name="modalEditreferrerFirstName" class="form-control" placeholder="John" value="John" />
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerLastName">Last Name</label>
-                            <input type="text" id="modalEditcustomerLastName" name="modalEditcustomerLastName" class="form-control" placeholder="Doe" value="Doe" />
+                            <label class="form-label" for="modalEditreferrerLastName">Last Name</label>
+                            <input type="text" id="modalEditreferrerLastName" name="modalEditreferrerLastName" class="form-control" placeholder="Doe" value="Doe" />
                         </div>
                         <div class="col-12">
-                            <label class="form-label" for="modalEditcustomerName">customername</label>
-                            <input type="text" id="modalEditcustomerName" name="modalEditcustomerName" class="form-control" placeholder="johndoe007" value="johndoe007" />
+                            <label class="form-label" for="modalEditreferrerName">referrername</label>
+                            <input type="text" id="modalEditreferrerName" name="modalEditreferrerName" class="form-control" placeholder="johndoe007" value="johndoe007" />
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerEmail">Email</label>
-                            <input type="text" id="modalEditcustomerEmail" name="modalEditcustomerEmail" class="form-control" placeholder="example@domain.com" value="example@domain.com" />
+                            <label class="form-label" for="modalEditreferrerEmail">Email</label>
+                            <input type="text" id="modalEditreferrerEmail" name="modalEditreferrerEmail" class="form-control" placeholder="example@domain.com" value="example@domain.com" />
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerStatus">Status</label>
-                            <select id="modalEditcustomerStatus" name="modalEditcustomerStatus" class="select2 form-select" aria-label="Default select example">
+                            <label class="form-label" for="modalEditreferrerStatus">Status</label>
+                            <select id="modalEditreferrerStatus" name="modalEditreferrerStatus" class="select2 form-select" aria-label="Default select example">
                             <option selected>Status</option>
                             <option value="1">Active</option>
                             <option value="2">Inactive</option>
@@ -566,15 +513,15 @@
                             <input type="text" id="modalEditTaxID" name="modalEditTaxID" class="form-control modal-edit-tax-id" placeholder="123 456 7890" value="123 456 7890" />
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerPhone">Phone Number</label>
+                            <label class="form-label" for="modalEditreferrerPhone">Phone Number</label>
                             <div class="input-group">
                             <span class="input-group-text">US (+1)</span>
-                            <input type="text" id="modalEditcustomerPhone" name="modalEditcustomerPhone" class="form-control phone-number-mask" placeholder="202 555 0111" value="202 555 0111" />
+                            <input type="text" id="modalEditreferrerPhone" name="modalEditreferrerPhone" class="form-control phone-number-mask" placeholder="202 555 0111" value="202 555 0111" />
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerLanguage">Language</label>
-                            <select id="modalEditcustomerLanguage" name="modalEditcustomerLanguage" class="select2 form-select" multiple>
+                            <label class="form-label" for="modalEditreferrerLanguage">Language</label>
+                            <select id="modalEditreferrerLanguage" name="modalEditreferrerLanguage" class="select2 form-select" multiple>
                             <option value="">Select</option>
                             <option value="english" selected>English</option>
                             <option value="spanish">Spanish</option>
@@ -587,8 +534,8 @@
                             </select>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditcustomerCountry">Country</label>
-                            <select id="modalEditcustomerCountry" name="modalEditcustomerCountry" class="select2 form-select" data-allow-clear="true">
+                            <label class="form-label" for="modalEditreferrerCountry">Country</label>
+                            <select id="modalEditreferrerCountry" name="modalEditreferrerCountry" class="select2 form-select" data-allow-clear="true">
                             <option value="">Select</option>
                             <option value="Australia">Australia</option>
                             <option value="Bangladesh">Bangladesh</option>
@@ -631,7 +578,7 @@
                     </div>
                 </div>
                 </div>
-                <!--/ Edit customer Modal -->
+                <!--/ Edit referrer Modal -->
 
                 <!-- Add New Credit Card Modal -->
                 <div class="modal fade" id="upgradePlanModal" tabindex="-1" aria-modal="true" role="dialog">
@@ -641,7 +588,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="text-center mb-6">
                         <h2>Upgrade Plan</h2>
-                        <p class="text-body-secondary">Choose the best plan for customer.</p>
+                        <p class="text-body-secondary">Choose the best plan for referrer.</p>
                         </div>
                         <form id="upgradePlanForm" class="row g-4" onsubmit="return false">
                         <div class="col-sm-9">
@@ -660,7 +607,7 @@
                     </div>
                     <hr class="mx-md-n5 mx-n3" />
                     <div class="modal-body">
-                        <h6 class="mb-0">customer current plan is standard plan</h6>
+                        <h6 class="mb-0">referrer current plan is standard plan</h6>
                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                         <div class="d-flex justify-content-center me-2 mt-1">
                             <sup class="h6 pricing-currency pt-1 mt-2 mb-0 me-1 text-primary">$</sup>

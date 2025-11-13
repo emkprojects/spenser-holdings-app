@@ -19,6 +19,13 @@ use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\UserStatus;
 
+use App\Models\Administration\CustomerType;
+use App\Models\Administration\ReferrerType;
+use App\Models\Administration\SupplierType;
+use App\Models\Administration\Referrer;
+use App\Models\Administration\Customer;
+use App\Models\Administration\Supplier;
+
 use App\Models\Settings\Position;
 
 use App\Http\Requests\Web\HumanResource\AddUserRequest;
@@ -59,7 +66,16 @@ class EmployeeController extends Controller
             ->addIndexColumn()
 
             ->setRowClass(function ($user) {
-                return $user->is_active == 0 ? 'table-warning' : '';
+                //return $user->is_active == 0 ? 'table-warning' : '';
+
+                if($user->user_status == "Suspended"){
+                    return $user->user_status == "Suspended" ? 'table-warning' : '';
+                }
+
+                if($user->user_status == "Deactivated"){
+                    return $user->user_status == "Deactivated" ? 'table-danger' : '';
+                }
+                
             })
 
             ->editColumn('is_active', function($user){
@@ -238,7 +254,7 @@ class EmployeeController extends Controller
 
         $status =  UserStatus::where('user_status', 'Active')->first();
 
-        info($validated);
+        #info($validated);
 
         try{
 
@@ -307,10 +323,49 @@ class EmployeeController extends Controller
         'user_details.national_identification_number', 'user_statuses.user_status', 'roles.name AS role', 'positions.position',
         )
         ->where('roles.name', '!=', 'super-admin')
-        ->where('users.user_reference', $id)->first();   
+        ->where('users.user_reference', $id)->first();  
+        
+        
+        if( date('Y-m-d', strtotime($user->date_of_birth)) != "1970-01-01"){
+
+           
+            $target_days = mktime(0, 0, 0, date('m',strtotime($user->date_of_birth)), 
+            date('d',strtotime($user->date_of_birth)), );
+            $today = time();
+            $diff_days = ($target_days - $today);
+
+            if($diff_days < 0)
+            {
+                $target_days = mktime(0, 0, 0, date('m',strtotime($user->date_of_birth)), 
+                date('d',strtotime($user->date_of_birth)), date('Y', strtotime('+1 year')) );
+                $diff_days = ($target_days - $today);
+                $next_user_dob = (int)($diff_days/86400). " Days";
+            }
+            else{
+
+                $next_user_dob = (int)($diff_days/86400). " Days";
+            
+            }
+
+            
+            $birth_date = date("Y-m-d", strtotime($user->date_of_birth));    
+            $current_date = date('Y-m-d');
+            $birth_timestamp = strtotime($birth_date);
+            $current_timestamp = strtotime($current_date);
+            $diff_seconds = $current_timestamp - $birth_timestamp;
+            $age_years = $diff_seconds / (60 * 60 * 24 * 365.25);
+            $age_years = round($age_years);
+            $user_age = $age_years . " Years old";
+
+        }
+        else{
+
+            $next_user_dob = "---";
+            $user_age = "---";
+        }
         
 
-        return view('web.human-resource.specific-user', compact('user'));
+        return view('web.human-resource.specific-user', compact('user', 'next_user_dob', 'user_age'));
     
 
     }
@@ -334,7 +389,8 @@ class EmployeeController extends Controller
         ->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
         ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
         ->leftJoin('positions', 'users.position_id', '=', 'positions.id')
-        ->select('users.id', 'users.user_status_id', 'users.position_id', 'model_has_roles.role_id',  'users.user_reference', 'users.email', 'users.phone',
+        ->select('users.id', 'users.user_status_id', 'users.position_id', 'model_has_roles.role_id',  'users.user_reference',
+         'users.email', 'users.phone', 'user_details.alternative_phone', 'user_details.alternative_email',
         'users.created_at', 'users.is_active', 'user_details.first_name', 'user_details.last_name', 'user_details.other_name',
         'user_details.gender', 'user_details.date_of_birth', 'user_details.physical_address',
         'user_details.national_identification_number', 'user_statuses.user_status', 'roles.name', 'positions.position',
@@ -359,7 +415,7 @@ class EmployeeController extends Controller
 
     ////////////////////// EDIT EMPLOYEE ///////////////////////////////////////////////////
 
-    public function editEmployee(EditUserRequest $request, $id){
+    public function editEmployee(EditUserRequest $request){
 
         if( !Auth::user()->can('edit-users')){
 
@@ -374,7 +430,7 @@ class EmployeeController extends Controller
 
             \DB::beginTransaction();
 
-            $employee = User::findorfail($id);
+            $employee = User::findorfail($validated['user_id']);
 
             $employee->update($validated);
 
@@ -429,7 +485,7 @@ class EmployeeController extends Controller
 
             $user = User::where('user_reference', $id)->first();
 
-            info($user);
+            #info($user);
             
             // $employee_detail = UserDetail::where('id', 3)->first();
             // info($employee_detail);

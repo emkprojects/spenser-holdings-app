@@ -47,7 +47,7 @@ class AddCustomerRequest extends FormRequest
             'contact_other_name' => isset($this->contact_other_name) ? ucwords($this->contact_other_name) : null,
             'contact_phone_number' => isset($this->contact_phone_number) ? '256'.''.str_replace(' ', '', $this->contact_phone_number) : null,
             'contact_alternative_phone' => isset($this->contact_alternative_phone) ? '256'.''.str_replace(' ', '', $this->contact_alternative_phone) : null,
-            'contact_date_of_birth' => isset($this->contact_date_of_birth) ? ucwords($this->contact_date_of_birth) : null,  
+            'contact_date_of_birth' => isset($this->contact_date_of_birth) ? ($this->contact_date_of_birth) : null,  
             'contact_gender' => isset($this->contact_gender) ? ucwords($this->contact_gender) : null,        
             'created_by' => $user->id, 
                      
@@ -69,7 +69,7 @@ class AddCustomerRequest extends FormRequest
             'national_identification_number' => 'nullable|string|max:15',
             'tax_identification_number' => 'nullable|string|max:15',
             'customer' => 'required|string',
-            'phone_number' => 'required|string|size:12',
+            'phone_number' => 'required|string|size:12|unique:customers,phone_number',
             'alternative_phone' => 'nullable|string|size:12',
             'email_address' => 'required|email|unique:customers,email_address',
             'alternative_email' => 'nullable|email',
@@ -91,7 +91,7 @@ class AddCustomerRequest extends FormRequest
             
             'referrer_type_id' => 'required', 
             'referrer_type' => 'required',
-            'employee_id' => 'required_if:referrer_type,Employee',
+            'user_id' => 'required_if:referrer_type,Employee',
             'customer_id' => 'required_if:referrer_type,Customer',
             'supplier_id' => 'required_if:referrer_type,Supplier',
             'referrer_id' => 'required_if:referrer_type,Others',
@@ -108,10 +108,10 @@ class AddCustomerRequest extends FormRequest
             'position_id.required' => 'Position is required',
             'referrer_type_id.required' => 'Referrer Type is required',
 
-            'customer_id.required_if' => 'Customer is required',
-            'supplier_id.required_if' => 'Supplier is required',
-            'user_id.required_if' => 'Employee is required',
-            'referrer_id.required_if' => 'referrer is required',
+            'customer_id.required_if' => 'Customer Referrer is required',
+            'supplier_id.required_if' => 'Supplier Referrer is required',
+            'user_id.required_if' => 'Employee Referrer is required',
+            'referrer_id.required_if' => 'Referrer is required',
         ];
     }
 

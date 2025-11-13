@@ -72,10 +72,33 @@ class AddReferrerRequest extends FormRequest
             'alternative_phone' => 'nullable|string|size:12',
             'email_address' => 'required|email|unique:referrers,email_address',
             'alternative_email' => 'nullable|email',
-            'gender' => 'required|in:Male,Female,Other',            
+            'gender' => 'required|in:Male,Female,Other',
+            'date_of_birth' => 'nullable|date',            
             'physical_address' => 'nullable|string',
             'created_by' => 'required|exists:users,id',
                         
         ];
     }
+
+
+
+    public function messages():array{
+        return [
+
+            'first_name.required'=> 'First Name is required',
+            'last_name.required'=> 'Last Name is required',
+            'phone_number.required'=> 'Phone Number is required',
+            'phone_number.size:12'=> 'Phone Number should be 12 digits',
+            'alternative_phone.size:12'=> 'Alternative Phone Number should be 12 digits',            
+            'email_address.required'=> 'Email Address is required',
+            'physical_address.required'=> 'Physical Address should only be string',
+            'gender.in'=> 'Gender should either be Male or Female or Other',
+            //'date_of_birth.required'=> 'Date of Birth is required',
+            'date_of_birth.date'=> 'Date of Birth is not a valid date',           
+
+        ];
+    }
+
+
+
 }

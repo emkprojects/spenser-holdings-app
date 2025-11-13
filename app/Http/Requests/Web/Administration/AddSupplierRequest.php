@@ -47,7 +47,7 @@ class AddSupplierRequest extends FormRequest
             'contact_other_name' => isset($this->contact_other_name) ? ucwords($this->contact_other_name) : null,
             'contact_phone_number' => isset($this->contact_phone_number) ? '256'.''.str_replace(' ', '', $this->contact_phone_number) : null,
             'contact_alternative_phone' => isset($this->contact_alternative_phone) ? '256'.''.str_replace(' ', '', $this->contact_alternative_phone) : null,
-            'contact_date_of_birth' => isset($this->contact_date_of_birth) ? ucwords($this->contact_date_of_birth) : null,  
+            'contact_date_of_birth' => isset($this->contact_date_of_birth) ? ($this->contact_date_of_birth) : null,  
             'contact_gender' => isset($this->contact_gender) ? ucwords($this->contact_gender) : null,        
             'created_by' => $user->id, 
                      
@@ -68,7 +68,7 @@ class AddSupplierRequest extends FormRequest
             'national_identification_number' => 'nullable|string|max:15',
             'tax_identification_number' => 'nullable|string|max:15',
             'supplier' => 'required|string',
-            'phone_number' => 'required|string|size:12',
+            'phone_number' => 'required|string|size:12|unique:suppliers,phone_number',
             'alternative_phone' => 'nullable|string|size:12',
             'email_address' => 'required|email|unique:suppliers,email_address',
             'alternative_email' => 'nullable|email',

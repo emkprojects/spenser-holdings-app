@@ -19,7 +19,11 @@ use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\UserStatus;
 
+use App\Models\Administration\CustomerType;
+use App\Models\Administration\ReferrerType;
 use App\Models\Administration\SupplierType;
+use App\Models\Administration\Referrer;
+use App\Models\Administration\Customer;
 use App\Models\Administration\Supplier;
 
 use App\Models\Settings\Position;
@@ -196,7 +200,7 @@ class SupplierController extends Controller
 
         $validated =  $request->validated();
 
-        info($validated);
+        #info($validated);
 
         try{
 
@@ -256,17 +260,29 @@ class SupplierController extends Controller
         'suppliers.contact_email_address', 'suppliers.contact_gender', 'suppliers.contact_date_of_birth', 
         'suppliers.contact_alternative_phone', 'suppliers.contact_alternative_email',
         'suppliers.contact_physical_address', 'positions.position', 'suppliers.is_active', 'suppliers.created_at',
-        'supplier_types.supplier_type',
-        'users.name',
+        'supplier_types.supplier_type', 'users.name',
         ) ->where('suppliers.supplier_reference', $id)->first();   
 
         if( date('Y-m-d', strtotime($supplier->contact_date_of_birth)) != "1970-01-01"){
 
             $target_days = mktime(0, 0, 0, date('m',strtotime($supplier->contact_date_of_birth)), 
-            date('d',strtotime($supplier->contact_date_of_birth)), date('Y', strtotime('+1 year')) );
+            date('d',strtotime($supplier->contact_date_of_birth)), );
             $today = time();
             $diff_days = ($target_days - $today);
-            $next_supplier_dob = (int)($diff_days/86400). " Days";
+
+            if($diff_days < 0)
+            {
+                $target_days = mktime(0, 0, 0, date('m',strtotime($supplier->contact_date_of_birth)), 
+                date('d',strtotime($supplier->contact_date_of_birth)), date('Y', strtotime('+1 year')) );
+                $diff_days = ($target_days - $today);
+                $next_supplier_dob = (int)($diff_days/86400). " Days";
+            }
+            else{
+
+                $next_supplier_dob = (int)($diff_days/86400). " Days";
+            
+            }
+
             
             $birth_date = date("Y-m-d", strtotime($supplier->contact_date_of_birth));    
             $current_date = date('Y-m-d');
@@ -294,7 +310,7 @@ class SupplierController extends Controller
 
     //////////////////////////////// EDIT SUPPLIER ////////////////////////////////////////
 
-    public function getEditSupplier($id){
+    public function getUpdateSupplier($id){
 
         #$user = Auth::user();
 
@@ -306,11 +322,17 @@ class SupplierController extends Controller
         $supplier = Supplier::leftJoin('user_details', 'user_details.user_id', '=', 'suppliers.created_by')
         ->leftJoin('users', 'users.id', '=', 'suppliers.created_by')
         ->leftJoin('supplier_types', 'suppliers.supplier_type_id', '=', 'supplier_types.id')
+        ->leftJoin('positions', 'suppliers.position_id', '=', 'positions.id')
         ->select('suppliers.id', 'suppliers.supplier_type_id', 'suppliers.supplier_reference', 
-        'suppliers.supplier', 'suppliers.phone_number', 'suppliers.email_address', 'suppliers.physical_address',
-        'suppliers.contact_full_name', 'suppliers.contact_phone_number', 'suppliers.contact_email_address', 
-        'suppliers.contact_physical_address', 'suppliers.contact_position', 'suppliers.is_active', 'suppliers.created_at',
-        'users.name', 'user_details.first_name', 'user_details.last_name',
+        'suppliers.national_identification_number', 'suppliers.tax_identification_number', 
+        'suppliers.supplier', 'suppliers.phone_number', 'suppliers.email_address', 
+        'suppliers.alternative_phone', 'suppliers.alternative_email',
+        'suppliers.physical_address',
+        'suppliers.contact_first_name', 'suppliers.contact_last_name', 'suppliers.contact_phone_number',
+        'suppliers.contact_email_address', 'suppliers.contact_gender', 'suppliers.contact_date_of_birth', 
+        'suppliers.contact_alternative_phone', 'suppliers.contact_alternative_email',
+        'suppliers.contact_physical_address', 'positions.position', 'suppliers.is_active', 'suppliers.created_at',
+        'supplier_types.supplier_type', 'users.name',
         ) ->where('suppliers.supplier_reference', $id)->first();  
         
         $supplier_types = SupplierType::select('id','supplier_type_reference', 'supplier_type')->orderBy('supplier_type', 'asc')->get();
@@ -328,7 +350,7 @@ class SupplierController extends Controller
 
     ////////////////////// EDIT SUPPLIER ///////////////////////////////////////////////////
 
-    public function editSupplier(EditSupplierRequest $request, $id){
+    public function updateSupplier(EditSupplierRequest $request){
 
         if( !Auth::user()->can('edit-suppliers')){
 
@@ -341,7 +363,7 @@ class SupplierController extends Controller
 
             \DB::beginTransaction();
 
-            $supplier = Supplier::findorfail($id);
+            $supplier = Supplier::findorfail($validated['supplier_id']);
 
             $supplier->update($validated);
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Add Customer'])
+@extends('layouts.admin', ['title' => 'Edit Customer'])
 
 @push('stylesheets')
 
@@ -35,7 +35,7 @@
 
                     <div class="row">
                         <div class="col-xl-12">
-                        <h4 class="pb-0 mt-1 fs-5 text-md-start text-center fw-bold"> ADD NEW CUSTOMER</h4>
+                        <h4 class="pb-0 mt-1 fs-5 text-md-start text-center fw-bold"> UPDATE CUSTOMER RECORD</h4>
                         </div>
                     </div>
                 
@@ -46,16 +46,24 @@
                     <form method="POST" id="add-form" nam="add-form" class="row g-6">
                         <!-- @csrf -->
 
+                        <input type="hidden" value="{{ $customer->id}}" id="edit_customer_id" name="edit_customer_id" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-customer-id" />
+                        <input type="hidden" value="{{ $customer->customer_reference}}" id="customer_reference" name="customer_reference" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-customer-ref" />
+
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="position_id">Customer Type</label>
+                            <label class="form-label fs-5" for="customer_type_id">Customer Type</label>
                             <div class="input-group input-group-merge">                    
-                                <!-- <span class="input-group-text" id="basic-addon-dob">
-                                    <i class="icon-base ti tabler-list"></i>
-                                </span>  -->
+                                
                                 <select id="customer_type_id" name="customer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <option value="">Select Customer Type</option>
                                     @foreach($customer_types as $customer_type)
-                                        <option value="{{$customer_type->id}}">{{$customer_type->customer_type}}</option>
+                                        
+                                        <!-- @if($customer_type->id == $customer->customer_type_id)
+                                            <option value="{{$customer_type->id}}">{{ucwords($customer_type->customer_type)}}</option>
+                                        @else
+                                            <option value="{{$customer_type->id}}">{{ucwords($customer_type->customer_type)}}</option>
+                                        @endif -->
+
+                                        <option value="{{ $customer_type->id }}" {{ ($customer_type->id == $customer->customer_type_id) ? 'selected' : '' }}>{{ $customer_type->customer_type }}</option>
+
                                     @endforeach
                                                             
                                 </select>
@@ -69,7 +77,7 @@
                                 <span class="input-group-text" id="basic-addon-nin">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" />                        
+                                <input type="text" value="{{ $customer->national_identification_number}}" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" />                        
                             </div> 
                         </div> 
 
@@ -79,28 +87,27 @@
                                 <span class="input-group-text" id="basic-addon-tin">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="tax_identification_number" name="tax_identification_number" class="form-control" placeholder="Enter TIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-tin" />                        
+                                <input type="text" value="{{ $customer->tax_identification_number}}" id="tax_identification_number" name="tax_identification_number" class="form-control" placeholder="Enter TIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-tin" />                        
                             </div> 
-                        </div> 
+                        </div>
                         
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="first_name">Customer</label>
+                            <label class="form-label fs-5" for="customer">Customer</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-fname">
+                                <span class="input-group-text" id="basic-addon-user">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="customer" name="customer" class="form-control" placeholder="Enter Customer" style="text-transform:capitalize;" aria-describedby="basic-addon-fname" />                        
+                                <input type="text" value="{{ $customer->customer}}" id="customer" name="customer" class="form-control" placeholder="Enter Customer" style="text-transform:;" aria-describedby="basic-addon-customer" maxlength="11" />                        
                             </div> 
                         </div> 
 
-
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="phone">Mobile Number</label>
+                            <label class="form-label fs-5" for="phone">Phone Number</label>
                            <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-phone">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </span>                                    
-                                <input type="text" id="phone_number" name="phone_number" class="form-control phone" placeholder="Enter Mobile Number" style="text-transform:;" aria-describedby="basic-addon-phone" maxlength="11" />                        
+                                <input type="text" value="{{ $customer->phone_number}}" id="phone_number" name="phone_number" class="form-control phone" placeholder="Enter Mobile Number" style="text-transform:;" aria-describedby="basic-addon-phone" maxlength="11" />                        
                             </div> 
                         </div> 
 
@@ -110,7 +117,7 @@
                                 <span class="input-group-text" id="basic-addon-aphone">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </span>                                    
-                                <input type="text" id="alternative_phone" name="alternative_phone" class="form-control phone" placeholder="Enter Alternative Mobile Number (Optional)" style="text-transform:;" aria-describedby="basic-addon-aphone" maxlength="11" />                        
+                                <input type="text" value="{{ $customer->alternative_phone}}" id="alternative_phone" name="alternative_phone" class="form-control phone" placeholder="Enter Alternative Mobile Number (Optional)" style="text-transform:;" aria-describedby="basic-addon-aphone" maxlength="11" />                        
                             </div> 
                         </div>                        
                         
@@ -120,9 +127,10 @@
                                 <span class="input-group-text" id="basic-addon-email">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </span>                                    
-                                <input type="email" id="email_address" name="email_address" class="form-control" placeholder="Enter Email Address" style="text-transform:;" aria-describedby="basic-addon-email" />                        
+                                <input type="email" value="{{ $customer->email_address}}" id="email_address" name="email_address" class="form-control" placeholder="Enter Email Address" style="text-transform:;" aria-describedby="basic-addon-email" />                        
                             </div> 
                         </div>
+
 
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="alternative_email">Alternative Email Address</label>
@@ -130,9 +138,10 @@
                                 <span class="input-group-text" id="basic-addon-aemail">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </span>                                    
-                                <input type="email" id="alternative_email" name="alternative_email" class="form-control" placeholder="Enter Alternavtive Email Address (Optional)" style="text-transform:;" aria-describedby="basic-addon-aemail" />                        
+                                <input type="email" value="{{ $customer->alternative_email}}" id="alternative_email" name="alternative_email" class="form-control" placeholder="Enter Alternavtive Email Address (Optional)" style="text-transform:;" aria-describedby="basic-addon-aemail" />                        
                             </div> 
-                        </div>
+                        </div>                  
+
 
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="physical_address">Physical Address</label>                             
@@ -140,17 +149,18 @@
                                 <span class="input-group-text" id="basic-addon-paddress">
                                     <i class="icon-base ti tabler-map-pin"></i>
                                 </span>
-                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address..." rows="" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
+                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address... (Optional)" rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" >{{ $customer->physical_address}}</textarea>
                             </div>
                         </div>
-                    
+                        
+                        
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="first_name">Contact First Name</label>
                            <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-fname">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="contact_first_name" name="contact_first_name" class="form-control" placeholder="Enter First Name" style="text-transform:capitalize;" aria-describedby="basic-addon-fname" />                        
+                                <input type="text" value="{{ $customer->contact_first_name}}" id="contact_first_name" name="contact_first_name" class="form-control" placeholder="Enter Contact First name" style="text-transform:capitalize;" aria-describedby="basic-addon-fname" />                        
                             </div> 
                         </div> 
 
@@ -161,99 +171,117 @@
                                 <span class="input-group-text" id="basic-addon-lname">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="contact_last_name" name="contact_last_name" class="form-control" placeholder="Enter Last Name" style="text-transform:capitalize;" aria-describedby="basic-addon-lname" />                        
+                                <input type="text" value="{{ $customer->contact_last_name}}" id="contact_last_name" name="contact_last_name" class="form-control" placeholder="Enter Contact Last name" style="text-transform:capitalize;" aria-describedby="basic-addon-lname" />                        
                             </div> 
                         </div> 
 
 
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="last_name">Contact Other Names</label>
+                            <label class="form-label fs-5" for="other_name">Contact Other Names</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-lname">
+                                <span class="input-group-text" id="basic-addon-oname">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="contact_othert_name" name="contact_othert_name" class="form-control" placeholder="Enter Contact Other Names" style="text-transform:capitalize;" aria-describedby="basic-addon-lname" />                        
+                                <input type="text" value="{{ $customer->contact_other_name}}" id="contact_other_name" name="other_name" class="form-control" placeholder="Enter Contact Other names (Optional)" style="text-transform:capitalize;" aria-describedby="basic-addon-oname" maxlength="11" />                        
                             </div> 
                         </div> 
 
-
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="phone">Contact Mobile Number</label>
+                            <label class="form-label fs-5" for="cphone">Contact Mobile Number</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-phone">
+                                <span class="input-group-text" id="basic-addon-cphone">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </span>                                    
-                                <input type="text" id="contact_phone_number" name="contact_phone_number" class="form-control phone" placeholder="Enter Contact Mobile Number" style="text-transform:;" aria-describedby="basic-addon-phone" maxlength="11" />                        
+                                <input type="text" value="{{ $customer->contact_phone_number}}" id="contact_phone_number" name="contact_phone_number" class="form-control phone" placeholder="Enter Contact Mobile Number" style="text-transform:;" aria-describedby="basic-addon-cphone" maxlength="11" />                        
                             </div> 
                         </div> 
 
-
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="alternative_phone">Contact Alternative Mobile</label>
+                            <label class="form-label fs-5" for="contact_alternative_phone">Contact Alternative Phone</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-aphone">
+                                <span class="input-group-text" id="basic-addon-caphone">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </span>                                    
-                                <input type="text" id="contact_alternative_phone" name="contact_alternative_phone" class="form-control phone" placeholder="Enter Contact Alternative Mobile Number (Optional)" style="text-transform:;" aria-describedby="basic-addon-aphone" maxlength="11" />                        
+                                <input type="text" value="{{ $customer->contact_alternative_phone}}" id="contact_alternative_phone" name="contact_alternative_phone" class="form-control phone" placeholder="Enter Contact Alternative Mobile Number (Optional)" style="text-transform:;" aria-describedby="basic-addon-caphone" maxlength="11" />                        
                             </div> 
-                        </div>      
-
-
+                        </div>                        
+                        
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="alternative_email">Contact Email Address</label>
+                            <label class="form-label fs-5" for="contact_email">Contact Email Address</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-aemail">
+                                <span class="input-group-text" id="basic-addon-cemail">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </span>                                    
-                                <input type="email" id="contact_email_address" name="contact_email_address" class="form-control" placeholder="Enter Contact Email Address" style="text-transform:;" aria-describedby="basic-addon-aemail" />                        
+                                <input type="email" value="{{ $customer->contact_email_address}}" id="contact_email_address" name="contact_email_address" class="form-control" placeholder="Enter Contact Email Address" style="text-transform:;" aria-describedby="basic-addon-cemail" />                        
                             </div> 
                         </div>
 
 
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="alternative_email">Contact Alternative Email </label>
+                            <label class="form-label fs-5" for="contact_alternative_email">Contact Alternative Email</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-aemail">
+                                <span class="input-group-text" id="basic-addon-caemail">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </span>                                    
-                                <input type="email" id="contact_alternative_email" name="contact_alternative_email" class="form-control" placeholder="Enter Contact Alternavtive Email (Optional)" style="text-transform:;" aria-describedby="basic-addon-aemail" />                        
+                                <input type="email" value="{{ $customer->contact_alternative_email}}" id="contact_alternative_email" name="contact_alternative_email" class="form-control" placeholder="Enter Contact Alternavtive Email Address (Optional)" style="text-transform:;" aria-describedby="basic-addon-caemail" />                        
                             </div> 
-                        </div>  
+                        </div> 
+                        
                         
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="position_id">Contact Position</label>
                             <div class="input-group input-group-merge">                    
-                                <!-- <span class="input-group-text" id="basic-addon-dob">
-                                    <i class="icon-base ti tabler-list"></i>
-                                </span>  -->
+                                
                                 <select id="position_id" name="position_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <option value="">Select Contact Position</option>
                                     @foreach($positions as $position)
-                                        <option value="{{$position->id}}">{{$position->position}}</option>
+                                        
+                                        <!-- @if($position->id == $customer->position_id)
+                                            <option value="{{$customer->position_id}}">{{ucwords($customer->position)}}</option>
+                                        @else
+                                            <option value="{{$position->id}}">{{ucwords($position->position)}}</option>
+                                        @endif -->
+
+                                        <option value="{{ $position->id }}" {{ ($position->id == $customer->position_id) ? 'selected' : '' }}>{{ $position->position }}</option>
+
                                     @endforeach
                                                             
                                 </select>
 
                             </div> 
-                        </div>
+                        </div>                        
 
-                    
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="physical_address">Contact Physical Address</label>                             
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-paddress">
-                                    <i class="icon-base ti tabler-map-pin"></i>
-                                </span>
-                                <textarea id="contact_physical_address" name="contact_physical_address" class="form-control autosize fs-5" placeholder="Enter Contact Physical Address... (Optional)" rows="" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" ></textarea>
-                            </div>
+                            <label class="form-label fs-5" for="contact_date_of_birth">Contact Date of Birth</label>
+                           <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-dob">
+                                    <i class="icon-base ti tabler-calendar"></i>
+                                </span>                                    
+                                <input type="date" value="{{ $customer->contact_date_of_birth}}" id="contact_date_of_birth" name="contact_date_of_birth" class="form-control" placeholder="Enter Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
+                            </div> 
                         </div>
                         
+
                         <div class="col-md-4 form-control-validation">
+                            <label class="form-label fs-5" for="contact_physical_address">Conatct Physical Address</label>                             
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-cpaddress">
+                                    <i class="icon-base ti tabler-map-pin"></i>
+                                </span>
+                                <textarea id="contact_physical_address" name="contact_physical_address" class="form-control autosize fs-5" placeholder="Enter Contact Physical Address... (Optional)" rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-cpaddress" >{{ $customer->contact_physical_address}}</textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-2 form-control-validation">
                             <label class="form-label fs-5" for="gender">Contact Gender</label> 
                             
                             <div class="switches-stacked">
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Male" class="switch-input" id="contact_gender" name="contact_gender" />
+                                    @if($customer->contact_gender == "Male")
+                                        <input type="radio" value="Male" class="switch-input" id="contact_gender" name="contact_gender" checked />
+                                    @else
+                                        <input type="radio" value="Male" class="switch-input" id="contact_gender" name="contact_gender" />
+                                    @endif
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -262,7 +290,11 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Female" class="switch-input" id="contact_gender" name="contact_gender" />
+                                    @if($customer->contact_gender == "Female")
+                                        <input type="radio" value="Female" class="switch-input" id="contact_gender" name="contact_gender" checked />
+                                    @else
+                                        <input type="radio" value="Female" class="switch-input" id="contact_gender" name="contact_gender" />
+                                    @endif                                    
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -271,7 +303,12 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    <input type="radio" value="Other" class="switch-input" id="contact_gender" name="contact_gender" />
+                                    @if($customer->contact_gender == "Other")
+                                        <input type="radio" value="Other" class="switch-input" id="contact_gender" name="contact_gender" checked />
+                                    @else
+                                        <input type="radio" value="Other" class="switch-input" id="contact_gender" name="contact_gender" />
+                                    
+                                    @endif    
                                     <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -285,25 +322,42 @@
                         </div>
 
 
-                        
-                        <div class="col-md-4 form-control-validation">
-                           <label class="form-label fs-5" for="date_of_birth">Contact Date of Birth</label>
-                           <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-dob">
-                                    <i class="icon-base ti tabler-calendar"></i>
-                                </span>                                    
-                                <input type="date" id="contact_date_of_birth" name="contact_date_of_birth" class="form-control" placeholder="Contact Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
+                        <div class="col-md-2 form-control-validation">
+                            <label class="form-label fs-6" for="is_active">Record Status</label>
+                            <div class="input-group input-group-merge">                    
+                                
+                                <select id="is_active" name="is_active" class="select2 w-100 fs-6" data-style="btn-default" style="text-transform:capitalize;">
+                                    
+                                    @if($customer->is_active == 1)
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disable</option>
+                                    @else
+                                        <option value="0">Disabled</option>
+                                        <option value="1">Enable</option>                                    
+                                    @endif   
+                                   
+                                                                
+                                </select>
+
                             </div> 
                         </div>
 
 
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="referrer_type_id">Referrer Type</label>
-                            <div class="input-group input-group-merge"> 
+                            <div class="input-group input-group-merge">                    
+                                
                                 <select id="referrer_type_id" name="referrer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <option value="">Select Referrer Type</option>
                                     @foreach($referrer_types as $referrer_type)
-                                        <option value="{{$referrer_type->id}}">{{$referrer_type->referrer_type}}</option>
+                                        
+                                        <!-- @if($referrer_type->id == $customer->referrer_type_id)
+                                            <option value="{{$customer->referrer_type_id}}">{{ucwords($customer->referrer_type)}}</option>
+                                        @else
+                                            <option value="{{$referrer_type->id}}">{{ucwords($referrer_type->referrer_type)}}</option>
+                                        @endif -->
+
+                                        <option value="{{ $referrer_type->id }}" {{ ($referrer_type->id == $customer->referrer_type_id) ? 'selected' : '' }}>{{ ucwords($referrer_type->referrer_type) }}</option>
+
                                     @endforeach
                                                             
                                 </select>
@@ -311,14 +365,19 @@
                             </div> 
                         </div>
 
+
                         <div class="col-md-4 form-control-validation" id="ref-employee-div">
-                            <label class="form-label fs-5" for="position_id">Employee</label>
+                            <label class="form-label fs-5" for="user_id">Employee</label>
                             <div class="input-group input-group-merge"> 
                                 <select id="user_id" name="user_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
                                     <option value="">Select Employee</option>
                                     @foreach($users as $user)
-                                        <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}} (+{{$user->phone}})</option>
-                                    @endforeach
+
+                                        <!-- <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}} (+{{$user->phone}})</option> -->
+
+                                        <option value="{{ $user->id }}" {{ ($user->id == $customer->user_id) ? 'selected' : '' }}>{{$user->first_name}} {{$user->last_name}} (+{{$user->phone}})</option>
+                                        
+                                    @endforeach                                    
                                                             
                                 </select>
 
@@ -326,12 +385,15 @@
                         </div>
 
                         <div class="col-md-4 form-control-validation" id="ref-supplier-div">
-                            <label class="form-label fs-5" for="position_id">Supplier</label>
+                            <label class="form-label fs-5" for="supplier_id">Supplier</label>
                             <div class="input-group input-group-merge"> 
                                 <select id="supplier_id" name="supplier_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
                                     <option value="">Select Supplier</option>
                                     @foreach($suppliers as $supplier)
-                                        <option value="{{$supplier->id}}">{{$supplier->supplier}} (+{{$supplier->phone_number}})</option>
+                                        <!-- <option value="{{$supplier->id}}">{{$supplier->supplier}} (+{{$supplier->phone_number}})</option> -->
+
+                                        <option value="{{ $supplier->id }}" {{ ($supplier->id == $customer->supplier_id) ? 'selected' : '' }}>{{$supplier->supplier}} (+{{$supplier->phone_number}})</option>
+
                                     @endforeach
                                                             
                                 </select>
@@ -340,12 +402,16 @@
                         </div>
 
                         <div class="col-md-4 form-control-validation" id="ref-customer-div">
-                            <label class="form-label fs-5" for="position_id">Customer</label>
+                            <label class="form-label fs-5" for="customer_id">Customer</label>
                             <div class="input-group input-group-merge"> 
                                 <select id="customer_id" name="customer_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
                                     <option value="">Select Customer</option>
-                                    @foreach($customers as $customer)
-                                        <option value="{{$customer->id}}">{{$customer->customer}} (+{{$customer->phone_number}})</option>
+                                    @foreach($customers as $ref_customer)
+
+                                        <!-- <option value="{{$customer->id}}">{{$customer->customer}} (+{{$customer->phone_number}})</option> -->
+
+                                        <option value="{{ $ref_customer->id }}" {{ ($ref_customer->id == $customer->customer_id) ? 'selected' : '' }}>{{$ref_customer->customer}} (+{{$ref_customer->phone_number}})</option>
+
                                     @endforeach
                                                             
                                 </select>
@@ -354,12 +420,16 @@
                         </div>
 
                         <div class="col-md-4 form-control-validation" id="ref-referrer-div">
-                            <label class="form-label fs-5" for="position_id">Referrer</label>
+                            <label class="form-label fs-5" for="referrer_id">Referrer</label>
                             <div class="input-group input-group-merge"> 
                                 <select id="referrer_id" name="referrer_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
                                     <option value="">Select Referrer</option>
                                     @foreach($referrers as $referrer)
-                                        <option value="{{$referrer->id}}">{{$referrer->first_name}} {{$referrer->last_name}} (+{{$referrer->phone_number}})</option>
+
+                                        <!-- <option value="{{$referrer->id}}">{{$referrer->first_name}} {{$referrer->last_name}} (+{{$referrer->phone_number}})</option> -->
+
+                                        <option value="{{ $referrer->id }}" {{ ($referrer->id == $customer->referrer_id) ? 'selected' : '' }}>{{$referrer->first_name}} {{$referrer->last_name}} (+{{$referrer->phone_number}})</option>
+
                                     @endforeach
                                                             
                                 </select>
@@ -371,12 +441,12 @@
                         <div class="col-12 form-control-validation">
                             <div class="form-check">
                                 <input type="checkbox" id="terms" name="terms" class="form-check-input" checked />
-                                <label class="form-check-label fs-5" for="terms">Customer has agreed to our terms and conditions</label>
+                                <label class="form-check-label fs-5" for="terms">Referrer has agreed to our terms and conditions</label>
                             </div>
                         </div>
 
                         <div class="col-12 form-control-validation">
-                            <button type="submit" id="add-btn" name="add-btn" class="btn btn-info button-prevent-multiple-submits p-3 float-end">Add Customer</button>
+                            <button type="submit" id="add-btn" name="add-btn" class="btn btn-info button-prevent-multiple-submits p-3 float-end">Update Customer</button>
                         </div>
 
                     </form>
@@ -456,18 +526,6 @@
 
             });
 
-            $('#position_id').select2({
-
-                "placeholder": "Select Contact Position",
-
-            });
-          
-            $('#is_active').select2({
-
-                "placeholder": "Choose Status",
-
-            });
-
 
             $('#referrer_type_id').select2({
 
@@ -476,7 +534,22 @@
             });
 
 
-            $('#referrer_id').select2({
+            $('#position_id').select2({
+
+                "placeholder": "Select Contact Position",
+
+            });
+
+          
+            $('#is_active').select2({
+
+                "placeholder": "Choose Status",
+
+            });
+
+
+
+             $('#referrer_id').select2({
 
                 "placeholder": "Select Referrer",
 
@@ -504,22 +577,160 @@
             });
 
 
+
+            /////////////////////////////////////////////// PHONE NUMBER FORMATTING /////////////////////////
+            
+            var phone_number = $("#phone_number").val();
+           
+            var sliced_phone_number = 0;
+            if(phone_number.length == 13){
+                sliced_phone_number = phone_number.slice(4);
+            }
+            else {
+                sliced_phone_number = phone_number.slice(3);
+            }    
+            var formatted_phone_number = sliced_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+            
+            $("#phone_number").val(formatted_phone_number);
+
+         
+            var alternative_phone_number = $("#alternative_phone").val();
+
+            if(alternative_phone_number !== null){
+
+                var sliced_alternative_phone_number = 0;
+                if(alternative_phone_number.length == 13){
+                    sliced_alternative_phone_number = alternative_phone_number.slice(4);
+                }
+                else {
+                    sliced_alternative_phone_number = alternative_phone_number.slice(3);
+                }    
+                var formatted_alternative_phone_number = sliced_alternative_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                
+                $("#alternative_phone").val(formatted_alternative_phone_number);
+
+            }
+
+            var contact_phone_number = $("#contact_phone_number").val();
+            
+            var sliced_contact_phone_number = 0;
+            if(contact_phone_number.length == 13){
+                sliced_contact_phone_number = contact_phone_number.slice(4);
+            }
+            else {
+                sliced_contact_phone_number = contact_phone_number.slice(3);
+            }    
+            var formatted_contact_phone_number = sliced_contact_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+            
+            $("#contact_phone_number").val(formatted_contact_phone_number);
+
+
+            var alternative_contact_phone_number = $("#contact_alternative_phone").val();
+
+            if(alternative_contact_phone_number !== null){
+
+                var sliced_alternative_contact_phone_number = 0;
+                if(alternative_contact_phone_number.length == 13){
+                    sliced_alternative_contact_phone_number = alternative_contact_phone_number.slice(4);
+                }
+                else {
+                    sliced_alternative_contact_phone_number = alternative_contact_phone_number.slice(3);
+                }    
+                var formatted_alternative_contact_phone_number = sliced_alternative_contact_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                
+                $("#contact_alternative_phone").val(formatted_alternative_contact_phone_number);
+
+            }
+            
+
+
             //////////////////////////// /////////////////////////////////////////////////////////
 
             $('#ref-customer-div').hide();
             $('#ref-supplier-div').hide();
             $('#ref-employee-div').hide();
             $('#ref-referrer-div').hide();
+            
+            let ref_selected_item, referrer_type;
+            
+            ref_selected_item = $.trim($('#referrer_type_id').find('option:selected').text());
+            referrer_type     = $.trim($('#referrer_type_id').find('option:selected').text());
 
+            //console.log("CURRENT REFERRER TYPE : ", ref_selected_item);
+           
+                if(ref_selected_item == "Employee"){
+                    
+                    // $('#user_id').val($('#user_id option:first-child').val()).trigger('change');
+                    // $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    // $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    // $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                   
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').show();
+                    $('#ref-referrer-div').hide();
+                    
 
-            let referrer_type = "";
+                }
+                else if(ref_selected_item == "Customer"){
+
+                    // $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    // $('#user_id').val($('#user_id option:first-child').val()).trigger('change');                    
+                    // $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    // $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                                                          
+                    $('#ref-customer-div').show();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').hide();
+                }
+                else if(ref_selected_item == "Supplier"){
+
+                    
+                    // $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    // $('#user_id').val($('#user_id option:first-child').val()).trigger('change');
+                    // $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    // $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                                       
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').show();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').hide();
+                   
+                }else if(ref_selected_item == "Others"){
+
+                    // $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');                      
+                    // $('#user_id').val($('#user_id option:first-child').val()).trigger('change');
+                    // $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    // $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                                     
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').show();
+                   
+                }else{
+
+                    // $('#user_id').val($('#user_id option:first-child').val()).trigger('change');
+                    // $('#customer_id').val($('#customer_id option:first-child').val()).trigger('change');
+                    // $('#supplier_id').val($('#supplier_id option:first-child').val()).trigger('change');
+                    // $('#referrer_id').val($('#referrer_id option:first-child').val()).trigger('change');
+                   
+                    $('#ref-customer-div').hide();
+                    $('#ref-supplier-div').hide();
+                    $('#ref-employee-div').hide();
+                    $('#ref-referrer-div').hide();
+
+                }
 
             $(document).on('change', '#referrer_type_id', function() {
                 
                 //let ref_selected_item = $(this).find('option:selected').val();
-                let ref_selected_item = $(this).find('option:selected').text();
+                ref_selected_item = $(this).find('option:selected').text();
                 referrer_type = $(this).find('option:selected').text();
 
+                //console.log("CURRENT REFERRER TYPE : ", ref_selected_item);
+           
                 if(ref_selected_item == "Employee"){
                     
                     $('#user_id').val($('#user_id option:first-child').val()).trigger('change');
@@ -586,6 +797,8 @@
                 }
             
             });
+  
+
 
 
             ///////////////////NUMBER INPUT INITIALISATION ///////////////////////////////////////
@@ -651,17 +864,17 @@
 
                     // Disable button on clicking submit
                     $('.button-prevent-multiple-submits').attr('disabled', true); 
+
+                    //console.log("CURRENT REFERRER TYPE :", referrer_type);                    
                         
                     // Format the form data
-                    var formData = new FormData(form);
+                    var formData = new FormData(form);                    
                     formData.append("referrer_type", referrer_type);
-
-                    //console.log(referrer_type);
-                                  
+                
                     // Initiate Ajax request
                     $.ajax({
 
-                        url: '/add-customer',
+                        url: '/edit-customer',
                         type: 'post',
                         data: formData,
                         processData: false,
@@ -675,11 +888,11 @@
 
                         success: function(response) {
 
-                            console.log(response);
+                            //console.log(response);
 
                             Swal.fire({
                                 title: '<span class="text text-success fw-bold">SUCCESS MESSAGE</span>',
-                                //text: 'Employee created successfully',
+                                //text: 'Customer updated successfully',
                                 text: response.message,
                                 icon: 'success',
                                 toast:'true',
@@ -695,12 +908,12 @@
                             });
                         
                             $('.button-prevent-multiple-submits').attr('disabled', false);
-                            $('#add-btn').text('Add Customer');
+                            $('#add-btn').text('Update Customer');
                         },
 
                         error: function(response){
                                                 
-                            console.log(response);
+                            //console.log(response);
                             
                             if(response.status == 422){
                                 
@@ -720,7 +933,7 @@
                             } 
 
                             $('.button-prevent-multiple-submits').attr('disabled', false);
-                            $('#add-btn').text('Add Customer');
+                            $('#add-btn').text('Update Customer');
                         }
 
                     });

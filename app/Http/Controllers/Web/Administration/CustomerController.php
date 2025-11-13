@@ -21,6 +21,7 @@ use App\Models\UserStatus;
 
 use App\Models\Administration\CustomerType;
 use App\Models\Administration\ReferrerType;
+use App\Models\Administration\SupplierType;
 use App\Models\Administration\Referrer;
 use App\Models\Administration\Customer;
 use App\Models\Administration\Supplier;
@@ -208,7 +209,7 @@ class CustomerController extends Controller
 
         $validated =  $request->validated();
 
-        info($validated);
+        #info($validated);
 
         try{
 
@@ -262,23 +263,35 @@ class CustomerController extends Controller
         ->select('customers.id', 'customers.customer_type_id', 'customers.customer_reference', 
         'customers.national_identification_number', 'customers.tax_identification_number', 
         'customers.customer', 'customers.phone_number', 'customers.email_address',
-        'customers.alternative_phone', 'customers.alternative_email',
-        'customers.physical_address',
+        'customers.alternative_phone', 'customers.alternative_email', 'customers.physical_address',
         'customers.contact_first_name', 'customers.contact_last_name', 'customers.contact_phone_number',
         'customers.contact_email_address', 'customers.contact_gender', 'customers.contact_date_of_birth', 
         'customers.contact_alternative_phone', 'customers.contact_alternative_email',
         'customers.contact_physical_address', 'positions.position', 'customers.is_active', 'customers.created_at',
-        'customer_types.customer_type',
-        'users.name',
+        'customer_types.customer_type','users.name',
         ) ->where('customers.customer_reference', $id)->first();  
         
         if( date('Y-m-d', strtotime($customer->contact_date_of_birth)) != "1970-01-01"){
 
+           
             $target_days = mktime(0, 0, 0, date('m',strtotime($customer->contact_date_of_birth)), 
-            date('d',strtotime($customer->contact_date_of_birth)), date('Y', strtotime('+1 year')) );
+            date('d',strtotime($customer->contact_date_of_birth)), );
             $today = time();
             $diff_days = ($target_days - $today);
-            $next_customer_dob = (int)($diff_days/86400). " Days";
+
+            if($diff_days < 0)
+            {
+                $target_days = mktime(0, 0, 0, date('m',strtotime($customer->contact_date_of_birth)), 
+                date('d',strtotime($customer->contact_date_of_birth)), date('Y', strtotime('+1 year')) );
+                $diff_days = ($target_days - $today);
+                $next_customer_dob = (int)($diff_days/86400). " Days";
+            }
+            else{
+
+                $next_customer_dob = (int)($diff_days/86400). " Days";
+            
+            }
+
             
             $birth_date = date("Y-m-d", strtotime($customer->contact_date_of_birth));    
             $current_date = date('Y-m-d');
@@ -306,7 +319,7 @@ class CustomerController extends Controller
 
     //////////////////////////////// EDIT CUSTOMER ////////////////////////////////////////
 
-    public function getEditCustomer($id){
+    public function getUpdateCustomer($id){
 
         #$user = Auth::user();
 
@@ -318,18 +331,48 @@ class CustomerController extends Controller
          $customer = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.created_by')
         ->leftJoin('users', 'users.id', '=', 'customers.created_by')
         ->leftJoin('customer_types', 'customers.customer_type_id', '=', 'customer_types.id')
-        ->select('customers.id', 'customers.customer_type_id', 'customers.customer_reference', 
-        'customers.customer', 'customers.phone_number', 'customers.email_address', 'customers.physical_address',
-        'customers.contact_full_name', 'customers.contact_phone_number', 'customers.contact_email_address', 
-        'customers.contact_physical_address', 'customers.contact_position', 'customers.is_active', 'customers.created_at',
-        'users.name', 'user_details.first_name', 'user_details.last_name',
-        ) ->where('customers.customer_reference', $id)->first();  
-        
+        ->leftJoin('referrer_types', 'customers.referrer_type_id', '=', 'referrer_types.id')
+        ->leftJoin('positions', 'customers.position_id', '=', 'positions.id')
+
+        ->select('customers.id', 'customers.created_by', 'customers.customer_type_id', 'customers.referrer_type_id', 'customers.position_id',
+        'customers.customer_reference', 
+        'customers.national_identification_number', 'customers.tax_identification_number', 
+        'customers.customer', 'customers.phone_number', 'customers.email_address',
+        'customers.alternative_phone', 'customers.alternative_email', 'customers.physical_address',
+        'customers.contact_first_name', 'customers.contact_last_name', 'customers.contact_phone_number',
+        'customers.contact_email_address', 'customers.contact_gender', 'customers.contact_date_of_birth', 
+        'customers.contact_alternative_phone', 'customers.contact_alternative_email',
+        'customers.contact_physical_address', 'positions.position', 'customers.is_active', 'customers.created_at',
+        'customer_types.customer_type', 'referrer_types.referrer_type',
+        'users.name', 'customers.supplier_id', 'customers.referrer_id', 'customers.user_id', 'customers.customer_id',
+        )->where('customers.customer_reference', $id)->first();  
+
         $customer_types = CustomerType::select('id','customer_type_reference', 'customer_type')->orderBy('customer_type', 'asc')->get();
 
         $positions = Position::select('id','position_reference', 'position')->orderBy('position', 'asc')->get();
 
-        return view('web.administration.edit-customer', compact('customer_types', 'positions', 'customer'));
+        $referrer_types = ReferrerType::select('id','referrer_type_reference', 'referrer_type')->orderBy('referrer_type', 'asc')->get();
+
+
+        $referrers = Referrer::select('id', 'referrer_reference', 'first_name', 'last_name', 'phone_number')->orderBy('first_name', 'asc')->get();
+        
+        $customers = Customer::where('id', '!=', $customer->id)
+        ->select('id', 'customer_reference', 'customer', 'phone_number')->orderBy('customer', 'asc')->get();
+
+        $suppliers = Supplier::select('id', 'supplier_reference', 'supplier', 'phone_number')->orderBy('supplier', 'asc')->get();
+
+        $users = User::leftJoin('user_details', 'user_details.user_id', '=', 'users.id')
+        ->select('users.id', 'users.user_reference', 'users.phone', 'user_details.first_name', 'user_details.last_name')->orderBy('user_details.first_name', 'asc')->get();
+
+        
+        // $referrer = Referrer::where('id', $customer->referrer_id)
+        // ->select('id', 'referrer_reference', 'first_name', 'last_name', 'phone_number')->orderBy('first_name', 'asc')->first();
+
+        #info($customer);
+
+        return view('web.administration.edit-customer', 
+        compact('customer', 'customer_types', 'positions', 'referrer_types', 'referrers', 'customers', 'suppliers', 'users', ));
+
 
     
     }
@@ -340,7 +383,7 @@ class CustomerController extends Controller
 
     ////////////////////// EDIT CUSTOMER ///////////////////////////////////////////////////
 
-    public function editCustomer(EditCustomerRequest $request, $id){
+    public function updateCustomer(EditCustomerRequest $request){
 
         if( !Auth::user()->can('edit-customers')){
 
@@ -353,8 +396,42 @@ class CustomerController extends Controller
 
             \DB::beginTransaction();
 
-            $customer = Customer::findorfail($id);
+            $update_referrer = Customer::findorfail($validated['edit_customer_id']);
 
+            if($update_referrer->referrer_id !== null){
+
+                $update_referrer->where('id', $validated['edit_customer_id'])->update([
+                    'referrer_id' => null,
+                ]);
+            }
+
+
+            if($update_referrer->user_id !== null){
+
+                $update_referrer->where('id', $validated['edit_customer_id'])->update([
+                    'user_id' => null,
+                ]);
+            }
+
+
+            if($update_referrer->supplier_id !== null){
+
+                $update_referrer->where('id', $validated['edit_customer_id'])->update([
+                    'supplier_id' => null,
+                ]);
+            }
+
+
+            if($update_referrer->customer_id !== null){
+
+                $update_referrer->where('id', $validated['edit_customer_id'])->update([
+                    'customer_id' => null,
+                ]);
+            }
+                       
+
+            $customer = Customer::findorfail($validated['edit_customer_id']);
+            
             $customer->update($validated);
 
             \DB::commit();

@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Edit Employee'])
+@extends('layouts.admin', ['title' => 'Edit Referrer'])
 
 @push('stylesheets')
 
@@ -35,7 +35,7 @@
 
                     <div class="row">
                         <div class="col-xl-12">
-                        <h4 class="pb-0 mt-1 fs-5 text-md-start text-center fw-bold"> UPDATE EMPLOYEE RECORD</h4>
+                        <h4 class="pb-0 mt-1 fs-5 text-md-start text-center fw-bold"> UPDATE REFERRER RECORD</h4>
                         </div>
                     </div>
                 
@@ -46,8 +46,8 @@
                     <form method="POST" id="add-form" nam="add-form" class="row g-6">
                         <!-- @csrf -->
 
-                        <input type="hidden" value="{{ $user->id}}" id="user_id" name="user_id" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-user-id" />
-                        <input type="hidden" value="{{ $user->user_reference}}" id="user_reference" name="user_reference" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-user-ref" />
+                        <input type="hidden" value="{{ $referrer->id}}" id="referrer_id" name="referrer_id" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-referrer-id" />
+                        <input type="hidden" value="{{ $referrer->referrer_reference}}" id="referrer_reference" name="referrer_reference" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-referrer-ref" />
 
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="national_identification_number">NIN</label>
@@ -55,7 +55,7 @@
                                 <span class="input-group-text" id="basic-addon-nin">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $user->national_identification_number}}" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" />                        
+                                <input type="text" value="{{ $referrer->national_identification_number}}" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" />                        
                             </div> 
                         </div> 
 
@@ -66,7 +66,7 @@
                                 <span class="input-group-text" id="basic-addon-fname">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $user->first_name}}" id="first_name" name="first_name" class="form-control" placeholder="Enter First name" style="text-transform:capitalize;" aria-describedby="basic-addon-fname" />                        
+                                <input type="text" value="{{ $referrer->first_name}}" id="first_name" name="first_name" class="form-control" placeholder="Enter First name" style="text-transform:capitalize;" aria-describedby="basic-addon-fname" />                        
                             </div> 
                         </div> 
 
@@ -77,7 +77,7 @@
                                 <span class="input-group-text" id="basic-addon-lname">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $user->last_name}}" id="last_name" name="last_name" class="form-control" placeholder="Enter Last name" style="text-transform:capitalize;" aria-describedby="basic-addon-lname" />                        
+                                <input type="text" value="{{ $referrer->last_name}}" id="last_name" name="last_name" class="form-control" placeholder="Enter Last name" style="text-transform:capitalize;" aria-describedby="basic-addon-lname" />                        
                             </div> 
                         </div> 
 
@@ -88,7 +88,7 @@
                                 <span class="input-group-text" id="basic-addon-oname">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $user->other_name}}" id="other_name" name="other_name" class="form-control" placeholder="Enter Other name (Optional)" style="text-transform:capitalize;" aria-describedby="basic-addon-oname" maxlength="11" />                        
+                                <input type="text" value="{{ $referrer->other_name}}" id="other_name" name="other_name" class="form-control" placeholder="Enter Other name (Optional)" style="text-transform:capitalize;" aria-describedby="basic-addon-oname" maxlength="11" />                        
                             </div> 
                         </div> 
 
@@ -99,7 +99,7 @@
                                 <span class="input-group-text" id="basic-addon-phone">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $user->phone}}" id="phone" name="phone" class="form-control phone" placeholder="Enter Mobile Number" style="text-transform:;" aria-describedby="basic-addon-phone" maxlength="11" />                        
+                                <input type="text" value="{{ $referrer->phone_number}}" id="phone_number" name="phone_number" class="form-control phone" placeholder="Enter Mobile Number" style="text-transform:;" aria-describedby="basic-addon-phone" maxlength="11" />                        
                             </div> 
                         </div> 
 
@@ -109,7 +109,7 @@
                                 <span class="input-group-text" id="basic-addon-aphone">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $user->alternative_phone}}" id="alternative_phone" name="alternative_phone" class="form-control phone" placeholder="Enter Alternative Mobile Number (Optional)" style="text-transform:;" aria-describedby="basic-addon-aphone" maxlength="11" />                        
+                                <input type="text" value="{{ $referrer->alternative_phone}}" id="alternative_phone" name="alternative_phone" class="form-control phone" placeholder="Enter Alternative Mobile Number (Optional)" style="text-transform:;" aria-describedby="basic-addon-aphone" maxlength="11" />                        
                             </div> 
                         </div>                        
                         
@@ -119,7 +119,7 @@
                                 <span class="input-group-text" id="basic-addon-email">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </span>                                    
-                                <input type="email" value="{{ $user->email}}" id="email" name="email" class="form-control" placeholder="Enter Email Address" style="text-transform:;" aria-describedby="basic-addon-email" />                        
+                                <input type="email" value="{{ $referrer->email_address}}" id="email_address" name="email_address" class="form-control" placeholder="Enter Email Address" style="text-transform:;" aria-describedby="basic-addon-email" />                        
                             </div> 
                         </div>
 
@@ -130,7 +130,7 @@
                                 <span class="input-group-text" id="basic-addon-aemail">
                                     <i class="icon-base ti tabler-mail"></i>
                                 </span>                                    
-                                <input type="email" value="{{ $user->alternative_email}}" id="alternative_email" name="alternative_email" class="form-control" placeholder="Enter Alternavtive Email Address (Optional)" style="text-transform:;" aria-describedby="basic-addon-aemail" />                        
+                                <input type="email" value="{{ $referrer->alternative_email}}" id="alternative_email" name="alternative_email" class="form-control" placeholder="Enter Alternavtive Email Address (Optional)" style="text-transform:;" aria-describedby="basic-addon-aemail" />                        
                             </div> 
                         </div>
 
@@ -141,26 +141,25 @@
                                 <span class="input-group-text" id="basic-addon-dob">
                                     <i class="icon-base ti tabler-calendar"></i>
                                 </span>                                    
-                                <input type="date" value="{{ $user->date_of_birth}}" id="date_of_birth" name="date_of_birth" class="form-control" placeholder="Enter Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
+                                <input type="date" value="{{ $referrer->date_of_birth}}" id="date_of_birth" name="date_of_birth" class="form-control" placeholder="Enter Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
                             </div> 
                         </div>
 
 
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="role_id">Employee Role</label>
+                            <label class="form-label fs-5" for="role_id">Referrer Type</label>
                             <div class="input-group input-group-merge">                    
                                 
-                                <select id="role_id" name="role_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <!-- <option value="">Select Employee Role</option> -->
-                                    @foreach($roles as $role)
+                                <select id="referrer_type_id" name="referrer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    @foreach($referrer_types as $referrer_type)
                                         
-                                        <!-- @if($role->id == $user->role_id)
-                                            <option value="{{$user->role_id}}">{{ucwords($role->name)}}</option>
+                                        <!-- @if($referrer_type->id == $referrer->referrer_type_id)
+                                            <option value="{{$referrer->referrer_type_id}}">{{ucwords($referrer_type->referrer_type)}}</option>
                                         @else
-                                            <option value="{{$role->id}}">{{ucwords($role->name)}}</option>
+                                            <option value="{{$referrer_type->id}}">{{ucwords($referrer_type->referrer_type)}}</option>
                                         @endif -->
 
-                                        <option value="{{ $role->id }}" {{ ($role->id == $user->role_id) ? 'selected' : '' }}>{{ ucwords($role->name) }}</option>
+                                        <option value="{{ $referrer_type->id }}" {{ ($referrer_type->id == $referrer->referrer_type_id) ? 'selected' : '' }}>{{ $referrer_type->referrer_type }}</option>
 
                                     @endforeach
                                                             
@@ -172,61 +171,12 @@
 
 
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="position_id">Employee Position</label>
-                            <div class="input-group input-group-merge">                    
-                                <!-- <span class="input-group-text" id="basic-addon-dob">
-                                    <i class="icon-base ti tabler-list"></i>
-                                </span>  -->
-                                <select id="position_id" name="position_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <!-- <option value="">Select Employee Position</option> -->
-                                    @foreach($positions as $position)
-                                        <!-- @if($position->id == $user->position_id)
-                                            <option value="{{$user->position_id}}">{{ucwords($position->position)}}</option>
-                                        @else
-                                            <option value="{{$position->id}}">{{ucwords($position->position)}}</option>
-                                        @endif -->
-
-                                        <option value="{{ $position->id }}" {{ ($position->id == $user->position_id) ? 'selected' : '' }}>{{ ucwords($position->position) }}</option>
-
-                                    @endforeach
-                                                            
-                                </select>
-
-                            </div> 
-                        </div>
-
-
-                        <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="user_status_id">Employee Status</label>
-                            <div class="input-group input-group-merge">                    
-                                
-                                <select id="user_status_id" name="user_status_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    <!-- <option value="">Select Employee Status</option> -->
-                                    @foreach($user_statuses as $user_status)
-                                        
-                                        <!-- @if($user_status->id == $user->user_status_id)
-                                            <option value="{{$user->user_status_id}}">{{$user_status->user_status}}</option>
-                                        @else
-                                            <option value="{{$user_status->id}}">{{$user_status->user_status}}</option>
-                                        @endif -->
-
-                                        <option value="{{ $user_status->id }}" {{ ($user_status->id == $user->user_status_id) ? 'selected' : '' }}>{{ ucwords($user_status->user_status) }}</option>
-
-                                    @endforeach
-                                                            
-                                </select>
-
-                            </div> 
-                        </div>
-
-
-                        <div class="col-md-6 form-control-validation">
                             <label class="form-label fs-5" for="physical_address">Physical Address</label>                             
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-paddress">
                                     <i class="icon-base ti tabler-map-pin"></i>
                                 </span>
-                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address... (Optional)" rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" >{{ $user->physical_address}}</textarea>
+                                <textarea id="physical_address" name="physical_address" class="form-control autosize fs-5" placeholder="Enter Physical Address... (Optional)" rows="3" style="text-transform:capitalize;" aria-describedby="basic-addon-paddress" >{{ $referrer->physical_address}}</textarea>
                             </div>
                         </div>
 
@@ -236,7 +186,7 @@
                             
                             <div class="switches-stacked">
                                 <label class="switch switch-square">
-                                    @if($user->gender == "Male")
+                                    @if($referrer->gender == "Male")
                                         <input type="radio" value="Male" class="switch-input" id="gender" name="gender" checked />
                                     @else
                                         <input type="radio" value="Male" class="switch-input" id="gender" name="gender" />
@@ -249,7 +199,7 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    @if($user->gender == "Female")
+                                    @if($referrer->gender == "Female")
                                         <input type="radio" value="Female" class="switch-input" id="gender" name="gender" checked />
                                     @else
                                         <input type="radio" value="Female" class="switch-input" id="gender" name="gender" />
@@ -262,7 +212,7 @@
                                 </label>
 
                                 <label class="switch switch-square">
-                                    @if($user->gender == "Other")
+                                    @if($referrer->gender == "Other")
                                         <input type="radio" value="Other" class="switch-input" id="gender" name="gender" checked />
                                     @else
                                         <input type="radio" value="Other" class="switch-input" id="gender" name="gender" />
@@ -279,17 +229,38 @@
                             </div>
                             
                         </div>
+
+
+                        <div class="col-md-2 form-control-validation">
+                            <label class="form-label fs-6" for="is_active">Record Status</label>
+                            <div class="input-group input-group-merge">                    
+                                
+                                <select id="is_active" name="is_active" class="select2 w-100 fs-6" data-style="btn-default" style="text-transform:capitalize;">
+                                    
+                                    @if($referrer->is_active == 1)
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disable</option>
+                                    @else
+                                        <option value="0">Disabled</option>
+                                        <option value="1">Enable</option>                                    
+                                    @endif   
+                                   
+                                                                
+                                </select>
+
+                            </div> 
+                        </div>
                         
 
                         <div class="col-12 form-control-validation">
                             <div class="form-check">
                                 <input type="checkbox" id="terms" name="terms" class="form-check-input" checked />
-                                <label class="form-check-label fs-5" for="terms">Employee has agreed to our terms and conditions</label>
+                                <label class="form-check-label fs-5" for="terms">Referrer has agreed to our terms and conditions</label>
                             </div>
                         </div>
 
                         <div class="col-12 form-control-validation">
-                            <button type="submit" id="add-btn" name="add-btn" class="btn btn-info button-prevent-multiple-submits p-3 float-end">Update Employee</button>
+                            <button type="submit" id="add-btn" name="add-btn" class="btn btn-info button-prevent-multiple-submits p-3 float-end">Update Referrer</button>
                         </div>
 
                     </form>
@@ -363,23 +334,9 @@
 
             ///////////////////////SELECT 2 INITIALISATION ///////////////////////////////////////
              
-            $('#role_id').select2({
+            $('#referrer_type_id').select2({
 
-                "placeholder": "Select Employee Role",
-
-            });
-
-
-            $('#position_id').select2({
-
-                "placeholder": "Select Employee Position",
-
-            });
-
-
-            $('#user_status_id').select2({
-
-                "placeholder": "Select Employee Status",
+                "placeholder": "Select Referrer Type",
 
             });
 
@@ -394,7 +351,7 @@
 
             /////////////////////////////////////////////// PHONE NUMBER FORMATTING /////////////////////////
             
-            var phone_number = @json($user->phone);
+            var phone_number = @json($referrer->phone_number);
             var sliced_phone_number = 0;
             if(phone_number.length == 13){
                 sliced_phone_number = phone_number.slice(4);
@@ -405,10 +362,10 @@
             var formatted_phone_number = sliced_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
 
             
-            $("#phone").val(formatted_phone_number);
+            $("#phone_number").val(formatted_phone_number);
 
 
-            var alternative_phone_number = @json($user->alternative_phone);
+            var alternative_phone_number = @json($referrer->alternative_phone);
 
             if(alternative_phone_number !== null){
 
@@ -499,7 +456,7 @@
                     // Initiate Ajax request
                     $.ajax({
 
-                        url: '/edit-employee',
+                        url: '/edit-referrer',
                         type: 'post',
                         data: formData,
                         processData: false,
@@ -517,7 +474,7 @@
 
                             Swal.fire({
                                 title: '<span class="text text-success fw-bold">SUCCESS MESSAGE</span>',
-                                //text: 'Employee created successfully',
+                                //text: 'Referrer updated successfully',
                                 text: response.message,
                                 icon: 'success',
                                 toast:'true',
@@ -528,12 +485,12 @@
                                 
                             }).then(function() {
 
-                                window.location = "/employees";
+                                window.location = "/referrers";
 
                             });
                         
                             $('.button-prevent-multiple-submits').attr('disabled', false);
-                            $('#add-btn').text('Update Employee');
+                            $('#add-btn').text('Update Referrer');
                         },
 
                         error: function(response){
@@ -558,7 +515,7 @@
                             } 
 
                             $('.button-prevent-multiple-submits').attr('disabled', false);
-                            $('#add-btn').text('Update Employee');
+                            $('#add-btn').text('Update Referrer');
                         }
 
                     });

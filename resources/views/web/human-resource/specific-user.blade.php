@@ -43,9 +43,17 @@
 
                         <div class="user-avatar-section">
                             <div class=" d-flex align-items-center flex-column">
-                            <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/1.png" height="120" width="120" alt="User avatar" />
+                            
+                            @if($user->gender == "Male")
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/employee-male.png" height="120" width="120" alt="referrer avatar" />
+                            @elseif($user->gender == "Female")
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/employee-female.png" height="120" width="120" alt="referrer avatar" />
+                            @else
+                                <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/placeholder.png" height="120" width="120" alt="referrer avatar" />
+                            @endif
+
                             <div class="user-info text-center">
-                                <h5 class="fs-4">{{ $user->first_name }} {{ $user->last_name }} {{ $user->other_name }}</h5>
+                                <h5 class="fs-4">{{ $user->first_name }} {{ $user->other_name }} {{ $user->last_name }}</h5>
                                 <span class="badge bg-label-secondary fs-5">{{ $user->position }}</span>
                             </div>
                             </div>
@@ -115,7 +123,7 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">200 Days</div>
+                                        <div class="accordion-body" id="">{{ $next_user_dob }}</div>
                                     </div>
                                 </div>
 
@@ -128,7 +136,7 @@
                                     </h2>
 
                                     <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                        <div class="accordion-body" id="">25 Years old</div>
+                                        <div class="accordion-body" id="">{{ $user_age }}</div>
                                     </div>
                                 </div>
 
@@ -202,12 +210,20 @@
                             </ul> -->
 
                             <div class="d-flex justify-content-center">
-                                <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editUser" data-bs-toggle="modal">
+
+                                <a href="https://api.whatsapp.com/send?phone=+{{$user->phone}}&text=Hello! Employee" class="btn btn-primary me-4" target="new" title="Chat now">
+                                    <i class="icon-base ti tabler-phone"></i>
+                                </a>
+                                <a href="mailto:{{$user->email}}" class="btn btn-success me-4" title="Send mail">
+                                    <i class="icon-base ti tabler-mail"></i>
+                                </a>
+
+                                <!-- <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editUser" data-bs-toggle="modal">
                                     <i class="icon-base ti tabler-phone"></i>
                                 </a>
                                 <a href="javascript:;" class="btn btn-success me-4" data-bs-target="#editUser" data-bs-toggle="modal">
                                     <i class="icon-base ti tabler-mail"></i>
-                                </a>
+                                </a> -->
                                 <!-- <a href="javascript:;" class="btn btn-label-danger suspend-user">Suspend</a> -->
                             </div>
 
@@ -269,6 +285,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-cash icon-sm me-1_5"></i>Sales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-users icon-sm me-1_5"></i>Clients</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="javascript:void(0);"><i class="icon-base ti tabler-settings icon-sm me-1_5"></i>Settings</a>

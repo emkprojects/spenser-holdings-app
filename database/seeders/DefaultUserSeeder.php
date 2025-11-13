@@ -50,7 +50,7 @@ class DefaultUserSeeder extends Seeder
             'user_reference' => Str::uuid(),
             'name' => 'administrator',
             'email' => 'admin@spenserholdings.org',
-            'phone' => '256778802878',
+            'phone' => '256789542451',
             'password' =>  bcrypt('Admin@1234!'),
             'user_status_id' => $user_status->id,
             'position_id' => $coo_position->id,
@@ -66,7 +66,7 @@ class DefaultUserSeeder extends Seeder
             'user_reference' => Str::uuid(),
             'name' => 'director',
             'email' => 'director@spenserholdings.org',
-            'phone' => '256772123456',
+            'phone' => '256702532451',
             'password' =>  bcrypt('Admin@1234!'),
             'user_status_id' => $user_status->id,
             'position_id' => $md_position->id,
@@ -111,7 +111,7 @@ class DefaultUserSeeder extends Seeder
                 'last_name' =>  'Precious',
                 'other_name' =>  '',
                 'gender' => 'Female',
-                'date_of_birth' => '1999-12-31',
+                'date_of_birth' => '1975-12-31',
                 'physical_address' => 'Plot 123 Spenser Close - Mutungo',             
                 
             ]

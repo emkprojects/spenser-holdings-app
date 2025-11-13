@@ -57,7 +57,7 @@
         <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->    
         <script src="{{ asset('/assets/js/config.js') }}"></script>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" /> -->
 
         <style>
             .swal2-container {
@@ -826,7 +826,8 @@
                         <ul class="navbar-nav flex-row align-items-center ms-md-auto">                
 
         
-                            <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+                            <!-- <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <i class="icon-base ti tabler-language icon-22px text-heading"></i>
                                 </a>
@@ -852,7 +853,7 @@
                                     </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <!--/ Language -->
         
 
@@ -1166,7 +1167,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('/assets/img/avatars/1.png') }}" alt class="rounded-circle" />
+                                    <img src="{{ asset('/assets/img/avatars/placeholder.png') }}" alt class="rounded-circle" />
                                 </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -1175,7 +1176,7 @@
                                     <div class="d-flex align-items-center">
                                         <div class="flex-shrink-0 me-2">
                                         <div class="avatar avatar-online">
-                                            <img src="{{ asset('/assets/img/avatars/1.png') }}" alt class="rounded-circle" />
+                                            <img src="{{ asset('/assets/img/avatars/placeholder.png') }}" alt class="rounded-circle" />
                                         </div>
                                         </div>
                                         <div class="flex-grow-1">
@@ -1189,10 +1190,10 @@
                                     <div class="dropdown-divider my-1 mx-n2"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#"> <i class="icon-base ti tabler-user me-3 icon-md"></i><span class="align-middle">My Profile</span> </a>
+                                    <a class="dropdown-item" href="/specific-employee/{{Auth::user()->user_reference}}"> <i class="icon-base ti tabler-user me-3 icon-md"></i><span class="align-middle">My Profile</span> </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#"> <i class="icon-base ti tabler-settings me-3 icon-md"></i><span class="align-middle">Settings</span> </a>
+                                    <a class="dropdown-item" href="/specific-employee/{{Auth::user()->user_reference}}"> <i class="icon-base ti tabler-settings me-3 icon-md"></i><span class="align-middle">Settings</span> </a>
                                 </li>
                                 <!-- <li>
                                     <a class="dropdown-item" href="pages-account-settings-billing.html">

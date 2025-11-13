@@ -21,6 +21,7 @@ use App\Models\UserStatus;
 
 use App\Models\Administration\CustomerType;
 use App\Models\Administration\ReferrerType;
+use App\Models\Administration\SupplierType;
 use App\Models\Administration\Referrer;
 use App\Models\Administration\Customer;
 use App\Models\Administration\Supplier;
@@ -188,7 +189,7 @@ class ReferrerController extends Controller
 
         $validated =  $request->validated();
 
-        info($validated);
+        #info($validated);
 
         try{
 
@@ -240,13 +241,51 @@ class ReferrerController extends Controller
         ->leftJoin('referrer_types', 'referrers.referrer_type_id', '=', 'referrer_types.id')
         ->select('referrers.id', 'referrers.referrer_type_id', 'referrers.referrer_reference', 
         'referrers.national_identification_number', 'referrers.tax_identification_number', 
-        'referrers.first_name', 'referrers.last_name', 'referrers.phone_number',
-        'referrers.email_address', 'referrers.gender',
+        'referrers.first_name', 'referrers.last_name',  'referrers.other_name', 
+        'referrers.phone_number', 'referrers.alternative_phone', 'referrers.alternative_email',
+        'referrers.email_address', 'referrers.gender', 'referrers.date_of_birth',
         'referrers.physical_address', 'referrers.is_active', 'referrers.created_at',
         'referrer_types.referrer_type', 'users.name',
-        ) ->where('referrers.referrer_reference', $id)->first();   
+        ) ->where('referrers.referrer_reference', $id)->first();  
         
-        return view('web.administration.specific-referrer', compact('referrer'));
+        
+        if( date('Y-m-d', strtotime($referrer->date_of_birth)) != "1970-01-01"){
+
+            $target_days = mktime(0, 0, 0, date('m',strtotime($referrer->date_of_birth)), 
+            date('d',strtotime($referrer->date_of_birth)), );
+            $today = time();
+            $diff_days = ($target_days - $today);
+
+            if($diff_days < 0)
+            {
+                $target_days = mktime(0, 0, 0, date('m',strtotime($referrer->date_of_birth)), 
+                date('d',strtotime($referrer->date_of_birth)), date('Y', strtotime('+1 year')) );
+                $diff_days = ($target_days - $today);
+                $next_referrer_dob = (int)($diff_days/86400). " Days";
+            }
+            else{
+
+                $next_referrer_dob = (int)($diff_days/86400). " Days";
+            
+            }
+
+            $birth_date = date("Y-m-d", strtotime($referrer->date_of_birth));    
+            $current_date = date('Y-m-d');
+            $birth_timestamp = strtotime($birth_date);
+            $current_timestamp = strtotime($current_date);
+            $diff_seconds = $current_timestamp - $birth_timestamp;
+            $age_years = $diff_seconds / (60 * 60 * 24 * 365.25);
+            $age_years = round($age_years);
+            $referrer_age = $age_years . " Years old";
+
+        }
+        else{
+
+            $next_referrer_dob = "---";
+            $referrer_age = "---";
+        }
+        
+        return view('web.administration.specific-referrer', compact('referrer', 'next_referrer_dob', 'referrer_age'));
     
 
     }
@@ -256,7 +295,7 @@ class ReferrerController extends Controller
 
     //////////////////////////////// EDIT REFERRER ////////////////////////////////////////
 
-    public function getEditReferrer($id){
+    public function getUpdateReferrer($id){
 
         #$user = Auth::user();
 
@@ -270,15 +309,16 @@ class ReferrerController extends Controller
         ->leftJoin('referrer_types', 'referrers.referrer_type_id', '=', 'referrer_types.id')
         ->select('referrers.id', 'referrers.referrer_type_id', 'referrers.referrer_reference', 
         'referrers.national_identification_number', 'referrers.tax_identification_number', 
-        'referrers.first_name', 'referrers.last_name', 'referrers.phone_number',
-        'referrers.email_address', 'referrers.gender',
+        'referrers.first_name', 'referrers.last_name',  'referrers.other_name', 
+        'referrers.phone_number', 'referrers.alternative_phone', 'referrers.alternative_email',
+        'referrers.email_address', 'referrers.gender', 'referrers.date_of_birth',
         'referrers.physical_address', 'referrers.is_active', 'referrers.created_at',
         'referrer_types.referrer_type', 'users.name',
         ) ->where('referrers.referrer_reference', $id)->first();  
         
-        $referrer_types = ReferrerType::select('id','referrer_type_reference', 'referrer_type')->orderBy('referrer_type', 'asc')->get();
+        $referrer_types = ReferrerType::where('referrer_type', 'Others')->select('id','referrer_type_reference', 'referrer_type')->orderBy('referrer_type', 'asc')->get();
 
-        return view('web.administration.edit-refrerrer', compact('referrer_types', 'referrer'));
+        return view('web.administration.edit-referrer', compact('referrer_types', 'referrer'));
 
     
     }
@@ -289,7 +329,7 @@ class ReferrerController extends Controller
 
     ////////////////////// EDIT REFERRER ///////////////////////////////////////////////////
 
-    public function editReferrer(EditReferrerRequest $request, $id){
+    public function updateReferrer(EditReferrerRequest $request){
 
         if( !Auth::user()->can('edit-referrers')){
 
@@ -302,7 +342,7 @@ class ReferrerController extends Controller
 
             \DB::beginTransaction();
 
-            $referrer = Referrer::findorfail($id);
+            $referrer = Referrer::findorfail($validated['referrer_id']);
 
             $referrer->update($validated);
 
