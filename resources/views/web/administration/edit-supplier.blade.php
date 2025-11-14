@@ -92,12 +92,12 @@
                         </div>
                         
                         <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="customer">Supplier</label>
+                            <label class="form-label fs-5" for="supplier">Supplier</label>
                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-user">
+                                <span class="input-group-text" id="basic-addon-supplier">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $supplier->supplier}}" id="supplier" name="supplier" class="form-control" placeholder="Enter Supplier" style="text-transform:;" aria-describedby="basic-addon-customer" maxlength="11" />                        
+                                <input type="text" value="{{ $supplier->supplier}}" id="supplier" name="supplier" class="form-control" placeholder="Enter Supplier" style="text-transform:;" aria-describedby="basic-addon-supplier" maxlength="11" />                        
                             </div> 
                         </div> 
 
