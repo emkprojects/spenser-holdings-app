@@ -4,6 +4,10 @@ namespace App\Http\Requests\Web\ProductionManagement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Auth;
+use Str;
+use Carbon\carbon;
+
 class EditProductionRequest extends FormRequest
 {
     /**

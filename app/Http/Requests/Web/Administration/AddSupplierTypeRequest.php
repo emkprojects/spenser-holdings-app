@@ -4,6 +4,10 @@ namespace App\Http\Requests\Web\Administration;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Auth;
+use Str;
+use Carbon\carbon;
+
 class AddSupplierTypeRequest extends FormRequest
 {
     /**
@@ -11,7 +15,30 @@ class AddSupplierTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        if(Auth::user()->can('add-supplier-types')){
+
+            return true;
+        }
+
+        else{
+
+            return false;
+        }
+
+        #return true;
+    }
+
+    protected function prepareForValidation(){
+        
+        $user =  Auth::user();
+
+        $this->merge([
+            'supplier_type_reference' => Str::uuid(),
+            'supplier_type' => ucwords( $this->supplier_type),
+            'description' => isset($this->description) ? ucfirst( $this->description) : null,
+            'created_by' => $user->id,
+        ]);
     }
 
     /**
@@ -22,7 +49,11 @@ class AddSupplierTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'supplier_type_reference' => 'required',
+            'supplier_type' => 'required',
+            'description' => 'nullable',
+            'created_by' => 'required',
         ];
     }
 }

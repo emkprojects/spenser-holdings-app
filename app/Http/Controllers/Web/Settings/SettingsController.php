@@ -26,6 +26,7 @@ use App\Models\ProductionManagement\ProductCategory;
 use App\Models\ProductionManagement\InventoryCategory;
 use App\Models\Administration\CustomerType;
 use App\Models\Administration\SupplierType;
+use App\Models\Administration\ReferrerType;
 
 use App\Http\Requests\Web\Settings\AddGroupRequest;
 use App\Http\Requests\Web\Settings\EditGroupRequest;
@@ -50,10 +51,295 @@ use App\Http\Requests\Web\Administration\AddSupplierTypeRequest;
 use App\Http\Requests\Web\Administration\EditSupplierTypeRequest;
 use App\Http\Requests\Web\Administration\AddCustomerTypeRequest;
 use App\Http\Requests\Web\Administration\EditCustomerTypeRequest;
+use App\Http\Requests\Web\Administration\AddReferrerTypeRequest;
+use App\Http\Requests\Web\Administration\EditReferrerTypeRequest;
 
 
 class SettingsController extends Controller
 {
+
+
+
+
+
+    ////////////////////////////////////// Referrer Types ///////////////////////////////////////////////////////
+
+    public function getReferrerTypes(Request $request){
+
+        if( !Auth::user()->can('view-referrer-types')){
+
+            return abort(403); 
+        }
+
+        if ($request->ajax()) {
+
+            $referrer_types = ReferrerType::leftJoin('users', 'referrer_types.created_by', '=', 'users.id')
+             //->where('referrer_types.is_active', 1)
+            ->select('referrer_types.id', 'referrer_types.referrer_type_reference', 'referrer_types.referrer_type', 'referrer_types.description', 
+            'referrer_types.is_active', 'referrer_types.created_at','users.name')
+            ->orderBy('referrer_types.referrer_type', 'asc');
+
+            return Datatables::of($referrer_types)
+            ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
+                       
+            ->editColumn('referrer_type', function($referrer_types){
+                return ucwords($referrer_types->referrer_type);
+            })
+
+            ->editColumn('is_active', function($referrer_types){
+                if($referrer_types->is_active == 1){
+                    $is_active = "Enabled";
+                }
+                else{
+                    $is_active = "Disabled";
+                }
+                return ucwords($is_active);
+            })
+
+            ->editColumn('description', function($referrer_types){
+                return ucwords($referrer_types->description);
+            })
+             
+            ->editColumn('created_at', function($referrer_types){
+                return date("d-m-Y @ H:i:s a", strtotime($referrer_types->created_at));
+            })  
+
+            ->editColumn('name', function($referrer_types){
+                return ucwords($referrer_types->name);
+            })
+
+            ->addColumn('actions', function($row){
+
+                $actions = '<div class="d-flex gap-1">';
+
+                if( Auth::user()->can('view-referrer-types')){
+
+                    $actions .= '<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#viewRecordModal" data-id ="'.$row->referrer_type_reference.'" id ="'.$row->referrer_type_reference.'" class="text-info btn-xl record-view-btn" title="View Record"><i class="icon-base ti tabler-file-text"></i></a>';
+                                     
+                }
+
+                if( Auth::user()->can('edit-referrer-types')){
+                    
+                    $actions .= '<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editRecordModal" data-id ="'.$row->referrer_type_reference.'" id ="'.$row->referrer_type_reference.'" class="text-success btn-xl record-edit-btn" title="Edit Record"><i class="icon-base ti tabler-file-pencil"></i></a>';
+                                  
+                }
+
+                if( Auth::user()->can('delete-referrer-types')){
+                    
+                   
+                $actions .= '<a href="javascript:void(0);" data-id ="'.$row->referrer_type_reference.'" id ="'.$row->referrer_type_reference.'" class="text-danger btn-xl record-del-btn" title="Delete Record"><i class="icon-base ti tabler-file-x"></i></a>';
+
+                                  
+                }
+                
+                
+                
+                $actions .= '</div>';
+                return $actions;
+
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+
+        }
+
+        $categories = DB::table('categories')->select('id', 'category_reference', 'category')->orderBy('category', 'asc')->get();
+        
+        $groups = Group::select('id','group_reference', 'group')->orderBy('group', 'asc')->get();
+
+        return view('web.settings-management.view-referrer-types', compact('categories', 'groups') );
+
+    }
+
+
+
+
+    public function addReferrerType(AddReferrerTypeRequest $request){
+
+        $user = Auth::user();
+
+        if( !$user->can('add-referrer-types')){
+
+            return abort(403); 
+        }
+       
+        $validated =  $request->validated();
+
+        //info($validated);
+
+        try{
+
+            \DB::beginTransaction();
+
+            $referrer_type = ReferrerType::create($validated);
+
+            \DB::commit();
+
+            return response()->json(['message' => 'Referrer Type created successfully']);
+
+        }
+        catch(\Exception $e){
+       
+            \DB::rollBack();
+
+            Log::Error($e);
+
+            return response()->json(['message' => 'Error creating Referrer Type'], 500);
+        }
+    
+    }
+
+
+
+
+    public function getViewReferrerType($id){
+
+        if( !Auth::user()->can('view-referrer-types')){
+
+            return abort(403); 
+        }
+
+        try{
+
+            $referrer_type = ReferrerType::leftJoin('users', 'referrer_types.created_by', '=', 'users.id')
+             //->where('referrer_types.is_active', 1)
+            ->where('referrer_types.referrer_type_reference', $id)
+            ->select('referrer_types.referrer_type_reference', 'referrer_types.referrer_type', 'referrer_types.description', 
+            'referrer_types.is_active', 'referrer_types.created_at', 'users.name')->first();
+
+            return response()->json(['message' => 'success', 'data'=>$referrer_type]);
+
+        }
+
+        catch (ModelNotFoundException $e){
+
+            Log::Error($e);
+
+            return response()->json([
+                'message' => 'Referrer Type not found'
+            ], 404);
+
+        }
+        
+    }
+
+
+
+    public function getUpdateReferrerType($id){
+
+        if( !Auth::user()->can('edit-referrer-types')){
+
+            return abort(403); 
+        }
+
+        try{
+
+            $referrer_type = ReferrerType::leftJoin('users', 'referrer_types.created_by', '=', 'users.id')
+             //->where('referrer_types.is_active', 1)
+            ->where('referrer_types.referrer_type_reference', $id)
+            ->select('referrer_types.id', 'referrer_types.referrer_type_reference', 
+            'referrer_types.referrer_type', 'referrer_types.description', 
+            'referrer_types.is_active', 'referrer_types.created_at', 'users.name')->first();
+
+            return response()->json(['message' => 'success', 'data'=>$referrer_type]);
+
+        }
+
+        catch (ModelNotFoundException $e){
+
+            Log::Error($e);
+
+            return response()->json([
+                'message' => 'Referrer Type not found'
+            ], 404);
+
+        }
+        
+    }
+
+
+
+    public function updateReferrerType(EditReferrerTypeRequest $request){
+
+        $user = Auth::user();
+
+        if( !$user->can('edit-referrer-types')){
+
+            return abort(403); 
+        }
+       
+        $validated =  $request->validated();
+
+        //info($validated);
+
+        try{
+
+            \DB::beginTransaction();
+
+            $referrer_type = ReferrerType::where('referrer_type_reference', $validated['referrer_type_reference'])->first();  
+            
+            if($referrer_type === null ){
+
+                $error_message = array('referrer_type_reference' => array('Referrer Type does not exist'));
+
+                return response()->json([
+                    'message' => 'The given data was invalid',
+                    'errors' => $error_message
+                ], 422);
+            }
+
+            $referrer_type->where('referrer_type_reference', $validated['referrer_type_reference'])->update($validated);
+
+            \DB::commit();
+
+            return response()->json(['message' => 'Referrer Type updated successfully']);
+
+        }
+        catch(\Exception $e){
+       
+            \DB::rollBack();
+
+            Log::Error($e);
+
+            return response()->json(['message' => 'Error updating Referrer Type'], 500);
+        }
+    
+    }
+
+
+
+    public function deleteReferrerType($id){
+
+        if( !Auth::user()->can('delete-referrer-types')){
+
+            return abort(403); 
+        }
+
+        try{
+
+            $referrer_type = ReferrerType::where('referrer_type_reference', $id)->first();
+            $referrer_type->delete();
+
+            return response()->json(['message' => 'Referrer Type deleted successfully.']);
+
+        }
+
+        catch (ModelNotFoundException $e){
+
+            Log::Error($e);
+
+            return response()->json([
+                'message' => 'Referrer Type not found'
+            ], 404);
+
+        }
+
+
+    }
     
 
 
@@ -78,6 +364,10 @@ class SettingsController extends Controller
 
             return Datatables::of($customer_types)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('customer_type', function($customer_types){
                 return ucwords($customer_types->customer_type);
@@ -360,6 +650,10 @@ class SettingsController extends Controller
 
             return Datatables::of($supplier_types)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('supplier_type', function($supplier_types){
                 return ucwords($supplier_types->supplier_type);
@@ -639,6 +933,10 @@ class SettingsController extends Controller
 
             return Datatables::of($inventory_categories)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('inventory_category', function($inventory_categories){
                 return ucwords($inventory_categories->inventory_category);
@@ -817,7 +1115,7 @@ class SettingsController extends Controller
 
 
 
-    public function updateInventoryCategory(EditInventorycategoryequest $request){
+    public function updateInventoryCategory(EditInventoryCategoryRequest $request){
 
         $user = Auth::user();
 
@@ -920,7 +1218,11 @@ class SettingsController extends Controller
 
             return Datatables::of($product_categories)
             ->addIndexColumn()
-                       
+                    
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
+
             ->editColumn('product_category', function($product_categories){
                 return ucwords($product_categories->product_category);
             })
@@ -1494,6 +1796,10 @@ class SettingsController extends Controller
 
             return Datatables::of($groups)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('group', function($groups){
                 return ucwords($groups->group);
@@ -1752,12 +2058,16 @@ class SettingsController extends Controller
 
             $currency = Currency::leftJoin('users', 'currencies.created_by', '=', 'users.id')
             ->where('currencies.is_active', 1)
-            ->select('currencies.currency_reference', 'currencies.currency', 'currencies.currency_code', 
+            ->select('currencies.currency_reference', 'currencies.currency', 'currencies.currency_code', 'currencies.is_active',
             'currencies.description', 'currencies.created_at', 'users.name')
             ->orderBy('currencies.currency', 'asc');
 
             return Datatables::of($currency)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('currency', function($currency){
                 return ucwords($currency->currency);
@@ -1819,12 +2129,16 @@ class SettingsController extends Controller
             ->leftJoin('status_group', 'statuses.id', '=', 'status_group.status_id')
             ->leftJoin('groups', 'groups.id', '=', 'status_group.group_id')
             ->where('statuses.is_active', 1)
-            ->select('statuses.status_reference', 'statuses.status',
+            ->select('statuses.status_reference', 'statuses.status', 'statuses.is_active',
             'statuses.description', 'statuses.created_at', 'users.name', 'groups.group')
             ->orderBy('groups.group', 'asc');
 
             return Datatables::of($statuses)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('status', function($statuses){
                 return ucwords($statuses->status);
@@ -1886,12 +2200,16 @@ class SettingsController extends Controller
             //->leftJoin('groups', 'metric_group.group_id', '=', 'groups.id')
             //->leftJoin('metric_group', 'metric_group.metric_id', '=', 'metrics.id')
             ->where('metrics.is_active', 1)
-            ->select('metrics.metric_reference', 'metrics.metric', 'metrics.metric_code', 
+            ->select('metrics.metric_reference', 'metrics.metric', 'metrics.metric_code', 'metrics.is_active',
             'metrics.description', 'metrics.created_at', 'users.name', )
             ->orderBy('metrics.metric', 'asc');
 
             return Datatables::of($metrics)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('metric', function($metrics){
                 return ucwords($metrics->metric);
@@ -1956,11 +2274,15 @@ class SettingsController extends Controller
             $payment_methods = PaymentMethod::leftJoin('users', 'payment_methods.created_by', '=', 'users.id')
             ->where('payment_methods.is_active', 1)
             ->select('payment_methods.payment_method_reference', 'payment_methods.payment_method', 'payment_methods.payment_method_code', 
-            'payment_methods.description', 'payment_methods.created_at', 'users.name')
+            'payment_methods.description', 'payment_methods.created_at', 'payment_methods.is_active', 'users.name')
             ->orderBy('payment_methods.payment_method', 'asc');
 
             return Datatables::of($payment_methods)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('payment_method', function($payment_methods){
                 return ucwords($payment_methods->payment_method);
@@ -2023,11 +2345,15 @@ class SettingsController extends Controller
             //->leftJoin('groups', 'categories.group_id', '=', 'groups.id')
             ->where('categories.is_active', 1)
             ->select('categories.category_reference', 'categories.category', 
-            'categories.description', 'categories.created_at', 'users.name',)
+            'categories.description', 'categories.created_at', 'categories.is_active', 'users.name',)
             ->orderBy('categories.category', 'asc');
 
             return Datatables::of($sub_categories)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('category', function($sub_categories){
                 return ucwords($sub_categories->category);
@@ -2093,11 +2419,15 @@ class SettingsController extends Controller
             // ->leftJoin('categories', 'sub_categories.category_id', '=', 'categories.id')
             //->where('sub_categories.is_active', 1)
             ->select('sub_categories.sub_category_reference', 'sub_categories.sub_category', 'sub_categories.description', 
-            'sub_categories.created_at', 'users.name',)
+            'sub_categories.created_at',  'sub_categories.is_active', 'users.name',)
             ->orderBy('sub_categories.sub_category', 'asc');
 
             return Datatables::of($sub_categories)
             ->addIndexColumn()
+
+            ->setRowClass(function ($record) {
+                return $record->is_active == 0 ? 'table-warning' : '';
+            })
                        
             ->editColumn('sub_category', function($sub_categories){
                 return ucwords($sub_categories->sub_category);

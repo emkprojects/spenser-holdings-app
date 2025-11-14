@@ -22,9 +22,10 @@ class CustomerType extends Model implements Auditable
         'customer_type_reference',
         'customer_type', 
         'description', 
-        #'group_id', 
+        'group_id', 
         'is_active',
         'created_by',
+        'updated_by',
 
     ];
 

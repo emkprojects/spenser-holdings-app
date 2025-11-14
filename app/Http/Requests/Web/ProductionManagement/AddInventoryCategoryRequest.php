@@ -4,6 +4,10 @@ namespace App\Http\Requests\Web\ProductionManagement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Auth;
+use Str;
+use Carbon\carbon;
+
 class AddInventoryCategoryRequest extends FormRequest
 {
     /**
@@ -11,7 +15,31 @@ class AddInventoryCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        if(Auth::user()->can('add-inventory-categories')){
+
+            return true;
+        }
+
+        else{
+
+            return false;
+        }
+
+        #return true;
+    }
+
+
+    protected function prepareForValidation(){
+        
+        $user =  Auth::user();
+
+        $this->merge([
+            'inventory_category_reference' => Str::uuid(),
+            'inventory_category' => ucwords( $this->inventory_category),
+            'description' => isset($this->description) ? ucfirst( $this->description) : null,
+            'created_by'  => $user->id,
+        ]);
     }
 
     /**
@@ -22,7 +50,12 @@ class AddInventoryCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'inventory_category_reference' => 'required',
+            'inventory_category' => 'required',
+            'description' => 'nullable', 
+             #'is_active' => 'required',
+            'created_by'  => 'required', 
         ];
     }
 }

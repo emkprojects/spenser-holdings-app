@@ -22,9 +22,10 @@ class ReferrerType extends Model implements Auditable
         'referrer_type_reference',
         'referrer_type', 
         'description', 
-        #'group_id', 
+        'group_id', 
         'is_active',
         'created_by',
+        'updated_by',
 
     ];
 

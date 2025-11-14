@@ -22,9 +22,10 @@ class SupplierType extends Model implements Auditable
         'supplier_type_reference',
         'supplier_type', 
         'description', 
-        #'group_id', 
+        'group_id', 
         'is_active',
         'created_by',
+        'updated_by',
 
     ];
 

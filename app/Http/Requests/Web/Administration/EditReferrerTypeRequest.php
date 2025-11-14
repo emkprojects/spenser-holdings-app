@@ -4,6 +4,10 @@ namespace App\Http\Requests\Web\Administration;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Auth;
+use Str;
+use Carbon\carbon;
+
 class EditReferrerTypeRequest extends FormRequest
 {
     /**
@@ -11,7 +15,31 @@ class EditReferrerTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        if(Auth::user()->can('add-referrer-types')){
+
+            return true;
+        }
+
+        else{
+
+            return false;
+        }
+
+        #return true;
+    }
+
+    protected function prepareForValidation(){
+        
+        $user =  Auth::user();
+
+        $this->merge([
+           
+            'referrer_type' => ucwords( $this->referrer_type),
+            'description' => isset($this->description) ? ucfirst( $this->description) : null,
+            'updated_by' => $user->id,
+            'updated_at' => Carbon::now(),
+        ]);
     }
 
     /**
@@ -22,7 +50,13 @@ class EditReferrerTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'referrer_type_reference' => 'required',
+            'referrer_type' => 'required',
+            'description' => 'nullable',
+            'is_active' => 'required',
+            #'updated_by' => 'required',
+            'updated_at' => 'required',
         ];
     }
 }

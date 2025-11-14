@@ -582,7 +582,7 @@
 
                         <!-- Settings Management menu start -->
                         @can('manage-settings')
-                        <li class="menu-item {{ request()->is('product-categories') ? 'active open' : '' }} {{ request()->is('inventory-categories') ? 'active open' : '' }} {{ request()->is('referrer-types') ? 'active' : '' }} {{ request()->is('customer-types') ? 'active open' : '' }}  {{ request()->is('supplier-types') ? 'active open' : '' }}  {{ request()->is('statuses') ? 'active open' : '' }} {{ request()->is('item-categories') ? 'active open' : '' }} {{ request()->is('categories') ? 'active open' : '' }} {{ request()->is('payment-methods') ? 'active open' : '' }} {{ request()->is('groups') ? 'active open' : '' }} {{ request()->is('currencies') ? 'active open' : '' }} {{ request()->is('metrics') ? 'active open' : '' }}">
+                        <li class="menu-item {{ request()->is('product-categories') ? 'active open' : '' }} {{ request()->is('inventory-categories') ? 'active open' : '' }} {{ request()->is('referrer-types') ? 'active open' : '' }} {{ request()->is('customer-types') ? 'active open' : '' }}  {{ request()->is('supplier-types') ? 'active open' : '' }}  {{ request()->is('statuses') ? 'active open' : '' }} {{ request()->is('item-categories') ? 'active open' : '' }} {{ request()->is('categories') ? 'active open' : '' }} {{ request()->is('payment-methods') ? 'active open' : '' }} {{ request()->is('groups') ? 'active open' : '' }} {{ request()->is('currencies') ? 'active open' : '' }} {{ request()->is('metrics') ? 'active open' : '' }}">
 
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon icon-base ti tabler-settings"></i>

@@ -49,12 +49,13 @@ class CustomerController extends Controller
             $customers = Customer::leftJoin('user_details', 'user_details.user_id', '=', 'customers.created_by')
             ->leftJoin('users', 'users.id', '=', 'customers.created_by')
             ->leftJoin('customer_types', 'customers.customer_type_id', '=', 'customer_types.id')
+            ->leftJoin('referrer_types', 'customers.referrer_type_id', '=', 'referrer_types.id')
             ->leftJoin('positions', 'customers.position_id', '=', 'positions.id')
             ->select('customers.id', 'customers.customer_type_id', 'customers.customer_reference', 
             'customers.customer', 'customers.phone_number', 'customers.email_address', 'customers.physical_address',
             'customers.contact_first_name', 'customers.contact_last_name','customers.contact_phone_number', 'customers.contact_email_address', 
             'customers.contact_physical_address', 'positions.position', 'customers.is_active', 'customers.created_at',
-            'customer_types.customer_type',
+            'customer_types.customer_type', 'referrer_types.referrer_type',
             'users.name', 'user_details.first_name', 'user_details.last_name',
             )->orderBy('customers.created_at', 'asc');
 

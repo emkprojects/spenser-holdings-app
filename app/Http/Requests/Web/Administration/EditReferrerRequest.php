@@ -46,6 +46,7 @@ class EditReferrerRequest extends FormRequest
             'physical_address' => isset($this->physical_address) ? ucwords($this->physical_address) : null,               
             'gender' => isset($this->gender) ? ucwords($this->gender) : null,        
             'updated_by' => $user->id, 
+            'updated_at' => Carbon::now(),
                      
         ]);
     }
@@ -75,6 +76,7 @@ class EditReferrerRequest extends FormRequest
             'gender' => 'required|in:Male,Female,Other',            
             'physical_address' => 'nullable|string',
             'updated_by' => 'required|exists:users,id',
+            'updated_at' => 'required',
             
                         
         ];

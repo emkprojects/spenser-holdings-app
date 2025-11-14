@@ -203,7 +203,7 @@
                                 <label class="form-label fs-6" for="is_active_edit">Status</label>
                                 <div class="input-group input-group-merge">                    
                                     
-                                    <select id="is_active_edit" name="is_active" class="selectpicker w-100 fs-6" data-style="btn-default" style="text-transform:capitalize;">
+                                    <select id="is_active_edit" name="is_active" class="select2 w-100 fs-6" data-style="btn-default" style="text-transform:capitalize;">
                                         <option value="">Choose Status</option>    
                                         <option value="1">Enabled</option>
                                         <option value="0">Disabled</option>

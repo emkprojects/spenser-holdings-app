@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Customer Types'])
+@extends('layouts.admin', ['title' => 'Referrer Types'])
 
 @push('stylesheets')
 
@@ -34,10 +34,10 @@
             <div class="row">
 
                     <div class="col-xl-10">
-                        <h4 class="pb-0 mt-1 text-md-start text-center fw-bold">All Customer Types</h4>
+                        <h4 class="pb-0 mt-1 text-md-start text-center fw-bold">All Referrer Types</h4>
                     </div>
 
-                    @can('add-customer-types')
+                    @can('add-referrer-types')
                     <div class="col-xl-2 float:right;">
                         <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#addRecordModal" class="btn btn-primary record-view-btn" title="Add Record">
                             <i class="menu-icon icon-base ti tabler-file-plus"></i> New Record
@@ -53,7 +53,7 @@
                     <thead>
                     <tr class="fw-bold fs-3">
                         <th width="2%">ID</th>
-                        <th>Customer Type</th>
+                        <th>Referrer Type</th>
                         <th style="word-wrap: break-word;">Description</th> 
                         <th>Status</th>
                         <th width="10%">Record Date</th>
@@ -81,7 +81,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold fs-5" id="viewRecordModalTitle">RECORD FOR 
                         <span class="text text-primary" id="record_header_view" style="text-transform:uppercase;"></span> 
-                        CUSTOMER TYPE
+                        REFERRER TYPE
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -96,12 +96,12 @@
                                 <h2 class="accordion-header d-flex align-items-center">
                                 <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true">
                                     <i class="icon-base ti tabler-file-text me-2"></i>
-                                    Customer Type
+                                    Referrer Type
                                 </button>
                                 </h2>
 
                                 <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
-                                <div class="accordion-body" id="customer_type_view"></div>
+                                <div class="accordion-body" id="referrer_type_view"></div>
                                 </div>
                             </div>
 
@@ -157,7 +157,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold fs-5" id="editRecordModalTitle">UPDATE 
                         <span class="text text-primary" id="record_header_edit" style="text-transform:uppercase;"></span> 
-                        CUSTOMER TYPE RECORD
+                        REFERRER TYPE RECORD
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -169,16 +169,16 @@
                     
                         <div class="row">
 
-                            <!-- <input type="hidden" id="customer_type_id_edit" name="customer_type_id" class="form-control" /> -->
-                            <input type="hidden" id="customer_type_reference_edit" name="customer_type_reference" class="form-control" />
+                            <!-- <input type="hidden" id="referrer_type_id_edit" name="referrer_type_id" class="form-control" /> -->
+                            <input type="hidden" id="referrer_type_reference_edit" name="referrer_type_reference" class="form-control" />
 
                             <div class="col-md-12 form-control-validation">
-                                <label class="form-label fs-6" for="customer-type">Customer Type</label>
+                                <label class="form-label fs-6" for="referrer-type">Customer Type</label>
                                 <div class="input-group input-group-merge">
-                                    <span class="input-group-text" id="basic-addon-customer-type">
+                                    <span class="input-group-text" id="basic-addon-referrer-type">
                                         <i class="icon-base ti tabler-file-text"></i>
                                     </span> 
-                                    <input type="text" id="customer_type_edit" name="customer_type" class="form-control fs-6" placeholder="Enter Customer Type" style="text-transform:capitalize;" />
+                                    <input type="text" id="referrer_type_edit" name="referrer_type" class="form-control fs-6" placeholder="Enter Customer Type" style="text-transform:capitalize;" />
                                 </div> 
                             </div> 
 
@@ -244,7 +244,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold fs-5" id="addRecordModalTitle">ADD 
                         <span class="text text-primary" id="record_header" style="text-transform:uppercase;">NEW</span> 
-                        CUSTOMER TYPE RECORD
+                        REFERRER TYPE RECORD
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -261,7 +261,7 @@
                                     <span class="input-group-text" id="basic-addon-category-type">
                                         <i class="icon-base ti tabler-file-text"></i>
                                     </span> 
-                                    <input type="text" id="customer_type" name="customer_type" class="form-control fs-6" placeholder="Enter Customer Type" style="text-transform:capitalize;" />
+                                    <input type="text" id="referrer_type" name="referrer_type" class="form-control fs-6" placeholder="Enter Customer Type" style="text-transform:capitalize;" />
                                 </div> 
                             </div> 
 
@@ -417,13 +417,13 @@
         var table =  $('#record-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "/customer-types",
+            ajax: "/referrer-types",
             columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable:false, searchable:false},
-            { data: 'customer_type', name: 'customer_types.customer_type'},
-            { data: 'description', name: 'customer_types.description'},
-            { data: 'is_active', name: 'customer_types.is_active'},                           
-            { data: 'created_at', name: 'customer_types.created_at' },
+            { data: 'referrer_type', name: 'referrer_types.referrer_type'},
+            { data: 'description', name: 'referrer_types.description'},
+            { data: 'is_active', name: 'referrer_types.is_active'},                           
+            { data: 'created_at', name: 'referrer_types.created_at' },
             { data: 'name', name: 'users.name' },
             { data: 'actions', name: 'actions' },
             ],
@@ -453,16 +453,16 @@
             var record_id = $(this).attr('id');
 
             $.ajax({
-                url: '/specific-customer-type/'+ record_id,
+                url: '/specific-referrer-type/'+ record_id,
                 type: 'GET',
                 
                 success: function(response) {
 
                   //console.log(response);
 
-                  $('#record_header_view').text(response.data.customer_type);
+                  $('#record_header_view').text(response.data.referrer_type);
 
-                  $('#customer_type_view').text(response.data.customer_type);
+                  $('#referrer_type_view').text(response.data.referrer_type);
                   $('#description_view').text(response.data.description);
 
                   if(response.data.is_active == 1){
@@ -545,7 +545,7 @@
                 // Initiate Ajax request
                 $.ajax({
 
-                    url: '/add-customer-type',
+                    url: '/add-referrer-type',
                     type: 'post',
                     data: formData,
                     processData: false,
@@ -574,7 +574,7 @@
                             
                         }).then(function() {
 
-                            //window.location = "/customer-types";
+                            //window.location = "/referrer-types";
                             table.ajax.reload();
 
                         });
@@ -690,18 +690,18 @@
             var record_id = $(this).attr('id');
             
               $.ajax({
-                url: '/edit-customer-type/'+ record_id,
+                url: '/edit-referrer-type/'+ record_id,
                 type: 'GET',
                 
                 success: function(response) {
 
                     //console.log(response);
 
-                    $('#record_header_edit').text(response.data.customer_type);
+                    $('#record_header_edit').text(response.data.referrer_type);
 
-                    // $('#customer_type_id_edit').val(response.data.id);
-                    $('#customer_type_reference_edit').val(response.data.customer_type_reference);
-                    $('#customer_type_edit').val(response.data.customer_type);
+                    // $('#referrer_type_id_edit').val(response.data.id);
+                    $('#referrer_type_reference_edit').val(response.data.referrer_type_reference);
+                    $('#referrer_type_edit').val(response.data.referrer_type);
                     $('#description_edit').val(response.data.description);                    
                     $('#is_active_edit').val(response.data.is_active).trigger('change');             
                         
@@ -779,7 +779,7 @@
                 // Initiate Ajax request
                 $.ajax({
 
-                    url: '/edit-customer-type',
+                    url: '/edit-referrer-type',
                     type: 'post',
                     data: formData,
                     processData: false,
@@ -808,7 +808,7 @@
                             
                         }).then(function() {
 
-                            //window.location = "/customer-types";
+                            //window.location = "/referrer-types";
                             table.ajax.reload();
 
                         });
@@ -942,7 +942,7 @@
                     //   'X-CSRF-Token': "{{csrf_token()}}",
                     // },
                     type:'post',
-                    url: '/delete-customer-type/'+ record_id,
+                    url: '/delete-referrer-type/'+ record_id,
 
                         success:function(response){
 

@@ -62,7 +62,7 @@
                                     <th>Phone Number</th>
                                     <th>Email Address</th>
                                     <th>Physical Address</th>
-                                    <th>Customer Type</th>             
+                                    <th>Referrered By</th>             
                                                                         
                                     <!-- <th>Status</th> -->
                                     <!-- <th width="10%">Record Date</th> -->
@@ -194,18 +194,25 @@
             { data: 'phone_number', name: 'customers.phone_number'},
             { data: 'email_address', name: 'customers.email_address'}, 
             { data: 'physical_address', name: 'customers.physical_address'},
-            { data: 'customer_type', name: 'customer_types.customer_type'},              
+            { data: 'referrer_type', name: 'referrer_types.referrer_type'},              
             //{ data: 'is_active', name: 'users.is_active'},                           
             // { data: 'created_at', name: 'users.created_at' },
             // { data: 'name', name: 'users.name' },
             { data: 'actions', name: 'actions' },
             ],
 
-            "columnDefs": [
-
+             "columnDefs": [
                 {
-                
-                },
+                    "targets": 4, // Target the column index you want to truncate (0-indexed)
+                    "data": "physical_address", // Replace with the actual data property name for that column
+                    "render": function(data, type, row, meta) {
+                        if (type === 'display' && data != null && typeof data === 'string' && data.length > 30) {
+                            return data.substring(0, 30) + '...';
+                        }
+                        return data;
+                    }
+                }
+                ,
             ]
         });
     

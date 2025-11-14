@@ -49,6 +49,7 @@ class EditCustomerRequest extends FormRequest
             'contact_date_of_birth' => isset($this->contact_date_of_birth) ? ($this->contact_date_of_birth) : null,  
             'contact_gender' => isset($this->contact_gender) ? ucwords($this->contact_gender) : null,        
             'updated_by' => $user->id, 
+            'updated_at' => Carbon::now(),
                      
         ]);
     }
@@ -87,6 +88,7 @@ class EditCustomerRequest extends FormRequest
             'contact_date_of_birth' => 'nullable|date',            
             
             'updated_by' => 'required|exists:users,id',
+            'updated_at' => 'required',
             
             'referrer_type_id' => 'required', 
             'referrer_type' => 'required',

@@ -4,6 +4,10 @@ namespace App\Http\Requests\Web\ProductionManagement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Auth;
+use Str;
+use Carbon\carbon;
+
 class EditProductCategoryRequest extends FormRequest
 {
     /**
@@ -11,7 +15,32 @@ class EditProductCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        if(Auth::user()->can('edit-product-categories')){
+
+            return true;
+        }
+
+        else{
+
+            return false;
+        }
+
+        #return true;
+    }
+
+
+    protected function prepareForValidation(){
+        
+        $user =  Auth::user();
+
+        $this->merge([
+            
+            'product_category' => ucwords( $this->product_category),
+            'description' => isset($this->description) ? ucfirst( $this->description) : null,
+            'updated_by'  => $user->id,
+            'updated_at' => Carbon::now(),
+        ]);
     }
 
     /**
@@ -22,7 +51,13 @@ class EditProductCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'product_category_reference' => 'required',
+            'product_category' => 'required',
+            'description' => 'nullable', 
+             #'is_active' => 'required',
+            #'updayed_by'  => 'required', 
+            'updated_at' => 'required',
         ];
     }
 }
