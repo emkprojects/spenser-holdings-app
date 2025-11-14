@@ -97,7 +97,7 @@
                                 <span class="input-group-text" id="basic-addon-supplier">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $supplier->supplier}}" id="supplier" name="supplier" class="form-control" placeholder="Enter Supplier" style="text-transform:;" aria-describedby="basic-addon-supplier" maxlength="11" />                        
+                                <input type="text" value="{{ $supplier->supplier}}" id="supplier" name="supplier" class="form-control" placeholder="Enter Supplier" style="text-transform:;" aria-describedby="basic-addon-supplier" />                        
                             </div> 
                         </div> 
 

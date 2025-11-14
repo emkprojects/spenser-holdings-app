@@ -97,7 +97,7 @@
                                 <span class="input-group-text" id="basic-addon-customer">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $customer->customer}}" id="customer" name="customer" class="form-control" placeholder="Enter Customer" style="text-transform:;" aria-describedby="basic-addon-customer" maxlength="11" />                        
+                                <input type="text" value="{{ $customer->customer}}" id="customer" name="customer" class="form-control" placeholder="Enter Customer" style="text-transform:;" aria-describedby="basic-addon-customer" />                        
                             </div> 
                         </div> 
 
