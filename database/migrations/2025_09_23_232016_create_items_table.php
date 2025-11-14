@@ -21,12 +21,14 @@ return new class extends Migration
             $table->decimal('current_stock', total: 10, places: 2)->nullable();
             $table->decimal('minimum_stock', total: 10, places: 2)->nullable();
             $table->decimal('amount', total: 10, places: 2)->nullable();
-            $table->datetime('last_updated')->nullable();
             $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
             $table->foreignId('item_category_id')->constrained();
-            $table->foreignId('supplier_id')->constrained();            
-            $table->foreignId('user_id')->nullable()->constrained(); 
+            $table->foreignId('supplier_id')->constrained(); 
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');            
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users'); 
             $table->uuid('item_reference')->unique();              
             $table->softDeletes();
             $table->timestamps();

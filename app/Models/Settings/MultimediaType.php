@@ -22,7 +22,8 @@ class MultimediaType extends Model implements Auditable
         'media_type_reference',
         'media_type',
         'description',       
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
     
 }

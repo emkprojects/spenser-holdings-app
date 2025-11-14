@@ -41,7 +41,8 @@ class Supplier extends Model implements Auditable
         'position_id',
         'supplier_type_id', 
         'is_active',        
-        'created_by',         
+        'created_by',  
+        'updated_by',         
     ];
     
 }

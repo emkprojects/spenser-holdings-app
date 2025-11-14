@@ -29,6 +29,7 @@ class Production extends Model implements Auditable
         'date_of_production', 
         'is_active',
         'created_by',
+        'updated_by',  
 
     ];
 

@@ -28,7 +28,7 @@ class productionSeeder extends Seeder
 
             [
                 
-             'user_id' => $user->id,
+             'created_by' => $user->id,
              'production_reference' => Str::uuid(), 
              'production_reference_no' => date("Y/m/d/his/0001"), 
              'production' => 'PRODUCTION #1000001', 
@@ -39,7 +39,7 @@ class productionSeeder extends Seeder
 
              [
                 
-             'user_id' => $user->id,
+             'created_by' => $user->id,
              'production_reference' => Str::uuid(), 
              'production_reference_no' => date("Y/m/d/his/0002"), 
              'production' => 'PRODUCTION #1000002', 

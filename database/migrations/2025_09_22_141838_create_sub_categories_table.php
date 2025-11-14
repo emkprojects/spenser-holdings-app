@@ -17,7 +17,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');  
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');  
             $table->uuid('sub_category_reference')->unique();               
             $table->softDeletes();
             $table->timestamps();

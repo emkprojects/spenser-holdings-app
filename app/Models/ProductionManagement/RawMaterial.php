@@ -31,7 +31,8 @@ class RawMaterial extends Model implements Auditable
         'is_active',
         'status_id',
         'item_id',
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
 
 

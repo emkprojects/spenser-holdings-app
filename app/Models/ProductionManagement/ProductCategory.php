@@ -25,6 +25,7 @@ class ProductCategory extends Model implements Auditable
         'category_id', 
         'is_active',
         'created_by',
+        'updated_by',  
 
     ];
 

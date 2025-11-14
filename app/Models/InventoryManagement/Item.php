@@ -29,7 +29,8 @@ class Item extends Model implements Auditable
         'is_active',
         'last_updated',         
         'supplier_id',        
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
     
 }

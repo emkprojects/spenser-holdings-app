@@ -46,7 +46,8 @@ class Customer extends Model implements Auditable
         'position_id',
         'referrer_id',
         'is_active',        
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
     
 }

@@ -19,9 +19,12 @@ return new class extends Migration
             $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
             $table->date('date_of_production')->default(now()); 
-            $table->foreignId('user_id')->nullable()->constrained(); 
             $table->unsignedBigInteger('supervisor')->nullable();
             $table->foreign('supervisor')->nullable()->references('id')->on('users'); 
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users'); 
             $table->uuid('production_reference')->unique(); 
             $table->softDeletes();
             $table->timestamps();

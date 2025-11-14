@@ -29,6 +29,8 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();     
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users'); 
             $table->uuid('referrer_reference')->unique();               
             $table->softDeletes();
             $table->timestamps();

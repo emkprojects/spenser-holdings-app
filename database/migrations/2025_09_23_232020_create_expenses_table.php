@@ -22,9 +22,12 @@ return new class extends Migration
             $table->foreignId('status_id')->nullable()->constrained();
             $table->boolean('is_active')->default(true);
             $table->foreignId('item_id')->constrained();
-            $table->foreignId('production_id')->nullable()->constrained();            
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->unsignedBigInteger('approved_by');
+            $table->foreignId('production_id')->nullable()->constrained();
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');             
+            $table->unsignedBigInteger('updated_by');
+            $table->foreign('updated_by')->references('id')->on('users'); 
+            $table->unsignedBigInteger('approved_by')->nullable();
             $table->foreign('approved_by')->references('id')->on('users');
             $table->uuid('expense_reference')->unique();                 
             $table->softDeletes();

@@ -53,7 +53,7 @@ class RawMaterialSeeder extends Seeder
                 'current_stock' => 15000, 
                 'minimum_stock' => 100,
                 'inventory_category_id' =>$meat_category->id, 
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $raw_material_status->id,
                 'created_at' => now()
             ],
@@ -66,7 +66,7 @@ class RawMaterialSeeder extends Seeder
                 'current_stock' => 17000, 
                 'minimum_stock' => 50,
                 'inventory_category_id' =>$bread_category->id, 
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $raw_material_status->id,
                 'created_at' => now()
             ],
@@ -79,7 +79,7 @@ class RawMaterialSeeder extends Seeder
                 'current_stock' => 8000, 
                 'minimum_stock' => 50,
                 'inventory_category_id' =>$bacon_smoked_unsliced_category->id, 
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $raw_material_status->id,
                 'created_at' => now()
             ],
@@ -91,7 +91,7 @@ class RawMaterialSeeder extends Seeder
                 'current_stock' => 6000, 
                 'minimum_stock' => 40,
                 'inventory_category_id' =>$ribs_unsliced_category->id, 
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $raw_material_status->id,
                 'created_at' => now()
             ],
@@ -113,7 +113,7 @@ class RawMaterialSeeder extends Seeder
                 $validated['purchase_id'] = $meat_item->id;
             }
            
-            $validated['user_id'] = $raw_material->user_id;
+            $validated['created_by'] = $raw_material->created_by;
             $validated['inventory_reference'] = Str::uuid();
             $validated['inventory'] = "INVENTORY-#".$raw_material->id;
             $validated['physical_stock'] = $raw_material->physical_stock;

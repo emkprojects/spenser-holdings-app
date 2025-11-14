@@ -360,36 +360,40 @@
 
             /////////////////////////////////////////////// PHONE NUMBER FORMATTING /////////////////////////
             
-            var phone_number = @json($referrer->phone_number);
-            var sliced_phone_number = 0;
-            if(phone_number.length == 13){
-                sliced_phone_number = phone_number.slice(4);
-            }
-            else {
-                sliced_phone_number = phone_number.slice(3);
-            }    
-            var formatted_phone_number = sliced_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+            $(function() {
 
-            
-            $("#phone_number").val(formatted_phone_number);
-
-
-            var alternative_phone_number = @json($referrer->alternative_phone);
-
-            if(alternative_phone_number !== null){
-
-                var sliced_alternative_phone_number = 0;
-                if(alternative_phone_number.length == 13){
-                    sliced_alternative_phone_number = alternative_phone_number.slice(4);
+                var phone_number = @json($referrer->phone_number);
+                var sliced_phone_number = 0;
+                if(phone_number.length == 13){
+                    sliced_phone_number = phone_number.slice(4);
                 }
                 else {
-                    sliced_alternative_phone_number = alternative_phone_number.slice(3);
+                    sliced_phone_number = phone_number.slice(3);
                 }    
-                var formatted_alternative_phone_number = sliced_alternative_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
-                
-                $("#alternative_phone").val(formatted_alternative_phone_number);
+                var formatted_phone_number = sliced_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
 
-            }
+                
+                $("#phone_number").val(formatted_phone_number);
+
+
+                var alternative_phone_number = @json($referrer->alternative_phone);
+
+                if(alternative_phone_number !== null){
+
+                    var sliced_alternative_phone_number = 0;
+                    if(alternative_phone_number.length == 13){
+                        sliced_alternative_phone_number = alternative_phone_number.slice(4);
+                    }
+                    else {
+                        sliced_alternative_phone_number = alternative_phone_number.slice(3);
+                    }    
+                    var formatted_alternative_phone_number = sliced_alternative_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                    
+                    $("#alternative_phone").val(formatted_alternative_phone_number);
+
+                }
+
+            });
             
   
 

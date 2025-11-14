@@ -24,7 +24,8 @@ class Currency extends Model implements Auditable
         'currency_code',
         'description', 
         'is_active',        
-        'created_by',        
+        'created_by',
+        'updated_by',          
     ];
     
 }

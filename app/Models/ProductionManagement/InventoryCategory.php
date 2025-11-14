@@ -26,6 +26,7 @@ class InventoryCategory extends Model implements Auditable
         'group_id', 
         'is_active',
         'created_by',
+        'updated_by',  
 
     ];
 

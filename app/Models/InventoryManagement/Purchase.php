@@ -29,7 +29,8 @@ class Purchase extends Model implements Auditable
         'date_of_purchase',
         'item_id',          
         'supplier_id',        
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
 
 }

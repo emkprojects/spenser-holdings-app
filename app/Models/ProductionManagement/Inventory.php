@@ -27,7 +27,8 @@ class Inventory extends Model implements Auditable
         'is_active',
         'date_of_inventory',
         'raw_material_id',
-        'created_by',        
+        'created_by',   
+        'updated_by',       
     ];
 
 }

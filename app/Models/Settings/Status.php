@@ -24,7 +24,8 @@ class Status extends Model implements Auditable
         'description', 
         'is_active', 
         //'group_id',       
-        'created_by',        
+        'created_by',
+        'updated_by',          
     ];
     
 }

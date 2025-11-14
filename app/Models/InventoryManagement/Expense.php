@@ -27,6 +27,7 @@ class Expense extends Model implements Auditable
         'date_of_expense', 
         'is_active',
         'created_by',
+        'updated_by',  
         'approved_by',
         'production_id',
     ];

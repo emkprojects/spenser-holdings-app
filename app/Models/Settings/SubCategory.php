@@ -25,7 +25,8 @@ class SubCategory extends Model implements Auditable
         'is_active',  
         //'category_id', 
         //'group_id',      
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
     
 }

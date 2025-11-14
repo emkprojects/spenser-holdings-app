@@ -23,7 +23,8 @@ class Group extends Model implements Auditable
         'group',
         'description', 
         'is_active',        
-        'created_by',        
+        'created_by',
+        'updated_by',          
     ];
     
 }

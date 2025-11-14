@@ -24,6 +24,7 @@ class Position extends Model implements Auditable
         'slug',
         'description', 
         'is_active',        
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
 }

@@ -31,7 +31,10 @@ return new class extends Migration
             $table->datetime('decline_date')->nullable();
             $table->text('decline_remarks')->nullable();  
             $table->boolean('vat_inclusive')->default(true);
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users'); 
             $table->foreignId('customer_id')->nullable()->constrained();  
             $table->uuid('sale_reference')->unique();      
             $table->softDeletes();

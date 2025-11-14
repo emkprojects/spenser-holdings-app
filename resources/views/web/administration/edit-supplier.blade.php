@@ -459,69 +459,72 @@
 
             /////////////////////////////////////////////// PHONE NUMBER FORMATTING /////////////////////////
             
-            var phone_number = $("#phone_number").val();
-           
-            var sliced_phone_number = 0;
-            if(phone_number.length == 13){
-                sliced_phone_number = phone_number.slice(4);
-            }
-            else {
-                sliced_phone_number = phone_number.slice(3);
-            }    
-            var formatted_phone_number = sliced_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+            $(function() {
+                    
+                var phone_number = $("#phone_number").val();
             
-            $("#phone_number").val(formatted_phone_number);
-
-         
-            var alternative_phone_number = $("#alternative_phone").val();
-
-            if(alternative_phone_number !== null){
-
-                var sliced_alternative_phone_number = 0;
-                if(alternative_phone_number.length == 13){
-                    sliced_alternative_phone_number = alternative_phone_number.slice(4);
+                var sliced_phone_number = 0;
+                if(phone_number.length == 13){
+                    sliced_phone_number = phone_number.slice(4);
                 }
                 else {
-                    sliced_alternative_phone_number = alternative_phone_number.slice(3);
+                    sliced_phone_number = phone_number.slice(3);
                 }    
-                var formatted_alternative_phone_number = sliced_alternative_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                var formatted_phone_number = sliced_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
                 
-                $("#alternative_phone").val(formatted_alternative_phone_number);
+                $("#phone_number").val(formatted_phone_number);
 
-            }
-
-            var contact_phone_number = $("#contact_phone_number").val();
             
-            var sliced_contact_phone_number = 0;
-            if(contact_phone_number.length == 13){
-                sliced_contact_phone_number = contact_phone_number.slice(4);
-            }
-            else {
-                sliced_contact_phone_number = contact_phone_number.slice(3);
-            }    
-            var formatted_contact_phone_number = sliced_contact_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
-            
-            $("#contact_phone_number").val(formatted_contact_phone_number);
+                var alternative_phone_number = $("#alternative_phone").val();
 
+                if(alternative_phone_number !== null){
 
-            var alternative_contact_phone_number = $("#contact_alternative_phone").val();
+                    var sliced_alternative_phone_number = 0;
+                    if(alternative_phone_number.length == 13){
+                        sliced_alternative_phone_number = alternative_phone_number.slice(4);
+                    }
+                    else {
+                        sliced_alternative_phone_number = alternative_phone_number.slice(3);
+                    }    
+                    var formatted_alternative_phone_number = sliced_alternative_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                    
+                    $("#alternative_phone").val(formatted_alternative_phone_number);
 
-            if(alternative_contact_phone_number !== null){
+                }
 
-                var sliced_alternative_contact_phone_number = 0;
-                if(alternative_contact_phone_number.length == 13){
-                    sliced_alternative_contact_phone_number = alternative_contact_phone_number.slice(4);
+                var contact_phone_number = $("#contact_phone_number").val();
+                
+                var sliced_contact_phone_number = 0;
+                if(contact_phone_number.length == 13){
+                    sliced_contact_phone_number = contact_phone_number.slice(4);
                 }
                 else {
-                    sliced_alternative_contact_phone_number = alternative_contact_phone_number.slice(3);
+                    sliced_contact_phone_number = contact_phone_number.slice(3);
                 }    
-                var formatted_alternative_contact_phone_number = sliced_alternative_contact_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                var formatted_contact_phone_number = sliced_contact_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
                 
-                $("#contact_alternative_phone").val(formatted_alternative_contact_phone_number);
+                $("#contact_phone_number").val(formatted_contact_phone_number);
 
-            }
+
+                var alternative_contact_phone_number = $("#contact_alternative_phone").val();
+
+                if(alternative_contact_phone_number !== null){
+
+                    var sliced_alternative_contact_phone_number = 0;
+                    if(alternative_contact_phone_number.length == 13){
+                        sliced_alternative_contact_phone_number = alternative_contact_phone_number.slice(4);
+                    }
+                    else {
+                        sliced_alternative_contact_phone_number = alternative_contact_phone_number.slice(3);
+                    }    
+                    var formatted_alternative_contact_phone_number = sliced_alternative_contact_phone_number.replace(/^(.{3})(.{3})(.*)$/, "$1 $2 $3");
+                    
+                    $("#contact_alternative_phone").val(formatted_alternative_contact_phone_number);
+
+                }
             
 
+            });
 
             //////////////////////////// /////////////////////////////////////////////////////////
 

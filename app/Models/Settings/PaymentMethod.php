@@ -24,7 +24,8 @@ class PaymentMethod extends Model implements Auditable
         'payment_method_code',
         'description', 
         'is_active',        
-        'created_by',        
+        'created_by',  
+        'updated_by',        
     ];
     
 }

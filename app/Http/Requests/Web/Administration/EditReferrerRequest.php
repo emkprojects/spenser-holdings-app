@@ -64,7 +64,7 @@ class EditReferrerRequest extends FormRequest
             'referrer_reference' => 'required|exists:referrers,referrer_reference',
             'referrer_type_id' => 'required',
             'national_identification_number' => 'nullable|string|size:14',
-            'tax_identification_number' => 'nullable|regex:/^[0-9]{10}$/|size:10',
+            'tax_identification_number' => 'nullable|size:10|regex:/^[0-9]{10}$/',
             'first_name' => 'required|string|max:225',
             'last_name' => 'required|string|max:225',
             'other_name' => 'nullable|string|max:225',

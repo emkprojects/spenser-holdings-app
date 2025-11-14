@@ -54,7 +54,7 @@ class ItemSeeder extends Seeder
                 'amount' => 10000,
                 'item_category_id' =>$undiboned_meat_category->id, 
                 'supplier_id' => $supplier_first->id,
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $item_status->id,
                 'created_at' => now()
             ],
@@ -69,7 +69,7 @@ class ItemSeeder extends Seeder
                 'amount' => 15000,
                 'item_category_id' =>$pork_category->id, 
                 'supplier_id' => $supplier_first->id,
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $item_status->id,
                 'created_at' => now()
             ],
@@ -84,7 +84,7 @@ class ItemSeeder extends Seeder
                 'amount' => 5000,
                 'item_category_id' =>$ingredients_category->id, 
                 'supplier_id' => $supplier_last->id,
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $item_status->id,
                 'created_at' => now()
             ],
@@ -98,7 +98,7 @@ class ItemSeeder extends Seeder
                 'amount' => 3000,
                 'item_category_id' =>$ingredients_category->id, 
                 'supplier_id' => $supplier_last->id,
-                'user_id' => $user->id, 
+                'created_by' => $user->id, 
                 'status_id' => $item_status->id,
                 'created_at' => now()
             ],
@@ -113,7 +113,7 @@ class ItemSeeder extends Seeder
 
             $validated['item_id'] = $item->id;
             $validated['supplier_id'] = $item->supplier_id;
-            $validated['user_id'] = $item->user_id;
+            $validated['created_by'] = $item->created_by;
             $validated['purchase'] = "PURCHASE-#".$item->id;
             $validated['purchase_reference'] = Str::uuid();
             $validated['created_at'] = $item->created_at;

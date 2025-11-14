@@ -20,7 +20,9 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('categories');    
             $table->foreignId('group_id')->nullable()->constrained('groups');             
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users'); 
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');  
             $table->uuid('inventory_category_reference')->unique();    
             $table->softDeletes();
             $table->timestamps();

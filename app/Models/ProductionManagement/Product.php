@@ -33,6 +33,7 @@ class Product extends Model implements Auditable
         'is_active',
         'last_updated',
         'created_by',
+        'updated_by',  
         'production_id',
 
     ];
