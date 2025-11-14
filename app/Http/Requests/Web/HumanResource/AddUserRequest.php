@@ -59,7 +59,7 @@ class AddUserRequest extends FormRequest
         return [
 
             'user_reference' => 'required',
-            'national_identification_number' => 'nullable|string|max:15',
+            'national_identification_number' => 'nullable|string|size:14',
             'first_name' => 'required|string|max:225',
             'last_name' => 'required|string|max:225',
             'other_name' => 'nullable|string|max:225',

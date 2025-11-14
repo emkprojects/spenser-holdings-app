@@ -50,12 +50,45 @@
                         <input type="hidden" value="{{ $referrer->referrer_reference}}" id="referrer_reference" name="referrer_reference" class="form-control" placeholder="" style="text-transform:;" aria-describedby="basic-addon-referrer-ref" />
 
                         <div class="col-md-4 form-control-validation">
+                            <label class="form-label fs-5" for="role_id">Referrer Type</label>
+                            <div class="input-group input-group-merge">                    
+                                
+                                <select id="referrer_type_id" name="referrer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
+                                    @foreach($referrer_types as $referrer_type)
+                                        
+                                        <!-- @if($referrer_type->id == $referrer->referrer_type_id)
+                                            <option value="{{$referrer->referrer_type_id}}">{{ucwords($referrer_type->referrer_type)}}</option>
+                                        @else
+                                            <option value="{{$referrer_type->id}}">{{ucwords($referrer_type->referrer_type)}}</option>
+                                        @endif -->
+
+                                        <option value="{{ $referrer_type->id }}" {{ ($referrer_type->id == $referrer->referrer_type_id) ? 'selected' : '' }}>{{ $referrer_type->referrer_type }}</option>
+
+                                    @endforeach
+                                                            
+                                </select>
+
+                            </div> 
+                        </div>
+
+
+                        <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="national_identification_number">NIN</label>
                            <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-nin">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" value="{{ $referrer->national_identification_number}}" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" />                        
+                                <input type="text" value="{{ $referrer->national_identification_number}}" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" maxlength="14" />                        
+                            </div> 
+                        </div> 
+
+                        <div class="col-md-4 form-control-validation">
+                            <label class="form-label fs-5" for="tax_identification_number">TIN</label>
+                           <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-tin">
+                                    <i class="icon-base ti tabler-user"></i>
+                                </span>                                    
+                                <input type="text" value="{{ $referrer->tax_identification_number}}" id="tax_identification_number" name="tax_identification_number" class="form-control" placeholder="Enter TIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-tin" maxlength="10" />                        
                             </div> 
                         </div> 
 
@@ -135,7 +168,7 @@
                         </div>
 
 
-                        <div class="col-md-4 form-control-validation">
+                        <!-- <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="date_of_birth">Date of Birth</label>
                            <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-dob">
@@ -143,33 +176,9 @@
                                 </span>                                    
                                 <input type="date" value="{{ $referrer->date_of_birth}}" id="date_of_birth" name="date_of_birth" class="form-control" placeholder="Enter Date of Birth (Optional)" style="text-transform:;" aria-describedby="basic-addon-dob" />                        
                             </div> 
-                        </div>
+                        </div> -->
 
-
-                        <div class="col-md-4 form-control-validation">
-                            <label class="form-label fs-5" for="role_id">Referrer Type</label>
-                            <div class="input-group input-group-merge">                    
-                                
-                                <select id="referrer_type_id" name="referrer_type_id" class="select2 form-select fs-6" style="text-transform:capitalize;">
-                                    @foreach($referrer_types as $referrer_type)
-                                        
-                                        <!-- @if($referrer_type->id == $referrer->referrer_type_id)
-                                            <option value="{{$referrer->referrer_type_id}}">{{ucwords($referrer_type->referrer_type)}}</option>
-                                        @else
-                                            <option value="{{$referrer_type->id}}">{{ucwords($referrer_type->referrer_type)}}</option>
-                                        @endif -->
-
-                                        <option value="{{ $referrer_type->id }}" {{ ($referrer_type->id == $referrer->referrer_type_id) ? 'selected' : '' }}>{{ $referrer_type->referrer_type }}</option>
-
-                                    @endforeach
-                                                            
-                                </select>
-
-                            </div> 
-                        </div>
-
-
-
+                        
                         <div class="col-md-4 form-control-validation">
                             <label class="form-label fs-5" for="physical_address">Physical Address</label>                             
                             <div class="input-group input-group-merge">

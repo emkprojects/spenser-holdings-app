@@ -63,8 +63,8 @@ class AddReferrerRequest extends FormRequest
 
             'referrer_reference' => 'required',
             'referrer_type_id' => 'required',            
-            'national_identification_number' => 'nullable|string|max:15',
-            'tax_identification_number' => 'nullable|string|max:15',
+            'national_identification_number' => 'nullable|string|size:14',
+            'tax_identification_number' => 'nullable|regex:/^[0-9]{10}$/|size:10',
             'first_name' => 'required|string|max:225',
             'last_name' => 'required|string|max:225',
             'other_name' => 'nullable|string|max:225',

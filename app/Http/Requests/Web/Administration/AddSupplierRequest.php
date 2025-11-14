@@ -65,8 +65,8 @@ class AddSupplierRequest extends FormRequest
 
             'supplier_reference' => 'required',
             'supplier_type_id' => 'required',            
-            'national_identification_number' => 'nullable|string|max:15',
-            'tax_identification_number' => 'nullable|string|max:15',
+            'national_identification_number' => 'nullable|string|size:14',
+            'tax_identification_number' => 'nullable|regex:/^[0-9]{10}$/|size:10',
             'supplier' => 'required|string',
             'phone_number' => 'required|string|size:12|unique:suppliers,phone_number',
             'alternative_phone' => 'nullable|string|size:12',

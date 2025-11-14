@@ -52,7 +52,7 @@
                                 <span class="input-group-text" id="basic-addon-nin">
                                     <i class="icon-base ti tabler-user"></i>
                                 </span>                                    
-                                <input type="text" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" />                        
+                                <input type="text" id="national_identification_number" name="national_identification_number" class="form-control" placeholder="Enter NIN (Optional)" style="text-transform:uppercase;" aria-describedby="basic-addon-nin" maxlength="14" />                        
                             </div> 
                         </div> 
 
