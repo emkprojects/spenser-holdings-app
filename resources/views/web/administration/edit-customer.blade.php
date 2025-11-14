@@ -95,7 +95,7 @@
                             <label class="form-label fs-5" for="customer">Customer</label>
                            <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-user">
-                                    <i class="icon-base ti tabler-user"></i>
+                                    <i class="icon-base ti tabler-customer"></i>
                                 </span>                                    
                                 <input type="text" value="{{ $customer->customer}}" id="customer" name="customer" class="form-control" placeholder="Enter Customer" style="text-transform:;" aria-describedby="basic-addon-customer" maxlength="11" />                        
                             </div> 
